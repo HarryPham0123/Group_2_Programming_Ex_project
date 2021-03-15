@@ -1,1 +1,1 @@
-# Group_2_Programming_Ex_project
+# Group 2 Programming Ex project
