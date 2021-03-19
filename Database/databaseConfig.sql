@@ -145,4 +145,89 @@ CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
 )
 ENGINE = InnoDB;
 
-
+-- -----------------------------------------------------
+-- Mock data session
+-- -----------------------------------------------------
+INSERT INTO Academic_year (Acode) VALUES (
+('A441C'),
+('A985B'),
+('A689R'),
+('A112C'),
+('A266Y'),
+('A721G'),
+('A484G'),
+('A660A'),
+('A399S'),
+('A133Y'),
+('A332H'),
+('A769O'),
+('A960H'),
+('A678O'),
+('A786R'),
+('A425C'),
+('A705C'),
+('A252X'),
+('A900D'),
+('A627O')
+);
+INSERT INTO Faculty (Fcode, Fname, Acode) VALUES (
+	('F023I', 'Faculty of Engineering', 'A441C'),
+    ('F546E', 'Faculty of Economics and Mangement', 'A705C'),
+	('F023I', 'Faculty of Engineering', 'A332H'),
+    ('F546E', 'Faculty of Economics and Mangement', 'A960H'),
+	('F023I', 'Faculty of Engineering', 'A332H'),
+    ('F546E', 'Faculty of Economics and Mangement', 'A441C'),
+	('F023I', 'Faculty of Engineering', 'A112C'),
+    ('F546E', 'Faculty of Economics and Mangement', 'A678O'),
+	('F023I', 'Faculty of Engineering', 'A425C'),
+    ('F546E', 'Faculty of Economics and Mangement', 'A252X')
+);
+INSERT INTO Program (Pcode, Pname, Fcode) VALUES (
+	('P100C', 'Computer Science', 'F023I'),
+	('P210B', 'Business Administration', 'F546E'),
+	('P153F', 'Finance and Accounting', 'F546E'),
+	('P547E', 'Electrical Engineering', 'F023I'),
+	('P736M', 'Mechanical Engineering', 'F023I'),
+	('P493A', 'Architecture', 'F023I'),
+	('P603C', 'Civil Engineering', 'F023I')
+);
+INSERT INTO Module (Mcode, Mname, Pcode) VALUES (
+	('M015A', 'Introductory Accounting'),
+    ('M005F', 'Introductory Finance'),
+    ('M235F', 'Investment Finance'),
+    ('M834M', 'Business Management'),
+    ('M567E', 'Microeconomics'),
+    ('M923E', 'Macroeconomics'),
+    ('M539A', 'Algebra'),
+    ('M256C', 'Calculus'),
+    ('M426D', 'Discrete Mathematics'),
+    ('M351B', 'Databases'),
+    ('M142N', 'Computer Networks'),
+    ('M152B', 'Business Administration'),
+    ('M154R', 'Realtime systems'),
+    ('M945O', 'Operating systems'),
+    ('M516I', 'IT Security'),
+    ('M516P', 'Programming Exercises')
+);
+INSERT INTO Module_Program_in_AY (Acode, Mcode, PCode) VALUES (
+	('A441C', 'M539A', 'P153F'),
+	('A705C', 'M015A', 'P210B'),
+	('A705C', 'M015A', 'P153F'),
+	('A960H', 'M923E', 'P210B'),
+	('A960H', 'M005F', 'P153F'),
+	('A441C', 'M015A', 'P210B'), 
+	('A960H', 'M834M', 'P210B'),
+	('A678O', 'M834M', 'P153F'),
+	('A678O', 'M235F', 'P153F'),
+	('A441C', 'M256C', 'P153F'),--
+	('A425C', 'M539A', 'P547E'),
+	('A332H', 'M256C', 'P736M'),
+	('A441C', 'M426D', 'P547E'),
+	('A960H', 'M351B', 'P100C'),
+	('A425C', 'M426D', 'P736M'),
+	('A960H', 'M015A', 'P547E'),
+	('A332H', 'M154R', 'P100C'),
+	('A425C', 'M015A', 'P736M'),
+	('A960H', 'M256C', 'P547E'),
+	('A425C', 'M516I', 'P100C')
+);
