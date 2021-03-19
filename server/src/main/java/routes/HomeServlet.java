@@ -12,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/home")
 public class HomeServlet {
@@ -24,7 +25,11 @@ public class HomeServlet {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<User> getAll() {
-        return new ArrayList<>(USERS.values());
+    public Response getAll() {
+        return Response
+                .status(200)
+                .entity(new ArrayList<>(USERS.values()))
+                .header("Access-Control-Allow-Origin", "*")
+                .build();
     }
 }
