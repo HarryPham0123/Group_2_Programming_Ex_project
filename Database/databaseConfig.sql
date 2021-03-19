@@ -140,7 +140,6 @@ CREATE TABLE IF NOT EXISTS `PE2018`.`Questionaire` (
   `Ccode` VARCHAR(50) NOT NULL,
   `Lcode` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`Ccode`, `Lcode`),
-  INDEX `Lcode_idx` (`Lcode` ASC) VISIBLE,
   CONSTRAINT `Ccode`
     FOREIGN KEY (`Ccode`)
     REFERENCES `PE2018`.`Class` (`Ccode`)
