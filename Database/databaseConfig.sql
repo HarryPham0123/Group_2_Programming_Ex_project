@@ -173,14 +173,6 @@ INSERT INTO Academic_year (Acode) VALUES (
 INSERT INTO Faculty (Fcode, Fname, Acode) VALUES (
 	('F023I', 'Faculty of Engineering', 'A441C'),
     ('F546E', 'Faculty of Economics and Mangement', 'A705C'),
-	('F023I', 'Faculty of Engineering', 'A332H'),
-    ('F546E', 'Faculty of Economics and Mangement', 'A960H'),
-	('F023I', 'Faculty of Engineering', 'A332H'),
-    ('F546E', 'Faculty of Economics and Mangement', 'A441C'),
-	('F023I', 'Faculty of Engineering', 'A112C'),
-    ('F546E', 'Faculty of Economics and Mangement', 'A678O'),
-	('F023I', 'Faculty of Engineering', 'A425C'),
-    ('F546E', 'Faculty of Economics and Mangement', 'A252X')
 );
 INSERT INTO Program (Pcode, Pname, Fcode) VALUES (
 	('P100C', 'Computer Science', 'F023I'),
@@ -213,21 +205,21 @@ INSERT INTO Module_Program_in_AY (Acode, Mcode, PCode) VALUES (
 	('A441C', 'M539A', 'P153F'),
 	('A705C', 'M015A', 'P210B'),
 	('A705C', 'M015A', 'P153F'),
-	('A960H', 'M923E', 'P210B'),
-	('A960H', 'M005F', 'P153F'),
-	('A441C', 'M015A', 'P210B'), 
-	('A960H', 'M834M', 'P210B'),
-	('A678O', 'M834M', 'P153F'),
-	('A678O', 'M235F', 'P153F'),
-	('A441C', 'M256C', 'P153F'),--
-	('A425C', 'M539A', 'P547E'),
-	('A332H', 'M256C', 'P736M'),
-	('A441C', 'M426D', 'P547E'),
-	('A960H', 'M351B', 'P100C'),
-	('A425C', 'M426D', 'P736M'),
-	('A960H', 'M015A', 'P547E'),
-	('A332H', 'M154R', 'P100C'),
-	('A425C', 'M015A', 'P736M'),
-	('A960H', 'M256C', 'P547E'),
-	('A425C', 'M516I', 'P100C')
+	('A441C', 'M923E', 'P210B'),
+	('A705C', 'M005F', 'P153F'),
+	('A705C', 'M015A', 'P210B'), 
+	('A441C', 'M834M', 'P210B'),
+	('A705C', 'M834M', 'P153F'),
+	('A441C', 'M235F', 'P153F'),
+	('A705C', 'M256C', 'P153F'),
+	('A705C', 'M539A', 'P547E'),
+	('A705C', 'M256C', 'P736M'),
+	('A705C', 'M426D', 'P547E'),
+	('A441C', 'M351B', 'P100C'),
+	('A705C', 'M426D', 'P736M'),
+	('A705C', 'M015A', 'P547E'),
+	('A705C', 'M154R', 'P100C'),
+	('A441C', 'M015A', 'P736M'),
+	('A441C', 'M256C', 'P547E'),
+	('A705C', 'M516I', 'P100C')
 );
