@@ -1,53 +1,51 @@
-CREATE PROCEDURE GetTotalClassesSize
-	(academic_year VARCHAR(50), 
-	semester VARCHAR(50), 
-	faculty VARCHAR(50), 
-	program VARCHAR(50), 
-	module VARCHAR(50), 
-	lecturer VARCHAR(50), 
-	class VARCHAR(50)) 
+DELIMITER $$
+CREATE PROCEDURE `GetTotalClassesSize`(AYCode INT, 
+									   Scode VARCHAR(50), 
+								       Fcode VARCHAR(50), 
+									   Pcode VARCHAR(50), 
+									   Mcode VARCHAR(50), 
+									   Lcode VARCHAR(50), 
+									   Ccode VARCHAR(50))
 BEGIN
 SELECT SUM(c.size)
-FROM Class c
-	JOIN Semester s ON ( c.Scode = s.Scode)
-    JOIN Academic_Year ay ON ( ay.AYCode = s.AYCode)
-    JOIN Module m ON ( c.Mcode = m.Mcode)
-    JOIN Program p ON (m.Pcode = p.Pcode)
-    JOIN Faculty f ON (p.Fcode = f.Fcode)
-    JOIN Lecturer lec ON ( lec.Lcode = (SELECT clec.Lcode
-										FROM Class_has_Lecturer clec 
-										WHERE c.Ccode = clec.Ccode))
+FROM class c
+	JOIN semester s ON ( c.FK_Scode = s.PK_Scode)
+    JOIN academic_year ay1 ON ( ay.PK_AYCode = s.FK_AYCode)
+    JOIN module m ON ( c.FK_Mcode = m.PK_Mcode)
+    JOIN program p ON (m.FK_Pcode = p.PK_Pcode)
+    JOIN faculty f ON (p.FK_Fcode = f.PK_Fcode)
+    JOIN academic_year ay2 ON ( ay.PK_AYCode = f.FK_AYCode)
+    JOIN lecturer lec ON ( lec.Lcode = (SELECT cl.FK_Lcode
+										FROM class_has_lecturer cl 
+										WHERE c.PK_Ccode = cl.FK_Ccode))
 WHERE 
 	( academic_year is null
-      or ay.AYCode = academic_year
+      or ay.PK_AYCode = AYCode
 	)
 AND
 	( semester is null
-      or s.Scode = semester
+      or s.PK_Scode = Scode
 	)
 AND
 	( faculty is null
-      or f.Fcode = faculty
+      or f.PK_Fcode = Fcode
 	)
 AND
 	( program is null
-      or p.Pcode = program
+      or p.PK_Pcode = Pcode
 	)
 AND
 	( module is null
-      or m.Mcode = module
+      or m.PK_Mcode = Mcode
 	)
 AND
 	( lecturer is null
-      or lec.Lcode = lecturer
+      or lec.PK_Lcode = Lcode
 	)
 AND
 	( class is null
-      or c.Ccode = class
+      or c.PK_Ccode = Ccode
 	)
-End;
-
-    
-
-
-
+;
+END$$
+DELIMITER ;
