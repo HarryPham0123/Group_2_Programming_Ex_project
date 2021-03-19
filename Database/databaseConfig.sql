@@ -172,7 +172,7 @@ INSERT INTO Academic_year (Acode) VALUES (
 );
 INSERT INTO Faculty (Fcode, Fname, Acode) VALUES (
 	('F023I', 'Faculty of Engineering', 'A441C'),
-    ('F546E', 'Faculty of Economics and Mangement', 'A705C'),
+    ('F546E', 'Faculty of Economics and Mangement', 'A705C')
 );
 INSERT INTO Program (Pcode, Pname, Fcode) VALUES (
 	('P100C', 'Computer Science', 'F023I'),
