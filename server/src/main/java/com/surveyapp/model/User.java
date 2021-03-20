@@ -1,4 +1,4 @@
-package model;
+package com.surveyapp.model;
 
 public class User {
     private Integer id;
