@@ -146,6 +146,18 @@ CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table Faculty_in_AY
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS Faculty_in_AY;
+
+CREATE TABLE IF NOT EXISTS Faculty_in_AY (
+	AYCode VARCHAR(10) NOT NULL,
+    Fcode VARCHAR(10) NOT NULL,
+	FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode),
+	FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
+)
+ENGINE = InnoDB;
+-- -----------------------------------------------------
 -- Mock data session
 -- -----------------------------------------------------
 INSERT INTO Academic_year (Acode) VALUES (
@@ -170,9 +182,9 @@ INSERT INTO Academic_year (Acode) VALUES (
 ('A900D'),
 ('A627O')
 );
-INSERT INTO Faculty (Fcode, Fname, Acode) VALUES (
-	('F023I', 'Faculty of Engineering', 'A441C'),
-    ('F546E', 'Faculty of Economics and Mangement', 'A705C')
+INSERT INTO Faculty (Fcode, Fname) VALUES (
+	('F023I', 'Faculty of Engineering'),
+    ('F546E', 'Faculty of Economics and Mangement')
 );
 INSERT INTO Program (Pcode, Pname, Fcode) VALUES (
 	('P100C', 'Computer Science', 'F023I'),
@@ -223,3 +235,13 @@ INSERT INTO Module_Program_in_AY (Acode, Mcode, PCode) VALUES (
 	('A441C', 'M256C', 'P547E'),
 	('A705C', 'M516I', 'P100C')
 );
+INSERT INTO Faculty_in_AY (AYCode, Fcode) VALUES (
+	('A441C', 'F023I'),
+    ('A441C', 'F546E'),
+    ('A660A', 'F546E'),
+    ('A660A', 'F023I'),
+	('A705C', 'F023I'),
+	('A705C', 'F546E'),
+    ('A266Y', 'F546E'),
+    ('A332H', 'F023I')
+)
