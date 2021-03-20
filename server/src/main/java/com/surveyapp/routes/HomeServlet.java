@@ -3,6 +3,7 @@ import com.surveyapp.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.GET;
@@ -22,11 +23,7 @@ public class HomeServlet {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response getAll() {
-        return Response
-                .status(200)
-                .entity(new ArrayList<>(USERS.values()))
-                .header("Access-Control-Allow-Origin", "*")
-                .build();
+    public List<User> getAll() {
+        return new ArrayList<>(USERS.values());
     }
 }
