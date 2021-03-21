@@ -32,9 +32,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS Faculty (
   Fcode VARCHAR(10) NOT NULL,
   Fname VARCHAR(50) NULL,
-  AYcode VARCHAR(10) NULL,
-  PRIMARY KEY (Fcode),
-  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode))
+  PRIMARY KEY (Fcode))
 ENGINE = InnoDB;
 
 
