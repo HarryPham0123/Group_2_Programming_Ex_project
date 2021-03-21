@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
   Mcode VARCHAR(10) NOT NULL,
   Pcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (AYCode, Mcode, Pcode),
-    FOREIGN KEY (AYcode) REFERENCES Academic_year (AYode),
+    FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode),
     FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
     FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
 )
