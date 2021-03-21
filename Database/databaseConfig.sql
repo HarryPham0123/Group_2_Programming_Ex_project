@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Semester (
   Scode VARCHAR(10) NOT NULL,
   AYcode VARCHAR(10) NULL,
   PRIMARY KEY (Scode),
-  FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode))
+  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode))
 ENGINE = InnoDB;
 
 
@@ -34,9 +34,9 @@ DROP TABLE IF EXISTS Faculty ;
 CREATE TABLE IF NOT EXISTS Faculty (
   Fcode VARCHAR(10) NOT NULL,
   Fname VARCHAR(50) NULL,
-  AYCode VARCHAR(10) NULL,
+  AYcode VARCHAR(10) NULL,
   PRIMARY KEY (Fcode),
-  FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode))
+  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode))
 ENGINE = InnoDB;
 
 
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
   Mcode VARCHAR(10) NOT NULL,
   Pcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (AYCode, Mcode, Pcode),
-    FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode),
+    FOREIGN KEY (AYcode) REFERENCES Academic_year (AYode),
     FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
     FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
 )
