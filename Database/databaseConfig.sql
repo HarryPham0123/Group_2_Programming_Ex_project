@@ -1,11 +1,11 @@
--- Created by Nguyen Dang Khoa --
+-- Created by Nguyen Dang Khoa, Pham Viet Hoang, Vuong Chi Hieu --
+DROP DATABASE IF EXISTS PE2018;
 CREATE DATABASE IF NOT EXISTS PE2018;
 USE PE2018;
 
 -- -----------------------------------------------------
 -- Table Academic_year
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Academic_year ;
 
 CREATE TABLE IF NOT EXISTS Academic_year (
   AYcode VARCHAR(10) NOT NULL,
@@ -16,7 +16,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Semester
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Semester ;
 
 CREATE TABLE IF NOT EXISTS Semester (
   Scode VARCHAR(10) NOT NULL,
@@ -29,7 +28,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Faculty
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Faculty ;
 
 CREATE TABLE IF NOT EXISTS Faculty (
   Fcode VARCHAR(10) NOT NULL,
@@ -43,8 +41,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Program
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Program ;
-
 CREATE TABLE IF NOT EXISTS Program (
   Pcode VARCHAR(10) NOT NULL,
   Pname VARCHAR(50) NULL,
@@ -58,7 +54,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Module
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Module ;
+
 
 CREATE TABLE IF NOT EXISTS Module (
   Mcode VARCHAR(10) NOT NULL,
@@ -71,7 +67,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Class
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Class ;
 
 CREATE TABLE IF NOT EXISTS Class (
   Ccode VARCHAR(10) NOT NULL,
@@ -100,14 +95,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table questionnaire
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS questionnaire ;
 
 CREATE TABLE IF NOT EXISTS questionnaire (
   Ccode VARCHAR(10) NOT NULL,
   Lcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (Ccode, Lcode),
-  FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
-  FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
+	FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
+	FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
 )
 ENGINE = InnoDB;
 
@@ -115,14 +109,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Class_has_Lecturer
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Class_has_Lecturer ;
 
 CREATE TABLE IF NOT EXISTS Class_has_Lecturer (
   Ccode VARCHAR(10) NOT NULL,
   Lcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (Ccode, Lcode),
-  FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
-  FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
+	FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
+	FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
 )
 ENGINE = InnoDB;
 
@@ -130,23 +123,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Module_Program_in_AY
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Module_Program_in_AY ;
 
 CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
   AYcode VARCHAR(10) NOT NULL,
   Mcode VARCHAR(10) NOT NULL,
   Pcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (AYcode, Mcode, Pcode),
-    FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode),
-    FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
-    FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
+	FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode),
+	FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
+	FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
 )
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table Faculty_in_AY
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Faculty_in_AY;
 
 CREATE TABLE IF NOT EXISTS Faculty_in_AY (
   AYcode VARCHAR(10) NOT NULL,
