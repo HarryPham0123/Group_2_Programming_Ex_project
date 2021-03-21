@@ -8,8 +8,8 @@ USE PE2018;
 DROP TABLE IF EXISTS Academic_year ;
 
 CREATE TABLE IF NOT EXISTS Academic_year (
-  AYCode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (AYCode))
+  AYcode VARCHAR(10) NOT NULL,
+  PRIMARY KEY (AYcode))
 ENGINE = InnoDB;
 
 
@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS Semester ;
 
 CREATE TABLE IF NOT EXISTS Semester (
   Scode VARCHAR(10) NOT NULL,
-  AYCode VARCHAR(10) NULL,
+  AYcode VARCHAR(10) NULL,
   PRIMARY KEY (Scode),
   FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode))
 ENGINE = InnoDB;
@@ -133,7 +133,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS Module_Program_in_AY ;
 
 CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
-  AYCode VARCHAR(10) NOT NULL,
+  AYcode VARCHAR(10) NOT NULL,
   Mcode VARCHAR(10) NOT NULL,
   Pcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (AYCode, Mcode, Pcode),
@@ -149,10 +149,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS Faculty_in_AY;
 
 CREATE TABLE IF NOT EXISTS Faculty_in_AY (
-	AYCode VARCHAR(10) NOT NULL,
-    Fcode VARCHAR(10) NOT NULL,
-	FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode),
-	FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
+  AYcode VARCHAR(10) NOT NULL,
+  Fcode VARCHAR(10) NOT NULL,
+  PRIMARY KEY (AYcode, Fcode),	
+    FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode),
+    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
 )
 ENGINE = InnoDB;
 -- -----------------------------------------------------
