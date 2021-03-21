@@ -106,20 +106,6 @@ CREATE TABLE IF NOT EXISTS questionnaire (
 ENGINE = InnoDB;
 
 
--- -- -----------------------------------------------------
--- -- Table Class_has_Lecturer
--- -- -----------------------------------------------------
-
--- CREATE TABLE IF NOT EXISTS Class_has_Lecturer (
---   Ccode VARCHAR(10) NOT NULL,
---   Lcode VARCHAR(10) NOT NULL,
---   PRIMARY KEY (Ccode, Lcode),
--- 	FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
--- 	FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
--- )
--- ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table Module_Program_in_AY
 -- -----------------------------------------------------
@@ -135,6 +121,7 @@ CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
 )
 ENGINE = InnoDB;
 
+	       
 -- -----------------------------------------------------
 -- Table Faculty_in_AY
 -- -----------------------------------------------------
@@ -147,6 +134,8 @@ CREATE TABLE IF NOT EXISTS Faculty_in_AY (
     FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
 )
 ENGINE = InnoDB;
+	       
+	       
 -- -----------------------------------------------------
 -- Mock data session
 -- -----------------------------------------------------
