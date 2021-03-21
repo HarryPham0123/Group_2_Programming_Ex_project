@@ -182,12 +182,12 @@ INSERT INTO Academic_year (AYcode) VALUES
 ('A627O')
 ;
 	       
-INSERT INTO Faculty (Fcode, Fname) VALUES (
+INSERT INTO Faculty (Fcode, Fname) VALUES 
 	('F023I', 'Faculty of Engineering'),
     ('F546E', 'Faculty of Economics and Mangement')
-);
+;
 	       
-INSERT INTO Program (Pcode, Pname, Fcode) VALUES (
+INSERT INTO Program (Pcode, Pname, Fcode) VALUES
 	('P100C', 'Computer Science', 'F023I'),
 	('P210B', 'Business Administration', 'F546E'),
 	('P153F', 'Finance and Accounting', 'F546E'),
@@ -195,9 +195,9 @@ INSERT INTO Program (Pcode, Pname, Fcode) VALUES (
 	('P736M', 'Mechanical Engineering', 'F023I'),
 	('P493A', 'Architecture', 'F023I'),
 	('P603C', 'Civil Engineering', 'F023I')
-);
+;
 	       
-INSERT INTO Module (Mcode, Mname) VALUES (
+INSERT INTO Module (Mcode, Mname) VALUES 
 	('M015A', 'Introductory Accounting'),
     ('M005F', 'Introductory Finance'),
     ('M235F', 'Investment Finance'),
@@ -214,11 +214,10 @@ INSERT INTO Module (Mcode, Mname) VALUES (
     ('M945O', 'Operating systems'),
     ('M516I', 'IT Security'),
     ('M516P', 'Programming Exercises')
-);
+;
 	       
-INSERT INTO Module_Program_in_AY (Acode, Mcode, PCode) VALUES (
+INSERT INTO Module_Program_in_AY (AYcode, Mcode, PCode) VALUES
 	('A441C', 'M539A', 'P153F'),
-	('A705C', 'M015A', 'P210B'),
 	('A705C', 'M015A', 'P153F'),
 	('A441C', 'M923E', 'P210B'),
 	('A705C', 'M005F', 'P153F'),
@@ -237,9 +236,9 @@ INSERT INTO Module_Program_in_AY (Acode, Mcode, PCode) VALUES (
 	('A441C', 'M015A', 'P736M'),
 	('A441C', 'M256C', 'P547E'),
 	('A705C', 'M516I', 'P100C')
-);
+;
 	       
-INSERT INTO Faculty_in_AY (AYCode, Fcode) VALUES (
+INSERT INTO Faculty_in_AY (AYcode, Fcode) VALUES
 	('A441C', 'F023I'),
     ('A441C', 'F546E'),
     ('A660A', 'F546E'),
@@ -248,9 +247,9 @@ INSERT INTO Faculty_in_AY (AYCode, Fcode) VALUES (
 	('A705C', 'F546E'),
     ('A266Y', 'F546E'),
     ('A332H', 'F023I')
-);
+;
 	       
-INSERT INTO Semester (Scode, AYCode) VALUES (
+INSERT INTO Semester (Scode, AYcode) VALUES 
 	('S736o', 'A441C'),
 	('S507q', 'A441C'),
 	('S497g', 'A660A'),
@@ -261,9 +260,9 @@ INSERT INTO Semester (Scode, AYCode) VALUES (
 	('S241x', 'A266Y'),
 	('S688c', 'A332H'),
 	('S594y', 'A332H')
-);
+;
 	       
-INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES (
+INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES 
 	('C161t', '35', 'S736o', 'M539A'),
 	('C889h', '40', 'S413z', 'M426D'),
 	('C406a', '32', 'S507q', 'M426D'),
@@ -289,9 +288,9 @@ INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES (
 	('C958f', '40', 'S206p', 'M834M'),
 	('C791m', '40', 'S206p', 'M351B'),
 	('C732m', '37', 'S413z', 'M834M')
-);
+;
 	       
-INSERT INTO Lecturer (Lcode, Lname) VALUES (
+INSERT INTO Lecturer (Lcode, Lname) VALUES 
 	('L668v', 'Lona Perrigan'),
 	('L322o', 'Marian Sirois'),
 	('L030r', 'Izora Dickerson'),
@@ -307,9 +306,9 @@ INSERT INTO Lecturer (Lcode, Lname) VALUES (
 	('L155l', 'Mabelle Fusco'),
 	('L768a', 'Dicie Mcbride'),
 	('L405m', 'Theresa Buhmann')
-);
+;
 	       
-INSERT INTO Class_has_Lecturer (Ccode, Lcode) VALUES (
+INSERT INTO Class_has_Lecturer (Ccode, Lcode) VALUES 
 	('C161t', 'L668v'),
 	('C889h', 'L030r'),
 	('C406a', 'L030r'),
@@ -335,9 +334,9 @@ INSERT INTO Class_has_Lecturer (Ccode, Lcode) VALUES (
     ('C311p', 'L436f'),
 	('C958f', 'L893a'),
 	('C958f', 'L192m')
-);
+;
 	       
-INSERT INTO Questionnaire (Ccode, Lcode) VALUES (
+INSERT INTO Questionnaire (Ccode, Lcode) VALUES 
 	('C363x', 'L960h'),
 	('C383d', 'L515u'),
 	('C296q', 'L192m'),
@@ -353,4 +352,4 @@ INSERT INTO Questionnaire (Ccode, Lcode) VALUES (
 	('C311p', 'L155l'),
     ('C311p', 'L436f'),
 	('C958f', 'L893a')
-);
+;
