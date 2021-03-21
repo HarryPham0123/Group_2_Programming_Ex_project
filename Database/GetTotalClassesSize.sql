@@ -1,25 +1,33 @@
-CREATE PROCEDURE GetTotalClassesSize
-	(academic_year VARCHAR(50), 
+CREATE PROCEDURE `GetTotalClassesSize`(
+	academic_year VARCHAR(50), 
 	semester VARCHAR(50), 
 	faculty VARCHAR(50), 
 	program VARCHAR(50), 
 	module VARCHAR(50), 
 	lecturer VARCHAR(50), 
-	class VARCHAR(50)) 
+	class VARCHAR(50))
 BEGIN
 SELECT SUM(c.size)
 FROM Class c
 	JOIN Semester s ON ( c.Scode = s.Scode)
-    JOIN Academic_Year ay ON ( ay.AYCode = s.AYCode)
-    JOIN Module m ON ( c.Mcode = m.Mcode)
-    JOIN Program p ON (m.Pcode = p.Pcode)
-    JOIN Faculty f ON (p.Fcode = f.Fcode)
-    JOIN Lecturer lec ON ( lec.Lcode = (SELECT clec.Lcode
-										FROM Class_has_Lecturer clec 
-										WHERE c.Ccode = clec.Ccode))
+    	JOIN Academic_Year ay ON ( ay.AYcode = s.AYcode)
+    	JOIN Module m ON ( c.Mcode = m.Mcode)
+     , Program p, Lecturer lec, Faculty f
 WHERE 
+	f.Fcode IN (SELECT fay.Fcode
+				From faculty_in_ay fay
+                WHERE fay.AYcode = ay.AYcode)
+AND
+	lec.Lcode IN (SELECT q.Lcode
+				FROM Questionnaire q 
+				WHERE c.Ccode = q.Ccode)
+AND
+	p.Pcode IN (SELECT mpa.Pcode
+				FROM module_program_in_ay mpa
+				WHERE ay.AYcode = mpa.AYcode)
+AND
 	( academic_year is null
-      or ay.AYCode = academic_year
+      or ay.AYcode = academic_year
 	)
 AND
 	( semester is null
@@ -44,10 +52,5 @@ AND
 AND
 	( class is null
       or c.Ccode = class
-	)
-End;
-
-    
-
-
-
+	);
+End
