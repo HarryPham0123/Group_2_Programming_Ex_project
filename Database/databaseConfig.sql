@@ -106,18 +106,18 @@ CREATE TABLE IF NOT EXISTS questionnaire (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table Class_has_Lecturer
--- -----------------------------------------------------
+-- -- -----------------------------------------------------
+-- -- Table Class_has_Lecturer
+-- -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Class_has_Lecturer (
-  Ccode VARCHAR(10) NOT NULL,
-  Lcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (Ccode, Lcode),
-	FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
-	FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
-)
-ENGINE = InnoDB;
+-- CREATE TABLE IF NOT EXISTS Class_has_Lecturer (
+--   Ccode VARCHAR(10) NOT NULL,
+--   Lcode VARCHAR(10) NOT NULL,
+--   PRIMARY KEY (Ccode, Lcode),
+-- 	FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
+-- 	FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
+-- )
+-- ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
