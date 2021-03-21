@@ -11,20 +11,20 @@ SELECT SUM(c.size)
 FROM Class c
 	JOIN Semester s ON ( c.Scode = s.Scode)
     	JOIN Academic_Year ay ON ( ay.AYcode = s.AYcode)
-    	JOIN Module m ON ( c.Mcode = m.Mcode)
-     , Program p, Lecturer lec, Faculty f
+    	JOIN Module m ON ( c.Mcode = m.Mcode), 
+     Program p, Lecturer lec, Faculty f
 WHERE 
 	f.Fcode IN (SELECT fay.Fcode
-				From faculty_in_ay fay
-                WHERE fay.AYcode = ay.AYcode)
+		     FROM faculty_in_ay fay
+                    WHERE fay.AYcode = ay.AYcode)
 AND
 	lec.Lcode IN (SELECT q.Lcode
-				FROM Questionnaire q 
-				WHERE c.Ccode = q.Ccode)
+		       FROM Questionnaire q 
+		      WHERE c.Ccode = q.Ccode)
 AND
 	p.Pcode IN (SELECT mpa.Pcode
-				FROM module_program_in_ay mpa
-				WHERE ay.AYcode = mpa.AYcode)
+		     FROM module_program_in_ay mpa
+		    WHERE ay.AYcode = mpa.AYcode)
 AND
 	( academic_year is null
       or ay.AYcode = academic_year
