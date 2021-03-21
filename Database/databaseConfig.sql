@@ -160,196 +160,176 @@ ENGINE = InnoDB;
 -- Mock data session
 -- -----------------------------------------------------
 INSERT INTO Academic_year (AYcode) VALUES
-('A441C'),
-('A985B'),
-('A689R'),
-('A112C'),
-('A266Y'),
-('A721G'),
-('A484G'),
-('A660A'),
-('A399S'),
-('A133Y'),
-('A332H'),
-('A769O'),
-('A960H'),
-('A678O'),
-('A786R'),
-('A425C'),
-('A705C'),
-('A252X'),
-('A900D'),
-('A627O')
+('A2016C'),
+('A2017B'),
+('A2018R'),
+('A2019C'),
+('A2020Y')
 ;
 	       
 INSERT INTO Faculty (Fcode, Fname) VALUES 
-	('F023I', 'Faculty of Engineering'),
-    ('F546E', 'Faculty of Economics and Mangement')
+	('F001I', 'Faculty of Engineering'),
+	('F002E', 'Faculty of Economics and Mangement')
 ;
 	       
 INSERT INTO Program (Pcode, Pname, Fcode) VALUES
-	('P100C', 'Computer Science', 'F023I'),
-	('P210B', 'Business Administration', 'F546E'),
-	('P153F', 'Finance and Accounting', 'F546E'),
-	('P547E', 'Electrical Engineering', 'F023I'),
-	('P736M', 'Mechanical Engineering', 'F023I'),
-	('P493A', 'Architecture', 'F023I'),
-	('P603C', 'Civil Engineering', 'F023I')
+	('P001C', 'Computer Science', 'F001I'),
+	('P002B', 'Business Administration', 'F002E'),
+	('P003F', 'Finance and Accounting', 'F002E'),
+	('P004E', 'Electrical Engineering', 'F001I'),
+	('P005M', 'Mechanical Engineering', 'F001I'),
+	('P006A', 'Architecture', 'F001I'),
+	('P007C', 'Civil Engineering', 'F001I')
 ;
 	       
 INSERT INTO Module (Mcode, Mname) VALUES 
-	('M015A', 'Introductory Accounting'),
-    ('M005F', 'Introductory Finance'),
-    ('M235F', 'Investment Finance'),
-    ('M834M', 'Business Management'),
-    ('M567E', 'Microeconomics'),
-    ('M923E', 'Macroeconomics'),
-    ('M539A', 'Algebra'),
-    ('M256C', 'Calculus'),
-    ('M426D', 'Discrete Mathematics'),
-    ('M351B', 'Databases'),
-    ('M142N', 'Computer Networks'),
-    ('M152B', 'Business Administration'),
-    ('M154R', 'Realtime systems'),
-    ('M945O', 'Operating systems'),
-    ('M516I', 'IT Security'),
-    ('M516P', 'Programming Exercises')
+    	('M001A', 'Introductory Accounting'),
+    	('M002F', 'Introductory Finance'),
+    	('M003F', 'Investment Finance'),
+    	('M004M', 'Business Management'),
+    	('M005E', 'Microeconomics'),
+    	('M006E', 'Macroeconomics'),
+    	('M007A', 'Algebra'),
+    	('M008C', 'Calculus'),
+    	('M009D', 'Discrete Mathematics'),
+    	('M010B', 'Databases'),
+    	('M011N', 'Computer Networks'),
+    	('M012B', 'Business Administration'),
+    	('M013R', 'Realtime systems'),
+    	('M014O', 'Operating systems'),
+    	('M015I', 'IT Security'),
+    	('M016P', 'Programming Exercises')
 ;
-	       
+
+-- In each academic year, a module is offered by at most one program.
+-- (A module may not be offered in a program in some academic years)  
+-- -> Modules in different programs must be different in each academic year (*) (Can not be expressed)
+-- Modules in 1 program must be unique -> Yes (b.c (AYcode, Mcode, Pcode) is primary key)
 INSERT INTO Module_Program_in_AY (AYcode, Mcode, PCode) VALUES
-	('A441C', 'M539A', 'P153F'),
-	('A705C', 'M015A', 'P153F'),
-	('A441C', 'M923E', 'P210B'),
-	('A705C', 'M005F', 'P153F'),
-	('A705C', 'M015A', 'P210B'), 
-	('A441C', 'M834M', 'P210B'),
-	('A705C', 'M834M', 'P153F'),
-	('A441C', 'M235F', 'P153F'),
-	('A705C', 'M256C', 'P153F'),
-	('A705C', 'M539A', 'P547E'),
-	('A705C', 'M256C', 'P736M'),
-	('A705C', 'M426D', 'P547E'),
-	('A441C', 'M351B', 'P100C'),
-	('A705C', 'M426D', 'P736M'),
-	('A705C', 'M015A', 'P547E'),
-	('A705C', 'M154R', 'P100C'),
-	('A441C', 'M015A', 'P736M'),
-	('A441C', 'M256C', 'P547E'),
-	('A705C', 'M516I', 'P100C')
+	('A2020Y', 'M007A', 'P001C'),
+	('A2020Y', 'M008C', 'P001C'),
+
+	('A2020Y', 'M011N', 'P005M'), 
+	('A2020Y', 'M012B', 'P005M'),
+	('A2020Y', 'M013R', 'P005M'),
+
+	('A2020Y', 'M014O', 'P003F'),
+	('A2020Y', 'M015I', 'P003F'),
+	('A2020Y', 'M016P', 'P003F'),
+
+	('A2020Y', 'M001A', 'P002B'),
+	('A2020Y', 'M002F', 'P002B'),
+
+	('A2020Y', 'M003F', 'P007C'),
+	('A2020Y', 'M004M', 'P007C'),
+
+	('A2020Y', 'M005E', 'P004E'),
+	('A2020Y', 'M006E', 'P004E'),
+
+	('A2020Y', 'M010B', 'P006A'),
+	('A2020Y', 'M009D', 'P006A')
 ;
-	       
+
+-- In year 2020, there are 2 faculties	       
 INSERT INTO Faculty_in_AY (AYcode, Fcode) VALUES
-	('A441C', 'F023I'),
-    ('A441C', 'F546E'),
-    ('A660A', 'F546E'),
-    ('A660A', 'F023I'),
-	('A705C', 'F023I'),
-	('A705C', 'F546E'),
-    ('A266Y', 'F546E'),
-    ('A332H', 'F023I')
+	('A2020Y', 'F001I'),
+	('A2020Y', 'F002E')
 ;
-	       
+
+-- There are only 4 semesters in each aca year	 
+-- A semester belongs to exactly one academic year.    
 INSERT INTO Semester (Scode, AYcode) VALUES 
-	('S736o', 'A441C'),
-	('S507q', 'A441C'),
-	('S497g', 'A660A'),
-	('S435x', 'A660A'),
-	('S206p', 'A705C'),
-	('S413z', 'A705C'),
-	('S037x', 'A266Y'),
-	('S241x', 'A266Y'),
-	('S688c', 'A332H'),
-	('S594y', 'A332H')
+	('S001o', 'A2020Y'),
+	('S002q', 'A2020Y'),
+	('S003g', 'A2020Y'),
+	('S004x', 'A2020Y')
 ;
-	       
+
+-- Students in each semester only learn 4 modules  	
+-- A class belongs to exactly one module
+-- -> A class can NOT belong to 2 or more modules
+-- A class is offered in exactly one semester 
+-- -> A class can NOT be offered in 2 or more diff semesters
 INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES 
-	('C161t', '35', 'S736o', 'M539A'),
-	('C889h', '40', 'S413z', 'M426D'),
-	('C406a', '32', 'S507q', 'M426D'),
-	('C507u', '33', 'S206p', 'M015A'),
-	('C546y', '33', 'S206p', 'M539A'),
-	('C905q', '35', 'S736o', 'M516I'),
-	('C722u', '35', 'S413z', 'M154R'),
-	('C188i', '32', 'S206p', 'M834M'),
-	('C990z', '38', 'S736o', 'M005F'),
-	('C363x', '33', 'S206p', 'M256C'),
-	('C383d', '30', 'S413z', 'M256C'),
-	('C296q', '31', 'S507q', 'M426D'),
-	('C130m', '37', 'S413z', 'M834M'),
-	('C556n', '37', 'S206p', 'M923E'),
-	('C256c', '39', 'S206p', 'M426D'),
-	('C197q', '37', 'S206p', 'M923E'),
-	('C387d', '38', 'S413z', 'M426D'),
-	('C817z', '34', 'S507q', 'M426D'),
-	('C973f', '40', 'S206p', 'M923E'),
-	('C400a', '34', 'S507q', 'M834M'),
-	('C443o', '38', 'S413z', 'M351B'),
-	('C311p', '36', 'S736o', 'M351B'),
-	('C958f', '40', 'S206p', 'M834M'),
-	('C791m', '40', 'S206p', 'M351B'),
-	('C732m', '37', 'S413z', 'M834M')
+	('C001t', '35', 'S001o', 'M001A'),
+	('C002h', '40', 'S001o', 'M002F'),
+	('C003a', '32', 'S001o', 'M003F'),
+	('C004m', '37', 'S001o', 'M004M'),
+
+	('C005u', '33', 'S002q', 'M005E'),
+	('C006y', '33', 'S002q', 'M006E'),
+	('C007q', '35', 'S002q', 'M007A'),
+	('C008n', '37', 'S002q', 'M008C'),
+
+	('C009u', '35', 'S003g', 'M009D'),
+	('C010i', '32', 'S003g', 'M010B'),
+	('C011z', '38', 'S003g', 'M011N'),
+	('C012c', '39', 'S003g', 'M012B'),
+
+	('C013x', '33', 'S004x', 'M013R'),
+	('C014d', '30', 'S004x', 'M014O'),
+	('C015q', '31', 'S004x', 'M015I'),
+	('C016q', '37', 'S004x', 'M016P')
 ;
 	       
 INSERT INTO Lecturer (Lcode, Lname) VALUES 
-	('L668v', 'Lona Perrigan'),
-	('L322o', 'Marian Sirois'),
-	('L030r', 'Izora Dickerson'),
-	('L500v', 'Sophia Frankel'),
-	('L893a', 'Octavia Mariska'),
-	('L824e', 'Rella Gruis'),
-	('L515u', 'Nona Tineo'),
-	('L960h', 'Anna Adkison'),
-	('L436f', 'Gwendolyn Edwards'),
-	('L192m', 'Lou Hinds'),
-	('L876g', 'Floy Blanco'),
-	('L664m', 'Tena Mee'),
-	('L155l', 'Mabelle Fusco'),
-	('L768a', 'Dicie Mcbride'),
-	('L405m', 'Theresa Buhmann')
+	('L001v', 'Lona Perrigan'),
+	('L002o', 'Marian Sirois'),
+	('L003r', 'Izora Dickerson'),
+	('L004v', 'Sophia Frankel'),
+	('L005a', 'Octavia Mariska'),
+	('L006e', 'Rella Gruis'),
+	('L007u', 'Nona Tineo'),
+	('L008h', 'Anna Adkison'),
+	('L009f', 'Gwendolyn Edwards'),
+	('L010m', 'Lou Hinds'),
+	('L011g', 'Floy Blanco'),
+	('L012m', 'Tena Mee'),
+	('L013l', 'Mabelle Fusco'),
+	('L014a', 'Dicie Mcbride'),
+	('L015m', 'Theresa Buhmann')
 ;
-	       
-INSERT INTO Class_has_Lecturer (Ccode, Lcode) VALUES 
-	('C161t', 'L668v'),
-	('C889h', 'L030r'),
-	('C406a', 'L030r'),
-	('C507u', 'L322o'),
-	('C546y', 'L824e'),
-	('C905q', 'L960h'),
-	('C722u', 'L436f'),
-	('C188i', 'L322o'),
-	('C990z', 'L876g'),
-	('C363x', 'L960h'),
-	('C383d', 'L515u'),
-	('C296q', 'L192m'),
-	('C130m', 'L155l'),
-	('C556n', 'L668v'),
-	('C256c', 'L192m'),
-	('C197q', 'L664m'),
-	('C387d', 'L893a'),
-	('C817z', 'L876g'),
-	('C973f', 'L515u'),
-	('C400a', 'L876g'),
-	('C443o', 'L030r'),
-	('C311p', 'L155l'),
-    ('C311p', 'L436f'),
-	('C958f', 'L893a'),
-	('C958f', 'L192m')
-;
-	       
+
+-- A questionnaire is filled for exactly one class and exactly one lecturer.
+-- -> Questionaire is relationship between class and lecturer
+
+-- A class has any number of lecturers.
+-- This case, we asume a class can have 1, 2 or 3 lecturers
+-- -> Lecturers in each class must be unique     
+-- A lecturer can teach any number of classes? -> Yes
 INSERT INTO Questionnaire (Ccode, Lcode) VALUES 
-	('C363x', 'L960h'),
-	('C383d', 'L515u'),
-	('C296q', 'L192m'),
-	('C130m', 'L155l'),
-	('C556n', 'L668v'),
-	('C256c', 'L192m'),
-	('C197q', 'L664m'),
-	('C387d', 'L893a'),
-	('C817z', 'L876g'),
-	('C973f', 'L515u'),
-	('C400a', 'L876g'),
-	('C443o', 'L030r'),
-	('C311p', 'L155l'),
-    ('C311p', 'L436f'),
-	('C958f', 'L893a')
+	('C001t', 'L015m'),
+	('C001t', 'L002o'),
+
+	('C002h', 'L001v'),
+	('C002h', 'L003r'),
+	('C002h', 'L004v'),
+
+	('C003a', 'L002o'),
+	('C004m', 'L003r'),
+
+	('C005u', 'L001v'),
+	('C005u', 'L004v'),
+	('C005u', 'L005a'),
+
+	('C006y', 'L004v'),
+	('C007q', 'L001v'),
+	('C008n', 'L005a'),
+	('C009u', 'L006e'),
+
+	('C010i', 'L006e'),
+	('C010i', 'L001v'),
+
+	('C011z', 'L007u'),
+
+	('C012c', 'L008h'),
+	('C012c', 'L009f'),
+
+	('C013x', 'L007u'),
+	('C014d', 'L010m'),
+	('C015q', 'L011g'),
+	('C015q', 'L012m'),
+
+	('C016q', 'L013l'),
+	('C016q', 'L014a')
 ;
