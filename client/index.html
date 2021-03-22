@@ -15,11 +15,13 @@
     }
     
     async function renderDummy() {
-        let dummys = await dummydata();
-        dummys.map(dummy => {
+        let lecturers = await dummydata();
+        lecturers.map(lecturer => {
                 var dummyRender = document.getElementById("dummy");
-                var header = document.createElement("h2").innerHTML = dummy.id;
-                var content = document.createElement("p").innerHTML = dummy.username;
+                var header = document.createElement("h2");
+                    header.innerText = lecturer.code;
+                var content = document.createElement("p");
+                    content.innerText = lecturer.name;
                 var divCover = document.createElement("div");
                 divCover.append(header);
                 divCover.append(content);
@@ -35,8 +37,12 @@
         background-color: cornflowerblue;
         margin: 10px 10px;
         border-radius: 10px;
-        width: 100px;
+        width: 120px;
+        display: flex;
+        flex-direction: column;
     }
-
+    div > p {
+        margin: 0;
+    }
 </style>
 </html>
