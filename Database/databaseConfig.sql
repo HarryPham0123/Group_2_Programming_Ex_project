@@ -103,18 +103,28 @@ CREATE TABLE IF NOT EXISTS questionnaire (
 )
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
--- Table Module_Program_in_AY
+-- Table Module_in_AY
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Module_Program_in_AY (
+CREATE TABLE IF NOT EXISTS Module_in_AY (
   AYcode VARCHAR(10) NOT NULL,
   Mcode VARCHAR(10) NOT NULL,
-  Pcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (AYcode, Mcode, Pcode),
+  PRIMARY KEY (AYcode, Mcode),
 	FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode),
-	FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
+	FOREIGN KEY (Mcode) REFERENCES Module (Mcode)
+)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table Program_in_AY
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS Program_in_AY (
+  AYcode VARCHAR(10) NOT NULL,
+  Pcode VARCHAR(10) NOT NULL,
+  PRIMARY KEY (AYcode, Pcode),
+	FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode),
 	FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
 )
 ENGINE = InnoDB;
@@ -184,29 +194,56 @@ INSERT INTO Module (Mcode, Mname) VALUES
 -- -> Modules in different programs must be different in each academic year (*) (Can not be expressed)
 -- Modules in 1 program must be unique -> Yes (b.c (AYcode, Mcode, Pcode) is primary key)
 INSERT INTO Module_Program_in_AY (AYcode, Mcode, PCode) VALUES
-	('A2020Y', 'M007A', 'P001C'),
-	('A2020Y', 'M008C', 'P001C'),
 
-	('A2020Y', 'M011N', 'P005M'), 
-	('A2020Y', 'M012B', 'P005M'),
-	('A2020Y', 'M013R', 'P005M'),
-
-	('A2020Y', 'M014O', 'P003F'),
-	('A2020Y', 'M015I', 'P003F'),
-	('A2020Y', 'M016P', 'P003F'),
-
-	('A2020Y', 'M001A', 'P002B'),
-	('A2020Y', 'M002F', 'P002B'),
-
-	('A2020Y', 'M003F', 'P007C'),
-	('A2020Y', 'M004M', 'P007C'),
-
-	('A2020Y', 'M005E', 'P004E'),
-	('A2020Y', 'M006E', 'P004E'),
-
-	('A2020Y', 'M010B', 'P006A'),
-	('A2020Y', 'M009D', 'P006A')
 ;
+INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  (
+	('A2020Y', 'P001C'),
+	('A2020Y', 'P001C'),
+
+	('A2020Y', 'P005M'), 
+	('A2020Y', 'P005M'),
+	('A2020Y', 'P005M'),
+
+	('A2020Y', 'P003F'),
+	('A2020Y', 'P003F'),
+	('A2020Y', 'P003F'),
+
+	('A2020Y', 'P002B'),
+	('A2020Y', 'P002B'),
+
+	('A2020Y', 'P007C'),
+	('A2020Y', 'P007C'),
+
+	('A2020Y', 'P004E'),
+	('A2020Y', 'P004E'),
+
+	('A2020Y', 'P006A'),
+	('A2020Y', 'P006A')
+);
+INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  (
+	('A2020Y', 'M007A'),
+	('A2020Y', 'M008C'),
+
+	('A2020Y', 'M011N'), 
+	('A2020Y', 'M012B'),
+	('A2020Y', 'M013R'),
+
+	('A2020Y', 'M014O'),
+	('A2020Y', 'M015I'),
+	('A2020Y', 'M016P'),
+
+	('A2020Y', 'M001A'),
+	('A2020Y', 'M002F'),
+
+	('A2020Y', 'M003F'),
+	('A2020Y', 'M004M'),
+
+	('A2020Y', 'M005E'),
+	('A2020Y', 'M006E'),
+
+	('A2020Y', 'M010B'),
+	('A2020Y', 'M009D')
+);
 
 -- In year 2020, there are 2 faculties	       
 INSERT INTO Faculty_in_AY (AYcode, Fcode) VALUES
