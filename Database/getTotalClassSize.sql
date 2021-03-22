@@ -1,4 +1,4 @@
-CREATE DEFINER=`HoangPham`@`localhost` PROCEDURE `GetTotalClassesSize`(
+CREATE PROCEDURE `GetTotalClassesSize`(
 	academic_year VARCHAR(50), 
 	semester VARCHAR(50), 
 	faculty VARCHAR(50), 
@@ -38,27 +38,18 @@ END IF;
 
 -- Query for getting the class's size
 SELECT SUM(c.size)
-FROM Class c
-	JOIN Semester s ON ( c.Scode = s.Scode)
-	JOIN Academic_Year ay ON ( ay.AYcode = s.AYcode)
-    JOIN Module m ON ( c.Mcode = m.Mcode), 
-     Program p, Lecturer lec, Faculty f 
-WHERE 
-	f.Fcode IN (SELECT fay.Fcode
-		        FROM faculty_in_ay fay
-				WHERE fay.AYcode = ay.AYcode)
-AND
-	lec.Lcode IN (SELECT q.Lcode
-				  FROM Questionnaire q 
-				  WHERE c.Ccode = q.Ccode)
-AND
-	p.Pcode IN (SELECT mpa.Pcode
-		        FROM module_program_in_ay mpa
-		        WHERE ay.AYcode = mpa.AYcode)
-AND
+-- Join into one big table
+FROM class c
+	NATURAL JOIN lecturer_in_class lc
+    NATURAL JOIN semester s
+    NATURAL JOIN faculty_in_ay fay
+    NATURAL JOIN module_in_ay may
+    NATURAL JOIN program_in_ay pay
+
+WHERE
 -- Check if parameter NULL or NOT, if yes, query based on the other parameters
 	( academic_year is null
-      or ay.AYcode = academic_year
+      or fay.AYcode = academic_year
 	)
 AND
 	( semester is null
@@ -66,19 +57,19 @@ AND
 	)
 AND
 	( faculty is null
-      or f.Fcode = faculty
+      or fay.Fcode = faculty
 	)
 AND
 	( program is null
-      or p.Pcode = program
+      or pay.Pcode = program
 	)
 AND
 	( module is null
-      or m.Mcode = module
+      or may.Mcode = module
 	)
 AND
 	( lecturer is null
-      or lec.Lcode = lecturer
+      or lc.Lcode = lecturer
 	)
 AND
 	( class is null
