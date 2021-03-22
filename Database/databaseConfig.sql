@@ -211,7 +211,7 @@ INSERT INTO Module (Mcode, Mname) VALUES
 -- (A module may not be offered in a program in some academic years)  
 -- -> Modules in different programs must be different in each academic year (*) (Can not be expressed)
 -- Modules in 1 program must be unique -> Yes (b.c (AYcode, Mcode, Pcode) is primary key)
-INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  (
+INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  
 	('A2020Y', 'P001C'),
 	('A2020Y', 'P001C'),
 
@@ -234,10 +234,10 @@ INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  (
 
 	('A2020Y', 'P006A'),
 	('A2020Y', 'P006A')
-);
+;
 	       
 	       
-INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  (
+INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  
 	('A2020Y', 'M007A'),
 	('A2020Y', 'M008C'),
 
@@ -260,7 +260,7 @@ INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  (
 
 	('A2020Y', 'M010B'),
 	('A2020Y', 'M009D')
-);
+;
 	       
 
 -- In year 2020, there are 2 faculties	       
