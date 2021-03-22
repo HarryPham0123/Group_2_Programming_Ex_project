@@ -142,6 +142,20 @@ CREATE TABLE IF NOT EXISTS Faculty_in_AY (
     FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
 )
 ENGINE = InnoDB;
+	      
+	       
+-- -----------------------------------------------------
+-- Table lecturer_in_class
+-- -----------------------------------------------------
+	       
+CREATE TABLE IF NOT EXISTS lecturer_in_class (
+  Ccode VARCHAR(10),
+  Lcode VARCHAR(10),
+  PRIMARY KEY (Ccode, Lcode),
+  FOREIGN KEY (Ccode) REFERENCES class (Ccode),
+  FOREIGN KEY (Lcode) REFERENCES lecturer (Lcode)
+)
+ENGINE = InnoDB;
 	       
 	       
 -- -----------------------------------------------------
@@ -155,10 +169,12 @@ INSERT INTO Academic_year (AYcode) VALUES
 ('A2020Y')
 ;
 	       
+	       
 INSERT INTO Faculty (Fcode, Fname) VALUES 
 	('F001I', 'Faculty of Engineering'),
 	('F002E', 'Faculty of Economics and Mangement')
 ;
+	       
 	       
 INSERT INTO Program (Pcode, Pname, Fcode) VALUES
 	('P001C', 'Computer Science', 'F001I'),
@@ -169,6 +185,7 @@ INSERT INTO Program (Pcode, Pname, Fcode) VALUES
 	('P006A', 'Architecture', 'F001I'),
 	('P007C', 'Civil Engineering', 'F001I')
 ;
+	       
 	       
 INSERT INTO Module (Mcode, Mname) VALUES 
     	('M001A', 'Introductory Accounting'),
@@ -188,14 +205,12 @@ INSERT INTO Module (Mcode, Mname) VALUES
     	('M015I', 'IT Security'),
     	('M016P', 'Programming Exercises')
 ;
+	       
 
 -- In each academic year, a module is offered by at most one program. (Data constrain)
 -- (A module may not be offered in a program in some academic years)  
 -- -> Modules in different programs must be different in each academic year (*) (Can not be expressed)
 -- Modules in 1 program must be unique -> Yes (b.c (AYcode, Mcode, Pcode) is primary key)
-INSERT INTO Module_Program_in_AY (AYcode, Mcode, PCode) VALUES
-
-;
 INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  (
 	('A2020Y', 'P001C'),
 	('A2020Y', 'P001C'),
@@ -220,6 +235,8 @@ INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  (
 	('A2020Y', 'P006A'),
 	('A2020Y', 'P006A')
 );
+	       
+	       
 INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  (
 	('A2020Y', 'M007A'),
 	('A2020Y', 'M008C'),
@@ -244,12 +261,14 @@ INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  (
 	('A2020Y', 'M010B'),
 	('A2020Y', 'M009D')
 );
+	       
 
 -- In year 2020, there are 2 faculties	       
 INSERT INTO Faculty_in_AY (AYcode, Fcode) VALUES
 	('A2020Y', 'F001I'),
 	('A2020Y', 'F002E')
 ;
+	       
 
 -- There are only 4 semesters in each aca year	 
 -- A semester belongs to exactly one academic year.    
@@ -260,6 +279,7 @@ INSERT INTO Semester (Scode, AYcode) VALUES
 	('S004x', 'A2020Y')
 ;
 
+	       
 -- Students in each semester only learn 4 modules  	
 -- A class belongs to exactly one module (Data constrain)
 -- -> A class can NOT associate to 2 or more modules
@@ -287,6 +307,7 @@ INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES
 	('C016q', '37', 'S004x', 'M016P')
 ;
 	       
+	       
 INSERT INTO Lecturer (Lcode, Lname) VALUES 
 	('L001v', 'Lona Perrigan'),
 	('L002o', 'Marian Sirois'),
@@ -305,14 +326,51 @@ INSERT INTO Lecturer (Lcode, Lname) VALUES
 	('L015m', 'Theresa Buhmann')
 ;
 
+	       
 -- A questionnaire is filled for exactly one class and exactly one lecturer. (Constrain)
--- -> Questionaire is relationship between class and lecturer
+-- -> Questionaire is relationship between class and lecturer    
+INSERT INTO Questionnaire (Ccode, Lcode) VALUES 
+	('C001t', 'L015m'),
+	('C001t', 'L002o'),
+
+	('C002h', 'L001v'),
+	('C002h', 'L003r'),
+	('C002h', 'L004v'),
+
+	('C003a', 'L002o'),
+	('C004m', 'L003r'),
+
+	('C005u', 'L001v'),
+	('C005u', 'L004v'),
+	('C005u', 'L005a'),
+
+	('C006y', 'L004v'),
+	('C007q', 'L001v'),
+	('C008n', 'L005a'),
+	('C009u', 'L006e'),
+
+	('C010i', 'L006e'),
+	('C010i', 'L001v'),
+
+	('C011z', 'L007u'),
+
+	('C012c', 'L008h'),
+	('C012c', 'L009f'),
+
+	('C013x', 'L007u'),
+	('C014d', 'L010m'),
+	('C015q', 'L011g'),
+	('C015q', 'L012m'),
+
+	('C016q', 'L013l'),
+	('C016q', 'L014a')
+;
 
 -- A class has any number of lecturers. (Data constrain)
 -- This case, we asume a class can have 1, 2 or 3 lecturers
 -- -> Lecturers in each class must be unique     
 -- A lecturer can teach any number of classes? -> Yes
-INSERT INTO Questionnaire (Ccode, Lcode) VALUES 
+INSERT INTO lecturer_in_class (Ccode, Lcode) VALUES 
 	('C001t', 'L015m'),
 	('C001t', 'L002o'),
 
