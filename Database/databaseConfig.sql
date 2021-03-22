@@ -208,56 +208,32 @@ INSERT INTO Module (Mcode, Mname) VALUES
 	       
 
 -- In each academic year, a module is offered by at most one program. (Data constrain)
--- (A module may not be offered in a program in some academic years)  
+-- (A module may not be offered in a program in some academic years) -> Module (M014O, M015I, M016P) not in 2020
 -- -> Modules in different programs must be different in each academic year (*) (Can not be expressed)
--- Modules in 1 program must be unique -> Yes (b.c (AYcode, Mcode, Pcode) is primary key)
+-- Modules in 1 program must be unique -> Yes
 INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  
 	('A2020Y', 'P001C'),
-	('A2020Y', 'P001C'),
-
-	('A2020Y', 'P005M'), 
-	('A2020Y', 'P005M'),
-	('A2020Y', 'P005M'),
-
-	('A2020Y', 'P003F'),
-	('A2020Y', 'P003F'),
-	('A2020Y', 'P003F'),
-
 	('A2020Y', 'P002B'),
-	('A2020Y', 'P002B'),
-
-	('A2020Y', 'P007C'),
-	('A2020Y', 'P007C'),
-
+	('A2020Y', 'P003F'), 
 	('A2020Y', 'P004E'),
-	('A2020Y', 'P004E'),
-
+	('A2020Y', 'P005M'),
 	('A2020Y', 'P006A'),
-	('A2020Y', 'P006A')
+	('A2020Y', 'P007C')
 ;
 	       
 	       
 INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  
 	('A2020Y', 'M007A'),
 	('A2020Y', 'M008C'),
-
 	('A2020Y', 'M011N'), 
 	('A2020Y', 'M012B'),
 	('A2020Y', 'M013R'),
-
-	('A2020Y', 'M014O'),
-	('A2020Y', 'M015I'),
-	('A2020Y', 'M016P'),
-
 	('A2020Y', 'M001A'),
 	('A2020Y', 'M002F'),
-
 	('A2020Y', 'M003F'),
 	('A2020Y', 'M004M'),
-
 	('A2020Y', 'M005E'),
 	('A2020Y', 'M006E'),
-
 	('A2020Y', 'M010B'),
 	('A2020Y', 'M009D')
 ;
