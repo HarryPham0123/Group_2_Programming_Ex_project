@@ -179,7 +179,7 @@ INSERT INTO Module (Mcode, Mname) VALUES
     	('M016P', 'Programming Exercises')
 ;
 
--- In each academic year, a module is offered by at most one program.
+-- In each academic year, a module is offered by at most one program. (Data constrain)
 -- (A module may not be offered in a program in some academic years)  
 -- -> Modules in different programs must be different in each academic year (*) (Can not be expressed)
 -- Modules in 1 program must be unique -> Yes (b.c (AYcode, Mcode, Pcode) is primary key)
@@ -224,10 +224,10 @@ INSERT INTO Semester (Scode, AYcode) VALUES
 ;
 
 -- Students in each semester only learn 4 modules  	
--- A class belongs to exactly one module
--- -> A class can NOT belong to 2 or more modules
--- A class is offered in exactly one semester 
--- -> A class can NOT be offered in 2 or more diff semesters
+-- A class belongs to exactly one module (Data constrain)
+-- -> A class can NOT associate to 2 or more modules
+-- A class is offered in exactly one semester (Data constrain)
+-- -> A class can NOT associate to 2 or more diff semesters
 INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES 
 	('C001t', '35', 'S001o', 'M001A'),
 	('C002h', '40', 'S001o', 'M002F'),
@@ -268,10 +268,10 @@ INSERT INTO Lecturer (Lcode, Lname) VALUES
 	('L015m', 'Theresa Buhmann')
 ;
 
--- A questionnaire is filled for exactly one class and exactly one lecturer.
+-- A questionnaire is filled for exactly one class and exactly one lecturer. (Constrain)
 -- -> Questionaire is relationship between class and lecturer
 
--- A class has any number of lecturers.
+-- A class has any number of lecturers. (Data constrain)
 -- This case, we asume a class can have 1, 2 or 3 lecturers
 -- -> Lecturers in each class must be unique     
 -- A lecturer can teach any number of classes? -> Yes
