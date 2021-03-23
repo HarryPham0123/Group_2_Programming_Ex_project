@@ -42,9 +42,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS Program (
   Pcode VARCHAR(10) NOT NULL,
   Pname VARCHAR(50) NULL,
-  Fcode VARCHAR(10) NULL,
   PRIMARY KEY (Pcode),
-  FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
 )
 ENGINE = InnoDB;
 
@@ -81,7 +79,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Lecturer
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Lecturer ;
 
 CREATE TABLE IF NOT EXISTS Lecturer (
   Lcode VARCHAR(10) NOT NULL,
@@ -176,14 +173,14 @@ INSERT INTO Faculty (Fcode, Fname) VALUES
 ;
 	       
 	       
-INSERT INTO Program (Pcode, Pname, Fcode) VALUES
-	('P001C', 'Computer Science', 'F001I'),
-	('P002B', 'Business Administration', 'F002E'),
-	('P003F', 'Finance and Accounting', 'F002E'),
-	('P004E', 'Electrical Engineering', 'F001I'),
-	('P005M', 'Mechanical Engineering', 'F001I'),
-	('P006A', 'Architecture', 'F001I'),
-	('P007C', 'Civil Engineering', 'F001I')
+INSERT INTO Program (Pcode, Pname) VALUES
+	('P001C', 'Computer Science'),
+	('P002B', 'Business Administration'),
+	('P003F', 'Finance and Accounting'),
+	('P004E', 'Electrical Engineering'),
+	('P005M', 'Mechanical Engineering'),
+	('P006A', 'Architecture'),
+	('P007C', 'Civil Engineering')
 ;
 	       
 	       
