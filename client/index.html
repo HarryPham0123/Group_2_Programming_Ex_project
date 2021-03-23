@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="styles.css">
-    <script lang="javascript" src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+            integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU="
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <h1>Lecturer list</h1>
     <div id="dummy"></div>
-    <h1>Hello world</h1>
+    <div class="exporter"></div>
+    <label for="lecturers">Choose a lecturer:</label>
+    <select name="lecturers" id="lecturers" oninput=handleSelect(this)"></select>
+    <div style="width: 500px">
+    <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
 </body>
+    <script lang="javascript" src="script.js"></script>
 </html>
