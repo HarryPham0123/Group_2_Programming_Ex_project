@@ -10,7 +10,7 @@
 </body>
 <script lang="javascript">
     async function dummydata() {
-        var data = await fetch("http://localhost:8080/api/home")
+        var data = await fetch("http://localhost:8080/api/lecturers")
         return await data.json()
     }
     
@@ -32,6 +32,10 @@
     renderDummy();
 </script>
 <style>
+    div {
+        display: flex;
+        flex-direction: row;
+    }
     div > div {
         padding: 10px;
         background-color: cornflowerblue;

@@ -41,8 +41,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Program (
   Pcode VARCHAR(10) NOT NULL,
-  Pname VARCHAR(50) NULL,
+  Pname VARCHAR(50) NOT NULL,
+  Fcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (Pcode),
+  FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
 )
 ENGINE = InnoDB;
 
@@ -54,8 +56,10 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS Module (
   Mcode VARCHAR(10) NOT NULL,
-  Mname VARCHAR(50) NULL,
-  PRIMARY KEY (Mcode)
+  Mname VARCHAR(50) NOT NULL,
+  Pcode VARCHAR(10) NOT NULL, 
+  PRIMARY KEY (Mcode),
+  FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
 )
 ENGINE = InnoDB;
 
@@ -173,34 +177,34 @@ INSERT INTO Faculty (Fcode, Fname) VALUES
 ;
 	       
 	       
-INSERT INTO Program (Pcode, Pname) VALUES
-	('P001C', 'Computer Science'),
-	('P002B', 'Business Administration'),
-	('P003F', 'Finance and Accounting'),
-	('P004E', 'Electrical Engineering'),
-	('P005M', 'Mechanical Engineering'),
-	('P006A', 'Architecture'),
-	('P007C', 'Civil Engineering')
+INSERT INTO Program (Pcode, Pname, Fcode) VALUES
+	('P001C', 'Computer Science', 'F001I'),
+	('P002B', 'Business Administration', 'F002E'),
+	('P003F', 'Finance and Accounting', 'F002E'),
+	('P004E', 'Electrical Engineering', 'F001I'),
+	('P005M', 'Mechanical Engineering', 'F001I'),
+	('P006A', 'Architecture', 'F001I'),
+	('P007C', 'Civil Engineering', 'F001I')
 ;
 	       
 	       
-INSERT INTO Module (Mcode, Mname) VALUES 
-    	('M001A', 'Introductory Accounting'),
-    	('M002F', 'Introductory Finance'),
-    	('M003F', 'Investment Finance'),
-    	('M004M', 'Business Management'),
-    	('M005E', 'Microeconomics'),
-    	('M006E', 'Macroeconomics'),
-    	('M007A', 'Algebra'),
-    	('M008C', 'Calculus'),
-    	('M009D', 'Discrete Mathematics'),
-    	('M010B', 'Databases'),
-    	('M011N', 'Computer Networks'),
-    	('M012B', 'Business Administration'),
-    	('M013R', 'Realtime systems'),
-    	('M014O', 'Operating systems'),
-    	('M015I', 'IT Security'),
-    	('M016P', 'Programming Exercises')
+INSERT INTO Module (Mcode, Mname, Pcode) VALUES 
+    	('M001A', 'Introductory Accounting', 'P002B'),
+    	('M002F', 'Introductory Finance', 'P003F'),
+    	('M003F', 'Investment Finance', 'P003F'),
+    	('M004M', 'Business Management', 'P002B'),
+    	('M005E', 'Microeconomics', 'P002B'),
+    	('M006E', 'Macroeconomics', 'P003F'),
+    	('M007A', 'Algebra', 'P004E'),
+    	('M008C', 'Calculus', 'P004E'),
+    	('M009D', 'Discrete Mathematics', 'P004E'),
+    	('M010B', 'Databases', 'P001C'),
+    	('M011N', 'Computer Networks', 'P001C'),
+    	('M012B', 'Business Administration', 'P001C'),
+    	('M013R', 'Realtime systems', 'P001C'),
+    	('M014O', 'Operating systems', 'P001C'),
+    	('M015I', 'IT Security', 'P001C'),
+    	('M016P', 'Programming Exercises', 'P001C')
 ;
 	       
 

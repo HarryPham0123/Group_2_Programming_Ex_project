@@ -5,7 +5,10 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
-
+/**
+ * Configuration response filter
+ * @author Khoa Dang Nguyen
+ * @version 0.0.1*/
 @Provider
 public class CORSFilter implements ContainerResponseFilter {
 
