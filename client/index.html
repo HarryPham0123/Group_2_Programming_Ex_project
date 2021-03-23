@@ -3,50 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="styles.css">
+    <script lang="javascript" src="script.js"></script>
 </head>
 <body>
     <div id="dummy"></div>
     <h1>Hello world</h1>
 </body>
-<script lang="javascript">
-    async function dummydata() {
-        var data = await fetch("http://localhost:8080/api/lecturers")
-        return await data.json()
-    }
-    
-    async function renderDummy() {
-        let lecturers = await dummydata();
-        lecturers.map(lecturer => {
-                var dummyRender = document.getElementById("dummy");
-                var header = document.createElement("h2");
-                    header.innerText = lecturer.code;
-                var content = document.createElement("p");
-                    content.innerText = lecturer.name;
-                var divCover = document.createElement("div");
-                divCover.append(header);
-                divCover.append(content);
-                dummyRender.append(divCover);
-            }
-        )
-    }
-    renderDummy();
-</script>
-<style>
-    div {
-        display: flex;
-        flex-direction: row;
-    }
-    div > div {
-        padding: 10px;
-        background-color: cornflowerblue;
-        margin: 10px 10px;
-        border-radius: 10px;
-        width: 120px;
-        display: flex;
-        flex-direction: column;
-    }
-    div > p {
-        margin: 0;
-    }
-</style>
 </html>

@@ -1,0 +1,26 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+.lecturer_container {
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    padding: 5px 20px;
+    margin: 10px;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+}
+.lecturer_header {
+    margin-bottom: 10px;
+}
+.lecturer_name {
+    margin: 0;
+}
+
+#dummy {
+    display: flex;
+    flex-wrap: wrap;
+}
