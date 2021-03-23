@@ -52,9 +52,13 @@ AND
 				  FROM Questionnaire q 
 				  WHERE c.Ccode = q.Ccode)
 AND
-	p.Pcode IN (SELECT mpa.Pcode
-		        FROM module_program_in_ay mpa
-		        WHERE ay.AYcode = mpa.AYcode)
+	p.Pcode IN (SELECT pay.Pcode
+		        FROM program_in_ay pay
+				WHERE pay.AYcode = ay.AYcode)
+AND
+	m.Mcode IN (SELECT may.Mcode
+		        FROM module_in_ay may
+				WHERE may.AYcode = ay.AYcode)
 AND
 -- Check if parameter NULL or NOT, if yes, query based on the other parameters
 	( academic_year is null
