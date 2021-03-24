@@ -42,9 +42,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS Program (
   Pcode VARCHAR(10) NOT NULL,
   Pname VARCHAR(50) NOT NULL,
-  Fcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (Pcode),
-  FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
+  PRIMARY KEY (Pcode)
 )
 ENGINE = InnoDB;
 
@@ -56,10 +54,8 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS Module (
   Mcode VARCHAR(10) NOT NULL,
-  Mname VARCHAR(50) NOT NULL,
-  Pcode VARCHAR(10) NOT NULL, 
-  PRIMARY KEY (Mcode),
-  FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
+  Mname VARCHAR(50) NOT NULL, 
+  PRIMARY KEY (Mcode)
 )
 ENGINE = InnoDB;
 
@@ -104,43 +100,35 @@ CREATE TABLE IF NOT EXISTS questionnaire (
 )
 ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table Module_in_AY
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS Module_in_AY (
-  AYcode VARCHAR(10) NOT NULL,
-  Mcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (AYcode, Mcode),
-	FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode),
-	FOREIGN KEY (Mcode) REFERENCES Module (Mcode)
-)
-ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table Program_in_AY
+-- Table Program_Module relationship
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Program_in_AY (
-  AYcode VARCHAR(10) NOT NULL,
+CREATE TABLE IF NOT EXISTS Program_Module (
+  PMcode VARCHAR(10) NOT NULL,
   Pcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (AYcode, Pcode),
-	FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode),
+  Mcode VARCHAR(10) NOT NULL,
+  PRIMARY KEY (PMcode),
+	FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
 	FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
 )
 ENGINE = InnoDB;
 
 	       
 -- -----------------------------------------------------
--- Table Faculty_in_AY
+-- Table AY_Faculty and program_module
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Faculty_in_AY (
+CREATE TABLE IF NOT EXISTS AY_Faculty_PM (
+  FAYcode VARCHAR(10) NOT NULL,
   AYcode VARCHAR(10) NOT NULL,
   Fcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (AYcode, Fcode),	
+  PMcode VARCHAR(10) NOT NULL,
+  PRIMARY KEY (FAYcode),	
     FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode),
-    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode)
+    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode),
+    FOREIGN KEY (PMcode) REFERENCES Program_Module (PMcode)
 )
 ENGINE = InnoDB;
 	      
@@ -177,73 +165,77 @@ INSERT INTO Faculty (Fcode, Fname) VALUES
 ;
 	       
 	       
-INSERT INTO Program (Pcode, Pname, Fcode) VALUES
-	('P001C', 'Computer Science', 'F001I'),
-	('P002B', 'Business Administration', 'F002E'),
-	('P003F', 'Finance and Accounting', 'F002E'),
-	('P004E', 'Electrical Engineering', 'F001I'),
-	('P005M', 'Mechanical Engineering', 'F001I'),
-	('P006A', 'Architecture', 'F001I'),
-	('P007C', 'Civil Engineering', 'F001I')
+INSERT INTO Program (Pcode, Pname) VALUES
+	('P001C', 'Computer Science'),
+	('P002B', 'Business Administration'),
+	('P003F', 'Finance and Accounting'),
+	('P004E', 'Electrical Engineering'),
+	('P005M', 'Mechanical Engineering'),
+	('P006A', 'Architecture'),
+	('P007C', 'Civil Engineering')
 ;
 	       
 	       
-INSERT INTO Module (Mcode, Mname, Pcode) VALUES 
-    	('M001A', 'Introductory Accounting', 'P002B'),
-    	('M002F', 'Introductory Finance', 'P003F'),
-    	('M003F', 'Investment Finance', 'P003F'),
-    	('M004M', 'Business Management', 'P002B'),
-    	('M005E', 'Microeconomics', 'P002B'),
-    	('M006E', 'Macroeconomics', 'P003F'),
-    	('M007A', 'Algebra', 'P004E'),
-    	('M008C', 'Calculus', 'P004E'),
-    	('M009D', 'Discrete Mathematics', 'P004E'),
-    	('M010B', 'Databases', 'P001C'),
-    	('M011N', 'Computer Networks', 'P001C'),
-    	('M012B', 'Business Administration', 'P001C'),
-    	('M013R', 'Realtime systems', 'P001C'),
-    	('M014O', 'Operating systems', 'P001C'),
-    	('M015I', 'IT Security', 'P001C'),
-    	('M016P', 'Programming Exercises', 'P001C')
+INSERT INTO Module (Mcode, Mname) VALUES 
+    	('M001A', 'Introductory Accounting'),
+    	('M002F', 'Introductory Finance'),
+    	('M003F', 'Investment Finance'),
+    	('M004M', 'Business Management'),
+    	('M005E', 'Microeconomics'),
+    	('M006E', 'Macroeconomics'),
+    	('M007A', 'Algebra'),
+    	('M008C', 'Calculus'),
+    	('M009D', 'Discrete Mathematics'),
+    	('M010B', 'Databases'),
+    	('M011N', 'Computer Networks'),
+    	('M012B', 'Business Administration'),
+    	('M013R', 'Realtime systems'),
+    	('M014O', 'Operating systems'),
+    	('M015I', 'IT Security'),
+    	('M016P', 'Programming Exercises')
 ;
+INSERT INTO Program_Module (PMcode, Pcode, Mcode) VALUES
+		('P001M', 'P001C', 'M010B'),
+    	('P002M', 'P001C', 'M011N'),
+    	('P003M', 'P001C', 'M012B'),
+    	('P004M', 'P001C', 'M013R'),
+    	('P005M', 'P001C', 'M014O'),
+    	('P006M', 'P001C', 'M015I'),
+    	('P007M', 'P001C', 'M016P'),
+        
+        ('P008M', 'P002B', 'M001A'),
+        ('P009M', 'P002B', 'M004M'),
+        ('P010M', 'P002B', 'M005E'),
+        
+    	('P011M', 'P003F', 'M002F'),
+    	('P012M', 'P003F', 'M003F'),
+    	('P013M', 'P003F', 'M006E'),
+        
+    	('P014M', 'P004E', 'M007A'),
+    	('P015M', 'P004E', 'M008C'),
+    	('P016M', 'P004E', 'M009D')
+;     
 	       
 
--- In each academic year, a module is offered by at most one program. (Data constrain)
--- (A module may not be offered in a program in some academic years) -> Module (M014O, M015I, M016P) not in 2020
--- -> Modules in different programs must be different in each academic year (*) (Can not be expressed)
--- Modules in 1 program must be unique -> Yes
-INSERT INTO Program_in_AY (AYcode, Pcode) VALUES  
-	('A2020Y', 'P001C'),
-	('A2020Y', 'P002B'),
-	('A2020Y', 'P003F'), 
-	('A2020Y', 'P004E'),
-	('A2020Y', 'P005M'),
-	('A2020Y', 'P006A'),
-	('A2020Y', 'P007C')
-;
 	       
-	       
-INSERT INTO Module_in_AY (AYcode, Mcode) VALUES  
-	('A2020Y', 'M007A'),
-	('A2020Y', 'M008C'),
-	('A2020Y', 'M011N'), 
-	('A2020Y', 'M012B'),
-	('A2020Y', 'M013R'),
-	('A2020Y', 'M001A'),
-	('A2020Y', 'M002F'),
-	('A2020Y', 'M003F'),
-	('A2020Y', 'M004M'),
-	('A2020Y', 'M005E'),
-	('A2020Y', 'M006E'),
-	('A2020Y', 'M010B'),
-	('A2020Y', 'M009D')
-;
-	       
+INSERT INTO AY_Faculty_PM (FAYcode, AYcode, Fcode, PMcode) VALUES
+    ('A014M', 'A2019C', 'F001I', 'P001M'),
+    ('A015M', 'A2019C', 'F001I', 'P002M'),
+	('A016M', 'A2019C', 'F002E', 'P008M'),
 
--- In year 2020, there are 2 faculties	       
-INSERT INTO Faculty_in_AY (AYcode, Fcode) VALUES
-	('A2020Y', 'F001I'),
-	('A2020Y', 'F002E')
+	('A001M', 'A2020Y', 'F001I', 'P001M'),
+    ('A002M', 'A2020Y', 'F001I', 'P002M'),
+    ('A003M', 'A2020Y', 'F001I', 'P003M'),
+    ('A004M', 'A2020Y', 'F001I', 'P004M'),
+    ('A005M', 'A2020Y', 'F001I', 'P014M'),
+    ('A006M', 'A2020Y', 'F001I', 'P015M'),
+    ('A007M', 'A2020Y', 'F001I', 'P016M'),
+	('A008M', 'A2020Y', 'F002E', 'P008M'),
+    ('A009M', 'A2020Y', 'F002E', 'P009M'),
+    ('A010M', 'A2020Y', 'F002E', 'P010M'),
+    ('A011M', 'A2020Y', 'F002E', 'P011M'),
+    ('A012M', 'A2020Y', 'F002E', 'P012M'),
+    ('A013M', 'A2020Y', 'F002E', 'P013M')
 ;
 	       
 
@@ -253,7 +245,9 @@ INSERT INTO Semester (Scode, AYcode) VALUES
 	('S001o', 'A2020Y'),
 	('S002q', 'A2020Y'),
 	('S003g', 'A2020Y'),
-	('S004x', 'A2020Y')
+	('S004x', 'A2020Y'),
+    
+	('S005z', 'A2019C')
 ;
 
 	       
@@ -281,7 +275,10 @@ INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES
 	('C013x', '33', 'S004x', 'M013R'),
 	('C014d', '30', 'S004x', 'M014O'),
 	('C015q', '31', 'S004x', 'M015I'),
-	('C016q', '37', 'S004x', 'M016P')
+	('C016q', '37', 'S004x', 'M016P'),
+    
+	('C017t', '30', 'S005z', 'M010B'),
+    ('C018t', '31', 'S005z', 'M001A')
 ;
 	       
 	       
@@ -340,7 +337,12 @@ INSERT INTO Questionnaire (Ccode, Lcode) VALUES
 	('C015q', 'L012m'),
 
 	('C016q', 'L013l'),
-	('C016q', 'L014a')
+	('C016q', 'L014a'),
+    
+    ('C017t', 'L014a'),
+    ('C017t', 'L015m'),
+    
+    ('C018t', 'L009f')
 ;
 
 -- A class has any number of lecturers. (Data constrain)
@@ -381,5 +383,10 @@ INSERT INTO lecturer_in_class (Ccode, Lcode) VALUES
 	('C015q', 'L012m'),
 
 	('C016q', 'L013l'),
-	('C016q', 'L014a')
+	('C016q', 'L014a'),
+    
+    ('C017t', 'L014a'),
+    ('C017t', 'L015m'),
+    
+    ('C018t', 'L009f')
 ;
