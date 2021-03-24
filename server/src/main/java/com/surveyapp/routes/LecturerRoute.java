@@ -1,17 +1,8 @@
 package com.surveyapp.routes;
 import com.surveyapp.model.Lecturer;
 import com.surveyapp.service.LecturerService;
-import com.surveyapp.util.DBUtil;
-import com.surveyapp.util.ObjMapper;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 

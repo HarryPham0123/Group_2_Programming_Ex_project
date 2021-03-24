@@ -4,7 +4,6 @@ import com.surveyapp.model.Lecturer;
 import com.surveyapp.util.DBUtil;
 import com.surveyapp.util.ObjMapper;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.List;
 import java.util.Optional;

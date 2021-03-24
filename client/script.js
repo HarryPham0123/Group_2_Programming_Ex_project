@@ -13,7 +13,6 @@ async function renderDummy() {
         lecturerSelect.value = lecturer.name;
         document.getElementById("lecturers").append(lecturerSelect)
     })
-
     lecturers.map(lecturer => {
             var dummyRender = document.getElementById("dummy");
             var header = document.createElement("h2");
