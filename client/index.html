@@ -2,26 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
-            integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU="
-            crossorigin="anonymous"></script>
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous"></script>
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tablestyle.css">
+    <title>Document</title>
 </head>
 <body>
-    <h1>Lecturer list</h1>
-    <div id="dummy"></div>
-    <div class="exporter"></div>
-    <label for="lecturers">Choose a lecturer:</label>
-    <select name="lecturers" id="lecturers" oninput=handleSelect(this)"></select>
-    <div style="width: 500px">
-    <canvas id="myChart" width="400" height="400"></canvas>
-    </div>
+<h1>Tables</h1>
+<button class="upload" >Load data</button>
+<button class="hide-btn" type="button">Hide table</button>
+<button class="show-btn">Show table</button>
+<div class="container">
+    <!-- <div class="row">
+    </div> -->
+    <table class="table-list">
+        <tr>
+            <th>Academic Year Code</th>
+            <th>Class code</th>
+            <th>Size</th>
+            <th>Module Name</th>
+            <th>Program name</th>
+            <th>Faculty name</th>
+        </tr>
+    </table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="main.js"></script>
 </body>
-    <script lang="javascript" src="script.js"></script>
 </html>
