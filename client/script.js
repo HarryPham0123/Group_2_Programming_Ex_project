@@ -6,12 +6,12 @@ $(function () {
 $(function () {
     $("body").on("click",".hide-btn", function () {
         $(".container").css("display", "none");
-        console.log("a")
+
     });
 });
 $(function () {
     $("body").on("click",".show-btn", function () {
-        $(".lecturers .container").css("display", "block");
+        $(".container").css("display", "block");
     });
 });
 function getData(){
