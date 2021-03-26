@@ -1,36 +1,5 @@
-* {
-    margin: 0px;
-    padding: 0px;
+.container th,
+.container td {
+	border: 1px solid black;
 }
 
-body {
-    background-color: floralwhite;
-}
-.lecturer_container {
-    background-color: cornflowerblue;
-    border-radius: 10px;
-    padding: 5px 20px;
-    margin: 10px;
-    text-align: center;
-    width: 100px;
-    height: 100px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-.lecturer_container:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    background-color: mediumslateblue;
-}
-.lecturer_header {
-    margin-bottom: 10px;
-}
-.lecturer_name {
-    margin: 0;
-}
-
-
-#dummy {
-    display: flex;
-    flex-wrap: wrap;
-}
