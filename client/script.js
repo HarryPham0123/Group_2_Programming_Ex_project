@@ -5,7 +5,7 @@ $(function () {
 	$(".show-btn").click(function() {
 		$(".table-container").slideDown()
 	})
-	$("body").one("click",".upload", function () {
+	$("body").one("click",".update", function () {
         	getData();
   })
 })
