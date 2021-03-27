@@ -7,8 +7,9 @@ $(function () {
 	})
 	$("body").one("click",".upload", function () {
         	getData();
-    	});
+  })
 })
+
 function getData(){
     $.ajax({
 		type: 'GET',

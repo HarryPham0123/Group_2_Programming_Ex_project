@@ -6,26 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <img src="images/vgu_logo.png" alt="">
 <br>
-<button class="upload" >Load data</button>
-<button class="hide-btn" type="button">Hide table</button>
-<button class="show-btn" type="button">Show table</button>
 <div class="container">
-    <table class="table-list">
-        <tr>
-            <th>Academic Year Code</th>
-            <th>Class code</th>
-            <th>Size</th>
-            <th>Module Name</th>
-            <th>Program name</th>
-            <th>Faculty name</th>
-        </tr>
-    </table>
+    <div class="button-bar">
+        <button class="update" >Load data</button>
+        <button class="show-btn" type="button">Show table</button>
+        <button class="hide-btn" type="button">Hide table</button>
+    </div>
+    <div class="table-container">
+        <table class="table-list">
+            <tr>
+                <th>Academic Year Code</th>
+                <th>Class code</th>
+                <th>Size</th>
+                <th>Module Name</th>
+                <th>Program name</th>
+                <th>Faculty name</th>
+            </tr>
+        </table>
+    </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="script.js"></script>
 </body>
+<script src="script.js"></script>
 </html>
