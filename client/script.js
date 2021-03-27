@@ -28,7 +28,7 @@ function getData(){
 			<td>${val.Mname}</td>
 			<td>${val.Pname}</td>
 			<td>${val.Fname}</td>
-		    <//tr>`).appendTo(".table-list");
+		    <tr>`).appendTo(".table-list");
 		    })
 			},
 	    		error:function () { 
