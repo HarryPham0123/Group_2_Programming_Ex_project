@@ -1,26 +1,20 @@
 $(function () {
-    $("body").one("click",".upload", function () {
-        getData();
-    });
-});
-$(function () {
-    $("body").on("click",".hide-btn", function () {
-        $(".container").css("display", "none");
-
-    });
-});
-$(function () {
-    $("body").on("click",".show-btn", function () {
-        $(".container").css("display", "block");
-    });
-});
+	$(".hide-btn").click(function() {
+		$(".table-container").slideUp()
+	})
+	$(".show-btn").click(function() {
+		$(".table-container").slideDown()
+	})
+	$("body").one("click",".upload", function () {
+        	getData();
+    	});
+})
 function getData(){
     $.ajax({
 		type: 'GET',
-		url: 'mockdata.txt',
+		url: 'http://localhost:8080/survey/api/general',
 		success: function(data) {
-            	let myJson=JSON.parse(data)
-		myJson.map(val=>{
+		data.map(val=>{
 		    $(`<tr>
 			<td>${val.AYcode}</td>
 			<td>${val.Ccode}</td>
