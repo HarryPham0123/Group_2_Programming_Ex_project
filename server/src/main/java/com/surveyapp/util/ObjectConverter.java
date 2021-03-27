@@ -7,20 +7,21 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.json.*;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Response;
 
 /**
  * Mapping utilization to map the corresponding column into POJO (Plain old Java object) or JSON format
  * @version 0.0.2
  * @author Khoa Dang Nguyen
  * */
-public class ObjMapper {
+public class ObjectConverter {
     /**
      * Map the table column into classes
      * @param mappingClass classes to be mapped into
@@ -67,6 +68,45 @@ public class ObjMapper {
         }
         //Return a object if the size equals to 1
         return objectList.size() == 1 ? objectList.get(0) : objectList;
+    }
+    /**
+     * Map the table columns into a JSON array
+     * @param resultSet result set retrieve from database
+     * @return a JSON array
+     */
+    @NotNull(message = "Can not be null")
+    public static String toJSON(ResultSet resultSet) throws Exception{
+        ResultSetMetaData metaData = resultSet.getMetaData();
+
+
+        JsonArrayBuilder entryListModel = Json.createArrayBuilder();
+
+        while(resultSet.next()) {
+            JsonObjectBuilder entryModel = Json.createObjectBuilder();
+
+            for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                String fieldName = metaData.getColumnName(i);
+                int columnType = metaData.getColumnType(i);
+                String fieldStringValue = "";
+                int fieldNumericValue = 0;
+
+                // Column contains integer values
+                if (columnType == 4) {
+                    fieldNumericValue = resultSet.getInt(i);
+                    entryModel.add(fieldName, fieldNumericValue);
+                }
+                // Column contains string values
+                else if (columnType == 12) {
+                    fieldStringValue = resultSet.getString(i);
+                    entryModel.add(fieldName, fieldStringValue);
+                }
+
+            }
+            JsonObject entry = entryModel.build();
+            entryListModel.add(entry);
+        }
+        String entryList = entryListModel.toString();
+        return entryList;
     }
     public static String toJSON(Object mappingObject) {
         try {
