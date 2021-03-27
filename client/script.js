@@ -5,9 +5,9 @@ $(function () {
 	$(".show-btn").click(function() {
 		$(".table-container").slideDown()
 	})
-	$(".update").click(function() {
-		getData();
-	})
+	$("body").one("click",".upload", function () {
+        	getData();
+  })
 })
 
 function getData(){
