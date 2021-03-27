@@ -38,19 +38,20 @@ END IF;
 
 -- Query for getting the general information
 SELECT ay.AYcode as 'Academic Year code', 
-		f.Fcode as 'Faculty code', f.Fname as 'Faculty',
-        p.Pcode as 'Program code', p.Pname as 'Program',
-        m.Mcode as 'Module code', m.Mname as 'Module',
-        c.Ccode as 'Class code', c.size as 'Class size'
+	f.Fname as 'Faculty',
+        p.Pname as 'Program',
+        m.Mname as 'Module',
+        c.Ccode as 'Class code',
+	c.size as 'Class size'
 FROM class c
-	NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
-    NATURAL JOIN semester s
-    NATURAL JOIN academic_year ay
-    NATURAL JOIN module m
-    NATURAL JOIN program_module 
-    NATURAL JOIN program p
-    NATURAL JOIN ay_faculty_pm 
-    NATURAL JOIN faculty f
+   NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
+   NATURAL JOIN semester s
+   NATURAL JOIN academic_year ay
+   NATURAL JOIN module m
+   NATURAL JOIN program_module 
+   NATURAL JOIN program p
+   NATURAL JOIN ay_faculty_pm 
+   NATURAL JOIN faculty f
 
 WHERE 
 -- Check if parameter NULL or NOT, if yes, query based on the other parameters
