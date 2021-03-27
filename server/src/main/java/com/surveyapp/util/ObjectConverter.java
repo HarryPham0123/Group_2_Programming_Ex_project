@@ -102,11 +102,10 @@ public class ObjectConverter {
                 }
 
             }
-            JsonObject entry = entryModel.build();
-            entryListModel.add(entry);
+            JsonObject entryList = entryModel.build();
+            entryListModel.add(entryList);
         }
-        String entryList = entryListModel.toString();
-        return entryList;
+        return entryListModel.build().toString();
     }
     public static String toJSON(Object mappingObject) {
         try {

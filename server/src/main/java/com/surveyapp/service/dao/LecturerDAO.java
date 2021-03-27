@@ -1,4 +1,4 @@
-package com.surveyapp.service;
+package com.surveyapp.service.dao;
 
 import com.surveyapp.model.Lecturer;
 import com.surveyapp.util.DBUtil;
