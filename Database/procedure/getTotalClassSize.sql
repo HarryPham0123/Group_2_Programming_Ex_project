@@ -1,3 +1,4 @@
+DELIMITER //
 CREATE PROCEDURE `GetTotalClassesSize`(
 	academic_year VARCHAR(50), 
 	semester VARCHAR(50), 
@@ -77,4 +78,6 @@ AND
 	( class is null
       or c.Ccode = class
 	);
-End
+END
+//
+DELIMITER ;
