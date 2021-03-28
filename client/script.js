@@ -1,7 +1,11 @@
-var filterList = [];
+var filterList;
 $(function () {
+	$(".pdf-btn").click(function() {
+		window.print()
+	})
 	$(".hide-btn").click(function() {
 		$(".table-container").slideUp()
+
 	})
 	$(".show-btn").click(function() {
 		$(".table-container").slideDown()
@@ -9,9 +13,10 @@ $(function () {
 	$("body").one("click",".update", function () {
         	getData();
   	})
-	$("body").on("input", "#search-bar", function() {
-		var searchValue = $("#search-bar").val().toLowerCase();
+	$("body").on("input", "#search-input", function() {
+		var searchValue = $("#search-input").val().toLowerCase();
 		filterList.remove();
+		console.log(filterList)
 		Array.from(filterList).map((row, index) => {
 			elText = filterList[index].innerText.toLowerCase();
 			if(elText.length !== 0 && elText.includes(searchValue)) {

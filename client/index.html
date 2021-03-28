@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <img src="assets/vgu_logo.png" alt="">
@@ -17,9 +18,9 @@
         <button class="show-btn" type="button">Show table</button>
         <button class="hide-btn" type="button">Hide table</button>
     </div>
-    <div>
-        <label for="search-bar">Search:</label>
-        <input id="search-bar"/>
+    <div class="search-bar">
+        <label for="search-input">Search:</label>
+        <input id="search-input"/>
     </div>
     <div class="table-container">
         <table class="table-list">
@@ -33,6 +34,8 @@
             </tr>
         </table>
     </div>
+</div>
+<div class="pdf-btn">Export to PDF
 </div>
 </body>
 <script src="script.js"></script>
