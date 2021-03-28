@@ -14,8 +14,7 @@ public class ProcedureDAO {
     private String procedureQuery = "{CALL %s(%s, %s, %s, %s, %s, %s, %s)}";
 
     public ProcedureDAO(String procedureName) {
-        this.procedureQuery = String.format(procedureQuery,procedureName);
-        this.procedureQuery = String.format(procedureQuery, "null", "null", "null", "null", "null", "null", "null");
+        this.procedureQuery = String.format(procedureQuery, procedureName, "null", "null", "null", "null", "null", "null", "null");
     }
 
     public String getAll() {
