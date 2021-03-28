@@ -1,72 +1,58 @@
-var debug = console.log.bind(console); //Debuger
+var filterList;
+$(function () {
+	$(".pdf-btn").click(function() {
+		window.print()
+	})
+	$(".hide-btn").click(function() {
+		$(".table-container").slideUp()
 
-async function dummydata() {
-    var data = await fetch("http://localhost:8080/api/lecturers")
-    return await data.json();
+	})
+	$(".show-btn").click(function() {
+		$(".table-container").slideDown()
+	})
+	$("body").one("click",".update", function () {
+        	getData();
+  	})
+	$("body").on("input", "#search-input", function() {
+		var searchValue = $("#search-input").val().toLowerCase();
+		filterList.remove();
+		console.log(filterList)
+		Array.from(filterList).map((row, index) => {
+			elText = filterList[index].innerText.toLowerCase();
+			if(elText.length !== 0 && elText.includes(searchValue)) {
+				$(".table-list").append(filterList[index])
+			}
+		})
+
+	})
+})
+
+
+function getData(){
+    $.ajax({
+		type: 'GET',
+		url: 'http://localhost:8080/survey/api/general',
+		success: function(data) {
+			dataRender(data);
+		},
+		error:function () {
+			alert("Error loading order");
+			},
+		}).always(function() {
+			//Get the filtered list
+			filterList = $(".table-list tr").slice(1);
+	});
 }
 
-async function renderDummy() {
-    let lecturers = await dummydata();
-    lecturers.map(lecturer => {
-        var lecturerSelect = document.createElement("option")
-        lecturerSelect.innerHTML = [lecturer.name, lecturer.code].join(" - ");
-        lecturerSelect.value = lecturer.name;
-        document.getElementById("lecturers").append(lecturerSelect)
-    })
-    lecturers.map(lecturer => {
-            var dummyRender = document.getElementById("dummy");
-            var header = document.createElement("h2");
-            header.innerText = lecturer.code;
-            header.className = "lecturer_header";
-            var content = document.createElement("p");
-            content.innerText = lecturer.name;
-            content.className = "lecturer_name";
-            var divCover = document.createElement("div");
-            divCover.className = "lecturer_container";
-            divCover.append(header);
-            divCover.append(content);
-            dummyRender.append(divCover);
-        }
-    )
-    return lecturers
+function dataRender(data) {
+	data.map(val=>{
+		$(`<tr>
+			<td>${val.AYcode}</td>
+			<td>${val.Ccode}</td>
+			<td>${val.size}</td>
+			<td>${val.Mname}</td>
+			<td>${val.Pname}</td>
+			<td>${val.Fname}</td>
+		    <tr>`).appendTo(".table-list");
+	})
 }
-renderDummy()
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-

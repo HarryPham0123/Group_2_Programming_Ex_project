@@ -1,8 +1,8 @@
-package com.surveyapp.service;
+package com.surveyapp.service.dao;
 
 import com.surveyapp.model.Lecturer;
 import com.surveyapp.util.DBUtil;
-import com.surveyapp.util.ObjMapper;
+import com.surveyapp.util.ObjectConverter;
 
 import java.sql.*;
 import java.util.List;
@@ -41,9 +41,17 @@ public class LecturerDAO implements DAO<Lecturer> {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(getAllScript);
-            lecturerList = (List<Lecturer>) ObjMapper.toObject(Lecturer.class, resultSet);
+            lecturerList = (List<Lecturer>) ObjectConverter.toObject(Lecturer.class, resultSet);
         } catch (Exception exception) {
             exception.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+            }
         }
         return lecturerList;
     }
@@ -54,7 +62,7 @@ public class LecturerDAO implements DAO<Lecturer> {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Lecturer lecturer = (Lecturer) ObjMapper.toObject(Lecturer.class, resultSet);
+            Lecturer lecturer = (Lecturer) ObjectConverter.toObject(Lecturer.class, resultSet);
             return Optional.ofNullable(lecturer);
         } catch (Exception exception) {
             exception.printStackTrace();

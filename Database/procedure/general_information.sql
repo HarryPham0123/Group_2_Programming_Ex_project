@@ -85,4 +85,4 @@ AND
 	);
 End
 //
-DELIMITER ;
+DELIMITER;

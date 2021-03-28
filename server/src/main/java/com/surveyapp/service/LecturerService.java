@@ -1,6 +1,7 @@
 package com.surveyapp.service;
 
 import com.surveyapp.model.Lecturer;
+import com.surveyapp.service.dao.LecturerDAO;
 
 import java.util.List;
 import java.util.Optional;

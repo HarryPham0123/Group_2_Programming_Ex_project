@@ -1,4 +1,4 @@
-package com.surveyapp.service;
+package com.surveyapp.service.dao;
 
 import java.util.List;
 import java.util.Optional;

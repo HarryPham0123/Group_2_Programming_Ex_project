@@ -1,36 +1,60 @@
-* {
-    margin: 0px;
-    padding: 0px;
-}
-
 body {
-    background-color: floralwhite;
+	margin: 0;
 }
-.lecturer_container {
-    background-color: cornflowerblue;
-    border-radius: 10px;
-    padding: 5px 20px;
-    margin: 10px;
-    text-align: center;
-    width: 100px;
-    height: 100px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+button {
+	margin: 20px 10px;
+	background-color: #ff9100;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+	border: none;
+
+}
+.pdf-btn {
+	background-color: #ff9100;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+	display: flex;
+	align-items: center;
+	text-align: center;
+	width: 80px;
+	height: 80px;
+	position: fixed;
+	border-radius: 10px;
+	bottom: 10px;
+	right: 10px;
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.lecturer_container:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    background-color: mediumslateblue;
-}
-.lecturer_header {
-    margin-bottom: 10px;
-}
-.lecturer_name {
-    margin: 0;
+.table-container table {
+	font-family: sans-serif;
+	font-size: .9em;
+	min-width: 400px;
+	margin: 25px 0;
+	border-collapse: collapse;
+	box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+	width: 1000px;
 }
 
+.table-container table th {
+	text-align: center;
+	color: black;
+	background-color: #ff9100;
+	position: sticky;
+	top: -2px;
+}
 
-#dummy {
-    display: flex;
-    flex-wrap: wrap;
+.table-container table th,
+.table-container table td {
+	padding: 12px 15px;
+	border: 1px solid black;
+}
+
+.table-container table tr:hover {
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	background-color: #ffc16b;
 }
