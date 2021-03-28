@@ -1,3 +1,4 @@
+DELIMITER //
 CREATE PROCEDURE `general_information`(
 	academic_year VARCHAR(50), 
 	semester VARCHAR(50), 
@@ -83,3 +84,5 @@ AND
       or c.Ccode = class
 	);
 End
+//
+DELIMITER;
