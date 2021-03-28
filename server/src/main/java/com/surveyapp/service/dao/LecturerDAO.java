@@ -44,6 +44,14 @@ public class LecturerDAO implements DAO<Lecturer> {
             lecturerList = (List<Lecturer>) ObjectConverter.toObject(Lecturer.class, resultSet);
         } catch (Exception exception) {
             exception.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+            }
         }
         return lecturerList;
     }

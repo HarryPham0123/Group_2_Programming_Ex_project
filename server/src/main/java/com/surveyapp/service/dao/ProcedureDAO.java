@@ -23,6 +23,14 @@ public class ProcedureDAO {
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+            }
         }
     }
 }
