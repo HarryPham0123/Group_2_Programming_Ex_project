@@ -14,44 +14,18 @@ import javax.ws.rs.core.Response;
 public class ClassRoute {
     private ClassService classService = new ClassService();
     @GET
-    //@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response getAll() {
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public List<Class> getAll() {
         List<Class> classList = classService.getAll();
-
-        JsonArrayBuilder entryListModel = Json.createArrayBuilder();
-
-        for(int i = 0; i < classList.size(); i++) {
-            Class aClass = classList.get(i);
-            JsonObject entry = Json.createObjectBuilder()
-                    .add("Ccode", aClass.getCode())
-                    .add("size", aClass.getSize())
-                    .add("Scode", aClass.getSemester().getCode())
-                    .add("AYCode", aClass.getSemester().getAcademicYear().getAYcode())
-                    .add("Mcode", aClass.getModule().getCode())
-                    .add("Mname", aClass.getModule().getName())
-                    .build();
-            entryListModel.add(entry);
-        }
-
-        JsonArray entryList = entryListModel.build();
-
-        return Response.status(Response.Status.OK).entity(entryList.toString()).build();
+        return classList;
     }
 
     @GET
     @Path("/{code}")
-    public Response getByCode(@PathParam("code") String code) {
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Class getByCode(@PathParam("code") String code) {
         Class aClass = classService.get(code);
-        JsonObject entry = Json.createObjectBuilder()
-                .add("Ccode", aClass.getCode())
-                .add("size", aClass.getSize())
-                .add("Scode", aClass.getSemester().getCode())
-                .add("AYCode", aClass.getSemester().getAcademicYear().getAYcode())
-                .add("Mcode", aClass.getModule().getCode())
-                .add("Mname", aClass.getModule().getName())
-                .build();
-
-        return Response.status(Response.Status.OK).entity(entry.toString()).build();
+        return aClass;
     }
 
     @POST
