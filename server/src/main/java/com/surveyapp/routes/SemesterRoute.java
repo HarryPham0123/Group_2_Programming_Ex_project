@@ -12,36 +12,18 @@ import javax.ws.rs.core.Response;
 public class SemesterRoute {
     private SemesterService semesterService = new SemesterService();
     @GET
-    //@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response getAll() {
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public List<Semester> getAll() {
         List<Semester> semesterList = semesterService.getAll();
-
-        JsonArrayBuilder entryListModel = Json.createArrayBuilder();
-
-        for(int i = 0; i < semesterList.size(); i++) {
-            Semester semester = semesterList.get(i);
-            JsonObject entry = Json.createObjectBuilder()
-                    .add("Scode", semester.getCode())
-                    .add("AYcode", semester.getAcademicYear().getAYcode())
-                    .build();
-            entryListModel.add(entry);
-        }
-
-        JsonArray entryList = entryListModel.build();
-
-        return Response.status(Response.Status.OK).entity(entryList.toString()).build();
+        return semesterList;
     }
 
     @GET
     @Path("/{code}")
-    public Response getByCode(@PathParam("code") String code) {
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Semester getByCode(@PathParam("code") String code) {
         Semester semester = semesterService.get(code);
-        JsonObject entry = Json.createObjectBuilder()
-                .add("Scode", semester.getCode())
-                .add("AYcode", semester.getAcademicYear().getAYcode())
-                .build();
-
-        return Response.status(Response.Status.OK).entity(entry.toString()).build();
+        return semester;
     }
 
     @POST
