@@ -14,5 +14,6 @@ import javax.persistence.Column;
 public class Semester {
     @Column(name = "Scode")
     private String code;
-    private AcademicYear academicYear;
+    @Column(name = "AYcode")
+    private String AYCode;
 }
