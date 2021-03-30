@@ -14,6 +14,8 @@ public class Class {
     private String code;
     @Column(name = "size")
     private int size;
-    Semester semester;
-    Module module;
+    @Column(name = "Scode")
+    private String Scode;
+    @Column(name = "Mcode")
+    private String Mcode;
 }
