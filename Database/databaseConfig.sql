@@ -92,9 +92,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS questionnaire (
+  Acode VARCHAR(10) NOT NULL,
   Ccode VARCHAR(10) NOT NULL,
   Lcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (Ccode, Lcode),
+  Answers json,
+  PRIMARY KEY (Acode),
 	FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
 	FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
 )
@@ -303,48 +305,47 @@ INSERT INTO Lecturer (Lcode, Lname) VALUES
 	       
 -- A questionnaire is filled for exactly one class and exactly one lecturer. (Constrain)
 -- -> Questionaire is relationship between class and lecturer    
-INSERT INTO Questionnaire (Ccode, Lcode) VALUES 
-	('C001t', 'L015m'),
-	('C001t', 'L002o'),
+ Insert into Questionnaire (Acode, Ccode, Lcode, Answers)
+ Values 
+ (
+ 	'A0001n', 'C002h', 'L001v',
+     '{ "attendance" : "often", "gender" : "male",
+     "question_1" : 3, "question_2" : 2, "question_3" : 2, 
+     "question_4" : 4, "question_5" : 5, "question_6" : 3, 
+     "question_7" : 4, "question_8" : 2, "question_9" : 5, 
+     "question_10" : 3, "question_11" : 1, "question_12" : 4, 
+     "question_13" : 5, "question_14" : 2, "question_15" : 4, 
+     "question_16" : 4, "question_17" : 5, 
+     "question_18" : "" }'
+ );
 
-	('C002h', 'L001v'),
-	('C002h', 'L003r'),
-	('C002h', 'L004v'),
+ Insert into Questionnaire (Acode, Ccode, Lcode, Answers)
+ Values 
+ (
+ 	'A0002n', 'C005u', 'L001v',
+     '{ "attendance" : "rarely", "gender" : "female",
+     "question_1" : 5, "question_2" : 2, "question_3" : 2, 
+     "question_4" : 4, "question_5" : 3, "question_6" : 1, 
+     "question_7" : 4, "question_8" : 2, "question_9" : 5, 
+     "question_10" : 1, "question_11" : 3, "question_12" : 4, 
+     "question_13" : 5, "question_14" : 5, "question_15" : 2, 
+     "question_16" : 4, "question_17" : 5, 
+     "question_18" : "" }'
+ );
 
-	('C003a', 'L002o'),
-	('C004m', 'L003r'),
-
-	('C005u', 'L001v'),
-	('C005u', 'L004v'),
-	('C005u', 'L005a'),
-
-	('C006y', 'L004v'),
-	('C007q', 'L001v'),
-	('C008n', 'L005a'),
-	('C009u', 'L006e'),
-
-	('C010i', 'L006e'),
-	('C010i', 'L001v'),
-
-	('C011z', 'L007u'),
-
-	('C012c', 'L008h'),
-	('C012c', 'L009f'),
-
-	('C013x', 'L007u'),
-	('C014d', 'L010m'),
-	('C015q', 'L011g'),
-	('C015q', 'L012m'),
-
-	('C016q', 'L013l'),
-	('C016q', 'L014a'),
-    
-    ('C017t', 'L014a'),
-    ('C017t', 'L015m'),
-    
-    ('C018t', 'L009f')
-;
-
+ Insert into Questionnaire (Acode, Ccode, Lcode, Answers)
+ Values 
+ (
+ 	'A0003n', 'C003a', 'L002o',
+     '{ "attendance" : "sometimes", "gender" : "female",
+     "question_1" : 1, "question_2" : 2, "question_3" : 3, 
+     "question_4" : 5, "question_5" : 3, "question_6" : 4, 
+     "question_7" : 4, "question_8" : 4, "question_9" : 3, 
+     "question_10" : 1, "question_11" : 1, "question_12" : 5, 
+     "question_13" : 5, "question_14" : 2, "question_15" : 4, 
+     "question_16" : 4, "question_17" : 1, 
+     "question_18" : "" }'
+ );
 -- A class has any number of lecturers. (Data constrain)
 -- This case, we asume a class can have 1, 2 or 3 lecturers
 -- -> Lecturers in each class must be unique     
