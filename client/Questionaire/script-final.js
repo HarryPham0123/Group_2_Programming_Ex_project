@@ -8,6 +8,14 @@ $(function () {
          addInput(newVal)
          changLec(newVal)
     });
+	$('.submit-btn').click(function() {
+	    if($('.radio-btn').is(':checked')|| $("input").val()!=="") {
+		alert("Done");
+	    }
+	    else{
+		alert("Please fill in all the question");
+	    }
+	 });
 });
 function getData(){
     $.ajax({
