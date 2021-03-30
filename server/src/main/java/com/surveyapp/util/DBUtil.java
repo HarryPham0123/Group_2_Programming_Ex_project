@@ -22,7 +22,7 @@ public class DBUtil {
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
-            DataSource ds = (DataSource) envContext.lookup("jdbc/pe2018");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/pe");
             return ds.getConnection();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
