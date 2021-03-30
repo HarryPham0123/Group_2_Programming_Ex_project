@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionaire form</title>
+    <link rel="stylesheet" href="style-update.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="box">
+
+    <!-- Title, intro -->
+    <div class="intro">
+        <img src="../assets/vgu_logo.png" id="logo">
+        <h2 id="title">MODULE EVALUATION QUESTIONNAIRE</h2>
+        <p id="opening">The information collected in this form is used to review the organization, relevance and
+            effectiveness of the module. It will help our lecturers and other faculty to improve on the courses taught at VGU. Your response
+            is anonymous, meaning your lecturers will not know who wrote what. Please answer the questions by filling the blanks or
+            checking the appropriate boxes:</p>
+    </div>
+    <hr>
+
+    <!-- First part -->
+    <div class="personal">
+
+        <label for="acad-year">Academic Year:</label>
+        <input readonly autocomplete="off" class="acad-year" type="text" required><br>
+        <label for="semester">Semester:</label>
+        <input readonly autocomplete="off" class="semester" type="text" required><br>
+        <label for="faculty">Faculty:</label>
+        <input readonly autocomplete="off" class="faculty" type="text" required><br>
+        <label for="program">Program:</label>
+        <input readonly autocomplete="off" class="program"  type="text" required><br>
+        <label for="module">Module:</label>
+        <input readonly autocomplete="off" class="module" type="text" required><br>
+
+        <label for="class">Class:</label>
+        <select class= "sel-class" name="" id="">
+            <option value="starter">--select--</option>
+        </select><br>
+
+        <label for="lecturer">Lecturer:</label>
+        <select class="sel-lec" name="" id="">
+            <option value="starter">--select--</option>
+        </select><br>
+
+        <label for="attend">How often did you attend class for this module?</label><br>
+        <input autocomplete="off"  type="radio" name="attend" value="never">
+        <label for="never">Never</label>
+        <input autocomplete="off"  type="radio" name="attend" value="rarely">
+        <label for="rarely">Rarely</label>
+        <input autocomplete="off"  type="radio" name="attend" value="sometimes">
+        <label for="sometimes">Sometimes</label>
+        <input autocomplete="off"  type="radio" name="attend" value="often">
+        <label for="often">Often</label>
+        <input autocomplete="off"  type="radio" name="attend" value="always">
+        <label for="always">Always</label><br>
+
+        <label for="gender">What is your gender: </label><br>
+        <input autocomplete="off"  type="radio" name="gender" value="male">
+        <label for="male">Male</label>
+        <input autocomplete="off"  type="radio" name="gender" value="female">
+        <label for="female">Female</label>
+        <input autocomplete="off"  type="radio" name="gender" value="other">
+        <label for="other">Other</label>
+
+    </div>
+    <hr>
+
+    <!-- Second part -->
+    <div class="organization">
+
+        <h3 id="subtitle1">ORGANIZATION & PLANNING</h3>
+
+        <p id="notice1">*Notice: Strongly disagree = 1, Strongly agree = 5</p>
+
+        <label for="question1">1. The module objectives have been clear to me.</label><br>
+        <input autocomplete="off"  type="radio" name="question1" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off"  type="radio" name="question1" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off"  type="radio" name="question1" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off"  type="radio" name="question1" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off"  type="radio" name="question1" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question2">2. The learning materials (e.g. course books, handouts, etc.) have been sufficient and useful.</label><br>
+        <input autocomplete="off"  type="radio" name="question2" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off"  type="radio" name="question2" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off"  type="radio" name="question2" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off"  type="radio" name="question2" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off"  type="radio" name="question2" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question3">3. The content of the module has always been relevant.</label><br>
+        <input autocomplete="off"  type="radio" name="question3" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off"  type="radio"  name="question3" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off"  type="radio"  name="question3" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off"  type="radio"  name="question3" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off"  type="radio"  name="question3" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question4">4. The lessons have been interesting.</label><br>
+        <input autocomplete="off"  type="radio" name="question4" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off"  type="radio" name="question4" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off"  type="radio" name="question4" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off"  type="radio" name="question4" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question4" value="5">
+        <label for="5">5</label><br>
+
+    </div>
+    <hr>
+
+    <!-- Third part -->
+    <div class="module">
+
+        <h4 id="subtitle2">MODULE WORKLOAD AND DIFFICULTY</h4>
+        <label for="question5">5. The module workload outside classroom such as homework, assignments, exercises, exams preparation, etc. has been</label><br>
+        <input autocomplete="off"  type="radio" name="question5" value="1">
+        <label for="1"> < 1 hour</label>
+        <input autocomplete="off"  type="radio" name="question5" value="2">
+        <label for="2">1-2</label>
+        <input autocomplete="off"  type="radio" name="question5" value="3">
+        <label for="3">2-3</label>
+        <input autocomplete="off"  type="radio" name="question5" value="4">
+        <label for="4">3-4</label>
+        <input autocomplete="off" type="radio" name="question5" value="5">
+        <label for="5"> > 5 hours</label><br>
+
+        <label for="question6">6. The overall module workload has been</label><br>
+        <input autocomplete="off"  type="radio" name="question6" value="1">
+        <label for="1">Too litte =1</label>
+        <input autocomplete="off"  type="radio" name="question6" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off"  type="radio" name="question6" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off"  type="radio" name="question6" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off"  type="radio"  name="question6" value="5">
+        <label for="5">Too much =5</label><br>
+
+        <label for="question7">7. The level of difficulty of the module has been</label><br>
+        <input autocomplete="off"  type="radio" name="question7" value="1">
+        <label for="1">Too low =1</label>
+        <input autocomplete="off"  type="radio"  name="question7" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off"  type="radio" name="question7" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question7" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question7" value="5">
+        <label for="5">Too high =5</label><br>
+    </div>
+
+    <!-- Fourth part -->
+    <hr>
+
+    <div class="teaching">
+
+
+        <h5 id="subtitle3">TEACHING & LEARNING</h5>
+        <p id="notice2">*Notice: Strongly disagree = 1, Strongly agree = 5</p>
+        <label for="question8">8. Module contents have been presented understandably.</label><br>
+        <input autocomplete="off" type="radio" name="question8" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question8" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question8" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question8" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question8" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question9">9. Various learning activities have been used to teach the content.</label><br>
+        <input autocomplete="off" type="radio" name="question9" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question9" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question9" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question9" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question9" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question10">10. The learning activities have supported the intended learning outcomes.</label><br>
+        <input autocomplete="off" type="radio" name="question10" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question10" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question10" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question10" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question10" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question11">11. The assessment methods (tests, assignment, groupwork, etc.) are appropriate.</label><br>
+        <input autocomplete="off" type="radio" name="question11" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question11" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question11" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question11" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question11" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question12">12. Students have been encouraged to apply critical thinking and logics to better understand the course material.</label><br>
+        <input autocomplete="off" type="radio" name="question12" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question12" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question12" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question12" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question12" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question13">13. The lecturer has given feedback (about your answers or performance in assignments, reports, presentations, etc.) and it was helpful.</label><br>
+        <input autocomplete="off" type="radio" name="question13" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question13" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question13" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question13" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question13" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question14">14. The language skills (English / German) of the lecturer were excellent.</label><br>
+        <input autocomplete="off" type="radio" name="question14" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question14" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question14" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question14" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question14" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question15">15. The lecturer has listened to students’ ideas and contributions</label><br>
+        <input autocomplete="off" type="radio" name="question15" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question15" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question15" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question15" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question15" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question16">16. The lecturer has encouraged discussion and questions in class.</label><br>
+        <input autocomplete="off" type="radio" name="question16" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question16" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question16" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question16" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question16" value="5">
+        <label for="5">5</label><br>
+
+        <label for="question17">17. The lecturer has offered consultation to individuals for academic support.</label><br>
+        <input autocomplete="off" type="radio" name="question17" value="1">
+        <label for="1">1</label>
+        <input autocomplete="off" type="radio" name="question17" value="2">
+        <label for="2">2</label>
+        <input autocomplete="off" type="radio" name="question17" value="3">
+        <label for="3">3</label>
+        <input autocomplete="off" type="radio" name="question17" value="4">
+        <label for="4">4</label>
+        <input autocomplete="off" type="radio" name="question17" value="5">
+        <label for="5">5</label><br>
+
+        <textarea id="comment" placeholder="Please enter your comment here"></textarea><br>
+    </div>
+
+    <button type="submit">Submit</button>
+
+</body>
+<script src="script-update.js"></script>
+</html>
