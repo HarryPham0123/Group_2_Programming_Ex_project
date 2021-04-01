@@ -7,15 +7,19 @@ $(function () {
          const newVal=getVal();
          addInput(newVal)
          changLec(newVal)
+    }); 
+    document.getElementById('submit-btn').addEventListener("click", function(event) {
+    let messages=[]
+    const errorElement=document.getElementById('error')
+    if($('.radio-btn').is(':checked')|| $("input").val()!=="") {
+      alert("The form has been submitted");
+      }
+      else{
+      event.preventDefault()
+      messages.push('Please fill in all the questions above before submit')
+      errorElement.innerText=messages.join(', ')
+      }
     });
-	$('.submit-btn').click(function() {
-	    if($('.radio-btn').is(':checked')|| $("input").val()!=="") {
-		alert("Done");
-	    }
-	    else{
-		alert("Please fill in all the question");
-	    }
-	 });
 });
 function getData(){
     $.ajax({
