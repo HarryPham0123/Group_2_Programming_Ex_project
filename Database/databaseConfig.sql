@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Semester (
   Scode VARCHAR(10) NOT NULL,
   AYcode VARCHAR(10) NULL,
   PRIMARY KEY (Scode),
-  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode))
+  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode) ON UPDATE CASCADE ON DELETE RESTRICT) 
 ENGINE = InnoDB;
 
 
@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS Class (
   Scode VARCHAR(10) NULL,
   Mcode VARCHAR(10) NULL,
   PRIMARY KEY (Ccode),
-  FOREIGN KEY (Scode) REFERENCES Semester (Scode),
-  FOREIGN KEY (Mcode) REFERENCES Module (Mcode)
+  FOREIGN KEY (Scode) REFERENCES Semester (Scode) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (Mcode) REFERENCES Module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS Questionnaire
     Lcode Varchar(10),
     Answers json,
     PRIMARY KEY (answer_id),
-    Foreign key (Ccode) References Class (Ccode),
-    Foreign key (Lcode) References Lecturer (Lcode),
+    Foreign key (Ccode) References Class (Ccode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    Foreign key (Lcode) References Lecturer (Lcode) ON UPDATE CASCADE ON DELETE RESTRICT,
     
     CONSTRAINT question_1_int_from_0_to_5_only
 		check ((Answers->>'$.question_1') >= 0 AND (Answers->>'$.question_1') <= 5 
@@ -192,8 +192,8 @@ CREATE TABLE IF NOT EXISTS Program_Module (
   Pcode VARCHAR(10) NOT NULL,
   Mcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (PMcode),
-	FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
-	FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
+	FOREIGN KEY (Mcode) REFERENCES Module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (Pcode) REFERENCES Program (Pcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 
@@ -208,9 +208,9 @@ CREATE TABLE IF NOT EXISTS AY_Faculty_PM (
   Fcode VARCHAR(10) NOT NULL,
   PMcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (FAYcode),	
-    FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode),
-    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode),
-    FOREIGN KEY (PMcode) REFERENCES Program_Module (PMcode)
+    FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (PMcode) REFERENCES Program_Module (PMcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 	      
@@ -223,8 +223,8 @@ CREATE TABLE IF NOT EXISTS lecturer_in_class (
   Ccode VARCHAR(10),
   Lcode VARCHAR(10),
   PRIMARY KEY (Ccode, Lcode),
-  FOREIGN KEY (Ccode) REFERENCES class (Ccode),
-  FOREIGN KEY (Lcode) REFERENCES lecturer (Lcode)
+  FOREIGN KEY (Ccode) REFERENCES class (Ccode) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (Lcode) REFERENCES lecturer (Lcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 	       
