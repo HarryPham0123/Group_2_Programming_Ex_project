@@ -13,6 +13,9 @@ public class LecturerDAO implements DAO<Lecturer> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM lecturer";
     private String getByCodeScript = "SELECT * FROM lecturer WHERE Lcode = ?";
+    private String saveScript = "INSERT INTO lecturer (Lcode, Lname) VALUES(?, ?)";
+    private String updateScript = "UPDATE lecturer SET Lcode = ?, Lname = ? WHERE Lcode = ?";
+    private String deleteScript = "DELETE FROM lecturer WHERE  Lcode = ?";
 
     private void executeInTransaction(Consumer<Connection> action) {
         try {
@@ -72,15 +75,61 @@ public class LecturerDAO implements DAO<Lecturer> {
 
     @Override
     public void save(Lecturer lecturer) {
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+            preparedStatement.setString(1, lecturer.getCode());
+            preparedStatement.setString(2, lecturer.getName());
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
-    public void update(Lecturer lecturer) {
-
+    public void update(String code, Lecturer lecturer) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+            preparedStatement.setString(1, lecturer.getCode());
+            preparedStatement.setString(2, lecturer.getName());
+            preparedStatement.setString(3, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally  {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
-    public void delete(Lecturer lecturer) {
-
+    public void delete(String code) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+            preparedStatement.setString(1, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch(Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 }
