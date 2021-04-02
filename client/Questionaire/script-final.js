@@ -8,18 +8,20 @@ $(function () {
          addInput(newVal)
          changLec(newVal)
     }); 
-    document.getElementById('submit-btn').addEventListener("click", function(event) {
-    let messages=[]
-    const errorElement=document.getElementById('error')
-    if($('.radio-btn').is(':checked')|| $("input").val()!=="") {
-      alert("The form has been submitted");
-      }
-      else{
-      event.preventDefault()
-      messages.push('Please fill in all the questions above before submit')
-      errorElement.innerText=messages.join(', ')
-      }
-    });
+    $('.submit').click(function() {
+        const getQuestion=document.getElementsByClassName("question")
+        if($(".sel-class option:selected").val()=="starter"){
+            alert("Please select the class option")
+        }
+        else if($(".sel-lec option:selected").val()=="starter"){
+            alert("Please select the lecturer option")
+        }
+        for(let i =1;i<=getQuestion.length;i++){
+            if (!$('input[name=question'+`${i}`+']:checked').length > 0) {
+                alert("Please fill in the question"+`${i}`); 
+            }
+        }
+     });
 });
 function getData(){
     $.ajax({
