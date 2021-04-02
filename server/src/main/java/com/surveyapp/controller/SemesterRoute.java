@@ -1,4 +1,4 @@
-package com.surveyapp.routes;
+package com.surveyapp.controller;
 import com.surveyapp.model.Semester;
 import com.surveyapp.service.SemesterService;
 import java.util.List;

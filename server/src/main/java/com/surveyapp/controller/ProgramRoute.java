@@ -1,4 +1,4 @@
-package com.surveyapp.routes;
+package com.surveyapp.controller;
 import com.surveyapp.model.Program;
 import com.surveyapp.service.ProgramService;
 

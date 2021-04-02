@@ -1,4 +1,4 @@
-package com.surveyapp.routes;
+package com.surveyapp.controller;
 import com.surveyapp.model.Lecturer;
 import com.surveyapp.service.LecturerService;
 import java.util.List;
