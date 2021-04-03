@@ -12,4 +12,8 @@ import javax.persistence.Column;
 public class AcademicYear {
     @Column(name = "AYcode")
     private String code;
+    public String getCode(){
+        return code;
+    }
 }
+

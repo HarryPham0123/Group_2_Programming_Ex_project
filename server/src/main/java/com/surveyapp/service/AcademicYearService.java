@@ -16,4 +16,16 @@ public class AcademicYearService {
         Optional<AcademicYear> academicYear = new AcademicYearDAO().get(code);
         return academicYear.orElseGet(() -> new AcademicYear());
     }
+
+    public void save(AcademicYear academicYear) {
+        DAO.save(academicYear);
+    }
+
+    public void update(AcademicYear academicYear) {
+        DAO.update(academicYear);
+    }
+
+    public void delete(AcademicYear academicYear) {
+        DAO.delete(academicYear);
+    }
 }
