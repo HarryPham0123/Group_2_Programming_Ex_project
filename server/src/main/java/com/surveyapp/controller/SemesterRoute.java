@@ -46,6 +46,5 @@ public class SemesterRoute {
     public Response delete(@PathParam("code") String code) {
         semesterService.delete(code);
         return Response.ok().entity("Successfully deleted").build();
-    }
-
+    } 
 }

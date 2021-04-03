@@ -27,11 +27,4 @@ public class ClassRoute {
         Class aClass = classService.get(code);
         return aClass;
     }
-
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public String insert(Semester semester) {
-        return "Underconstruction!";
-    }
 }

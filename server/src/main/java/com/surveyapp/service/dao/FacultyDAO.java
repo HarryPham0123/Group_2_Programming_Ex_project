@@ -93,7 +93,6 @@ public class FacultyDAO implements DAO<Faculty> {
         }
     }
 
-
     @Override
     public void update(String code, Faculty faculty) {
         try {

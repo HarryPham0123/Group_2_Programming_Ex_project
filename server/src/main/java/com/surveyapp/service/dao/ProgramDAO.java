@@ -68,12 +68,13 @@ public class ProgramDAO implements DAO<Program> {
     }
 
     @Override
-    public void update(Program program) {
+    public void update(String code, Program program) {
 
     }
 
     @Override
-    public void delete(Program program) {
+    public void delete(String code) {
 
     }
+
 }

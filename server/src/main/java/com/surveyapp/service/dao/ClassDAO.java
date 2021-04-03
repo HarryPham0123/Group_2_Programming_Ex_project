@@ -85,17 +85,18 @@ public class ClassDAO implements  DAO<Class> {
     }
 
     @Override
-    public void save (Class aClass) {
+    public void save(Class aClass) {
+        
+    }
+
+    @Override
+    public void update(String code, Class aClass) {
 
     }
 
     @Override
-    public void update (Class aClass) {
+    public void delete(String code) {
 
     }
 
-    @Override
-    public void delete (Class aClass) {
-
-    }
 }

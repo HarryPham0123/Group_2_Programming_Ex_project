@@ -60,19 +60,13 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     }
 
     @Override
-    public void update(AcademicYear academicYear) {
+    public void update(String code, AcademicYear academicYear) {
 
     }
 
     @Override
-    public void delete(AcademicYear academicYear) {
-        String script = "DELETE * FROM academic_year WHERE AYcode = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(script);
-            preparedStatement.setString(1, academicYear.getCode());
-            ResultSet resultSet = preparedStatement.executeQuery();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+    public void delete(String code) {
+
     }
+
 }

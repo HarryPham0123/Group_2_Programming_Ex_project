@@ -1,39 +1,38 @@
 package com.surveyapp.service;
 
+import com.surveyapp.service.dao.GetQuestionnaireDAO;
+import com.surveyapp.service.dao.ProcedureBaseDAO;
 import com.surveyapp.service.dao.ProcedureDAO;
+import com.surveyapp.service.dao.InsertQuestionnaireDAO;
+import lombok.NonNull;
 
 public class ProcedureService {
-    private ProcedureDAO procedureDAO = new ProcedureDAO();
+    private ProcedureBaseDAO procedureDAO = new ProcedureDAO("general_information").setParameters();
+    private InsertQuestionnaireDAO questionnaireDAO = new InsertQuestionnaireDAO("insert_questionnaire");
+    private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO("get_answers");
 
-    public String getAll() {
+    //Get all general information
+    public String getAll() throws Exception {
         return procedureDAO.getAll();
     }
 
-    public String getAcademicYear(String code) {
-        return procedureDAO.getAcademicYear(code);
+    public String insertAnswer(
+            @NonNull String Lcode,
+            @NonNull String Ccode,
+            @NonNull String answer
+    ) throws Exception {
+        return questionnaireDAO.setParameters(Lcode, Ccode, answer).getAll();
     }
 
-    public String getSemester(String code) {
-        return procedureDAO.getSemester(code);
-    }
-
-    public String getFaculty(String code) {
-        return procedureDAO.getFaculty(code);
-    }
-
-    public String getProgram(String code) {
-        return procedureDAO.getProgram(code);
-    }
-
-    public String getModule(String code) {
-        return procedureDAO.getModule(code);
-    }
-
-    public String getLecturer(String code) {
-        return procedureDAO.getLecturer(code);
-    }
-
-    public String getClass(String code) {
-        return procedureDAO.getClass(code);
+    public String getAnswer(
+            String academicYear,
+            String semester,
+            String faculty,
+            String program,
+            String module,
+            String lecturer,
+            String clazz
+    ) throws Exception {
+        return getQuestionnaireDAO.setParameters(academicYear, semester, faculty, program, module, lecturer, clazz).getAll();
     }
 }
