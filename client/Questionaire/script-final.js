@@ -8,7 +8,7 @@ $(function () {
          addInput(newVal)
          changLec(newVal)
     }); 
-    $('.submit').click(function() {
+    $('.submit-btn').click(function() {
         const getQuestion=document.getElementsByClassName("question")
         if($(".sel-class option:selected").val()=="starter"){
             alert("Please select the class option")
