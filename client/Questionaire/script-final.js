@@ -7,7 +7,21 @@ $(function () {
          const newVal=getVal();
          addInput(newVal)
          changLec(newVal)
-    });
+    }); 
+    $('.submit').click(function() {
+        const getQuestion=document.getElementsByClassName("question")
+        if($(".sel-class option:selected").val()=="starter"){
+            alert("Please select the class option")
+        }
+        else if($(".sel-lec option:selected").val()=="starter"){
+            alert("Please select the lecturer option")
+        }
+        for(let i =1;i<=getQuestion.length;i++){
+            if (!$('input[name=question'+`${i}`+']:checked').length > 0) {
+                alert("Please fill in the question"+`${i}`); 
+            }
+        }
+     });
 });
 function getData(){
     $.ajax({
