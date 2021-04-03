@@ -10,10 +10,12 @@ public class ProcedureService {
     private ProcedureBaseDAO procedureDAO = new ProcedureDAO("general_information").setParameters();
     private InsertQuestionnaireDAO questionnaireDAO = new InsertQuestionnaireDAO("insert_questionnaire");
     private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO("get_answers");
+
     //Get all general information
     public String getAll() throws Exception {
         return procedureDAO.getAll();
     }
+
     public String insertAnswer(
             @NonNull String Lcode,
             @NonNull String Ccode,
@@ -21,6 +23,7 @@ public class ProcedureService {
     ) throws Exception {
         return questionnaireDAO.setParameters(Lcode, Ccode, answer).getAll();
     }
+
     public String getAnswer(
             String academicYear,
             String semester,
@@ -31,4 +34,5 @@ public class ProcedureService {
             String clazz
     ) throws Exception {
         return getQuestionnaireDAO.setParameters(academicYear, semester, faculty, program, module, lecturer, clazz).getAll();
+    }
 }

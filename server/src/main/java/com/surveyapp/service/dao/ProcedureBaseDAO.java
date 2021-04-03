@@ -15,10 +15,9 @@ public abstract class ProcedureBaseDAO {
     public String getAll() throws Exception {
         try {
             CallableStatement statement = connection.prepareCall(procedureQuery);
-            System.out.println(procedureQuery);
+            System.out.println("[LOGGER] Query executed: " + procedureQuery);
             ResultSet resultSet = statement.executeQuery();
             String result = ObjectConverter.toJSON(resultSet);
-            System.out.println(result);
             return result;
         } finally {
             if (connection != null) {

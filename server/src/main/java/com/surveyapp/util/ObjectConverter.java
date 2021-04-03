@@ -96,7 +96,7 @@ public class ObjectConverter {
                     entryModel.add(fieldName, fieldNumericValue);
                 }
                 // Column contains string values
-                else if (columnType == 12) {
+                else if (columnType == 12 || columnType == -1) {
                     fieldStringValue = resultSet.getString(i);
                     entryModel.add(fieldName, fieldStringValue);
                 }

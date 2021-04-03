@@ -11,7 +11,7 @@ public class GeneralRoute {
     private ProcedureService procedureService = new ProcedureService();
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllGeneral() {
+    public Response getAllGeneral() throws Exception {
         return Response.status(Response.Status.OK).entity(procedureService.getAll()).build();
     }
 
