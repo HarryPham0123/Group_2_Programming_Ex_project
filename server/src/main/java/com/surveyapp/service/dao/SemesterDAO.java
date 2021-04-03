@@ -87,7 +87,7 @@ public class SemesterDAO implements DAO<Semester>{
     public void save(Semester semester) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, semester.getSemesterCode());
+            preparedStatement.setString(1, semester.getCode());
             preparedStatement.setString(2, semester.getAYCode());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
@@ -108,7 +108,7 @@ public class SemesterDAO implements DAO<Semester>{
     public void update(String code, Semester semester) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, semester.getSemesterCode());
+            preparedStatement.setString(1, semester.getCode());
             preparedStatement.setString(2, semester.getAYCode());
             preparedStatement.setString(3, code);
             preparedStatement.executeUpdate();
