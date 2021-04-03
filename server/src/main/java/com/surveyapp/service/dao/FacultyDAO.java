@@ -65,12 +65,12 @@ public class FacultyDAO implements DAO<Faculty> {
     }
 
     @Override
-    public void update(Faculty faculty) {
+    public void update(String code, Faculty faculty) {
 
     }
 
     @Override
-    public void delete(Faculty faculty) {
+    public void delete(String code) {
 
     }
 }

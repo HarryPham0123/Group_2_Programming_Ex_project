@@ -25,11 +25,4 @@ public class SemesterRoute {
         Semester semester = semesterService.get(code);
         return semester;
     }
-
-    @POST
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public String insert(Semester semester) {
-        return "Underconstruction!";
-    }
 }

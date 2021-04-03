@@ -86,12 +86,13 @@ public class SemesterDAO implements DAO<Semester>{
     }
 
     @Override
-    public void update (Semester semester) {
+    public void update(String code, Semester semester) {
 
     }
 
     @Override
-    public void delete (Semester semester) {
+    public void delete(String code) {
 
     }
+
 }

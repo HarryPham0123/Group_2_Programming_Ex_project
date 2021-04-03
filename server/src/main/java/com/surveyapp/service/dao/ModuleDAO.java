@@ -53,12 +53,13 @@ public class ModuleDAO implements DAO<Module> {
     }
 
     @Override
-    public void update(Module module) {
+    public void update(String code, Module module) {
 
     }
 
     @Override
-    public void delete(Module module) {
+    public void delete(String code) {
 
     }
+
 }

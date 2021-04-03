@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class AcademicYearService {
-    private AcademicYearDAO DAO = new AcademicYearDAO();
+    private AcademicYearDAO academicYearDAO = new AcademicYearDAO();
     public List<AcademicYear> getAll() {
-        return DAO.getAll();
+        return academicYearDAO.getAll();
     }
     public AcademicYear get(String code) {
         Optional<AcademicYear> academicYear = new AcademicYearDAO().get(code);
@@ -18,14 +18,6 @@ public class AcademicYearService {
     }
 
     public void save(AcademicYear academicYear) {
-        DAO.save(academicYear);
-    }
-
-    public void update(AcademicYear academicYear) {
-        DAO.update(academicYear);
-    }
-
-    public void delete(AcademicYear academicYear) {
-        DAO.delete(academicYear);
+        academicYearDAO.save(academicYear);
     }
 }
