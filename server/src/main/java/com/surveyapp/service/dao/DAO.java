@@ -10,7 +10,7 @@ public interface DAO<T> {
 
     void save(T t);
 
-    void update(T t);
+    void update(String code, T t);
 
-    void delete(T t);
+    void delete(String code);
 }
