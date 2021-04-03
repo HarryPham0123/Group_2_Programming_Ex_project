@@ -8,13 +8,24 @@ $(function () {
          addInput(newVal)
          changLec(newVal)
     }); 
-    $('.submit').click(function() {
+    $('.submit-btn').click(function() {
         const getQuestion=document.getElementsByClassName("question")
         if($(".sel-class option:selected").val()=="starter"){
             alert("Please select the class option")
         }
         else if($(".sel-lec option:selected").val()=="starter"){
             alert("Please select the lecturer option")
+        }
+        if(!$('input[name=attend]:checked').length > 0){
+            alert("Please fill in your attendance")
+        }
+        if(!$('input[name=gender]:checked').length > 0){
+            alert("Please fill in your gender")
+        }
+        for(let i =1;i<=getQuestion.length;i++){
+            if (!$('input[name=question'+`${i}`+']:checked').length > 0) {
+                alert("Please fill in the question"+`${i}`);
+            }
         }
         for(let i =1;i<=getQuestion.length;i++){
             if (!$('input[name=question'+`${i}`+']:checked').length > 0) {
