@@ -48,8 +48,15 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     }
 
     @Override
-    public void save(AcademicYear academicYear) {
-
+    public void save(AcademicYear academicYear) {//tbh this should be named insert lmao
+        String script = "INSERT INTO  academic_year VALUES (?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(script);
+            preparedStatement.setString(1, academicYear.getCode());
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
@@ -59,6 +66,13 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
 
     @Override
     public void delete(AcademicYear academicYear) {
-
+        String script = "DELETE * FROM academic_year WHERE AYcode = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(script);
+            preparedStatement.setString(1, academicYear.getCode());
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }

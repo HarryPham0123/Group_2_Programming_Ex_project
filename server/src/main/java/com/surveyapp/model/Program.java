@@ -14,6 +14,4 @@ public class Program {
     private String programCode;
     @Column(name = "Pname")
     private String programName;
-    @Column(name = "Fcode")
-    private String facultyCode;
 }
