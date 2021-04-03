@@ -25,4 +25,26 @@ public class SemesterRoute {
         Semester semester = semesterService.get(code);
         return semester;
     }
+
+   @POST
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response insert(Semester semester) {
+        semesterService.save(semester);
+        return Response.ok().entity("New faculty successfully inserted").build();
+    }
+
+    @PUT
+    @Path("/{code}")
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response update(@PathParam("code") String code, Semester semester) {
+        semesterService.update(code, semester);
+        return Response.ok().entity("Successfully updated").build();
+    }
+
+    @DELETE
+    @Path("/{code}")
+    public Response delete(@PathParam("code") String code) {
+        semesterService.delete(code);
+        return Response.ok().entity("Successfully deleted").build();
+    } 
 }

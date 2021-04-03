@@ -7,10 +7,15 @@ import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+
 public class FacultyDAO implements DAO<Faculty> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM faculty";
-
+    private String getByCodeScript = "SELECT * FROM faculty WHERE Fcode = ?";
+    private String saveScript = "INSERT INTO faculty (Fcode, Fname) VALUES(?, ?)";
+    private String updateScript = "UPDATE faculty SET Fcode = ?, Fname = ? WHERE Fcode = ?";
+    private String deleteScript = "DELETE FROM faculty WHERE  Fcode = ?";
+    
     private void executeInTransaction(Consumer<Connection> action) {
         try {
             connection.setAutoCommit(false);
@@ -54,23 +59,77 @@ public class FacultyDAO implements DAO<Faculty> {
         return facultyList;
     }
 
-    @Override
-    public Optional<Faculty> get(String id) {
-        return Optional.empty();
+  @Override
+    public Optional<Faculty> get(String code) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+            preparedStatement.setString(1, code);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Faculty faculty = (Faculty) ObjectConverter.toObject(Faculty.class, resultSet);
+            return Optional.ofNullable(faculty);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public void save(Faculty faculty) {
-
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+            preparedStatement.setString(1, faculty.getFacultyCode());
+            preparedStatement.setString(2, faculty.getFacultyName());
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public void update(String code, Faculty faculty) {
-
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+            preparedStatement.setString(1, faculty.getFacultyCode());
+            preparedStatement.setString(2, faculty.getFacultyName());
+            preparedStatement.setString(3, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally  {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public void delete(String code) {
-
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+            preparedStatement.setString(1, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch(Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 }
