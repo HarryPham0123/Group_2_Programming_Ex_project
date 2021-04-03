@@ -21,7 +21,7 @@ public class AcademicYearRoute {
     }
 
     @GET
-    @Path("/acy/{code}")
+    @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public AcademicYear getByCode(@PathParam("code") String code) {
         AcademicYear academicYear = academicYearService.get(code);
