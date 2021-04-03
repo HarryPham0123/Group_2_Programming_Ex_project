@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Semester (
   Scode VARCHAR(10) NOT NULL,
   AYcode VARCHAR(10) NULL,
   PRIMARY KEY (Scode),
-  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode))
+  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode) ON UPDATE CASCADE ON DELETE RESTRICT) 
 ENGINE = InnoDB;
 
 
@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS Class (
   Scode VARCHAR(10) NULL,
   Mcode VARCHAR(10) NULL,
   PRIMARY KEY (Ccode),
-  FOREIGN KEY (Scode) REFERENCES Semester (Scode),
-  FOREIGN KEY (Mcode) REFERENCES Module (Mcode)
+  FOREIGN KEY (Scode) REFERENCES Semester (Scode) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (Mcode) REFERENCES Module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 
@@ -88,15 +88,97 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table questionnaire
+-- Table Questionnaire
 -- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS questionnaire (
-  Ccode VARCHAR(10) NOT NULL,
-  Lcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (Ccode, Lcode),
-	FOREIGN KEY (Ccode) REFERENCES Class (Ccode),
-	FOREIGN KEY (Lcode) REFERENCES Lecturer (Lcode)
+	       
+-- 0 is considered as "Not applicable" in Questionnaire form
+CREATE TABLE IF NOT EXISTS Questionnaire 
+(
+    answer_id INT NOT NULL AUTO_INCREMENT,
+    Ccode Varchar(10),
+    Lcode Varchar(10),
+    Answers json,
+    PRIMARY KEY (answer_id),
+    Foreign key (Ccode) References Class (Ccode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    Foreign key (Lcode) References Lecturer (Lcode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    
+    CONSTRAINT question_1_int_from_0_to_5_only
+		check ((Answers->>'$.question_1') >= 0 AND (Answers->>'$.question_1') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_1')) LIKE 'INTEGER'),
+            
+	CONSTRAINT question_2_int_from_0_to_5_only
+		check ((Answers->>'$.question_2') >= 0 AND (Answers->>'$.question_2') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_2')) LIKE 'INTEGER'),
+            
+	CONSTRAINT question_3_int_from_0_to_5_only
+		check ((Answers->>'$.question_3') >= 0 AND (Answers->>'$.question_3') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_3')) LIKE 'INTEGER'),
+            
+	CONSTRAINT question_4_int_from_0_to_5_only
+		check ((Answers->>'$.question_4') >= 0 AND (Answers->>'$.question_4') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_4')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_5_int_from_1_to_5_only
+		check ((Answers->>'$.question_5') >= 1 AND (Answers->>'$.question_5') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_5')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_6_int_from_1_to_5_only
+		check ((Answers->>'$.question_6') >= 1 AND (Answers->>'$.question_6') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_6')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_7_int_from_1_to_5_only
+		check ((Answers->>'$.question_7') >= 1 AND (Answers->>'$.question_7') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_7')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_8_int_from_0_to_5_only
+		check ((Answers->>'$.question_8') >= 0 AND (Answers->>'$.question_8') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_8')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_9_int_from_0_to_5_only
+		check ((Answers->>'$.question_9') >= 0 AND (Answers->>'$.question_9') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_9')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_10_int_from_0_to_5_only
+		check ((Answers->>'$.question_10') >= 0 AND (Answers->>'$.question_10') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_10')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_11_int_from_0_to_5_only
+		check ((Answers->>'$.question_11') >= 0 AND (Answers->>'$.question_11') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_11')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_12_int_from_0_to_5_only
+		check ((Answers->>'$.question_12') >= 0 AND (Answers->>'$.question_12') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_12')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_13_int_from_0_to_5_only
+		check ((Answers->>'$.question_13') >= 0 AND (Answers->>'$.question_13') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_13')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_14_int_from_0_to_5_only
+		check ((Answers->>'$.question_14') >= 0 AND (Answers->>'$.question_14') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_14')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_15_int_from_0_to_5_only
+		check ((Answers->>'$.question_15') >= 0 AND (Answers->>'$.question_15') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_15')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_16_int_from_0_to_5_only
+		check ((Answers->>'$.question_16') >= 0 AND (Answers->>'$.question_16') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_16')) LIKE 'INTEGER'),
+        
+	CONSTRAINT question_17_int_from_0_to_5_only
+		check ((Answers->>'$.question_17') >= 0 AND (Answers->>'$.question_17') <= 5 
+			AND json_type(Json_extract(Answers, '$.question_17')) LIKE 'INTEGER'),
+            
+	CONSTRAINT question_18_string_only
+		check (json_type(Json_extract(Answers, '$.question_18')) LIKE 'STRING'),
+        
+	CONSTRAINT gender
+		check ((Answers->>'$.gender') = 'male' OR (Answers->>'$.gender') = 'female' OR (Answers->>'$.gender') = 'other'),
+        
+	CONSTRAINT attendance
+		check ((Answers->>'$.attendance') = 'never' OR (Answers->>'$.attendance') = 'rarely' OR (Answers->>'$.attendance') = 'sometimes'
+		   OR (Answers->>'$.attendance') = 'often' OR (Answers->>'$.attendance') = 'always')
 )
 ENGINE = InnoDB;
 
@@ -110,8 +192,8 @@ CREATE TABLE IF NOT EXISTS Program_Module (
   Pcode VARCHAR(10) NOT NULL,
   Mcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (PMcode),
-	FOREIGN KEY (Mcode) REFERENCES Module (Mcode),
-	FOREIGN KEY (Pcode) REFERENCES Program (Pcode)
+	FOREIGN KEY (Mcode) REFERENCES Module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (Pcode) REFERENCES Program (Pcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 
@@ -126,9 +208,9 @@ CREATE TABLE IF NOT EXISTS AY_Faculty_PM (
   Fcode VARCHAR(10) NOT NULL,
   PMcode VARCHAR(10) NOT NULL,
   PRIMARY KEY (FAYcode),	
-    FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode),
-    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode),
-    FOREIGN KEY (PMcode) REFERENCES Program_Module (PMcode)
+    FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (PMcode) REFERENCES Program_Module (PMcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 	      
@@ -141,8 +223,8 @@ CREATE TABLE IF NOT EXISTS lecturer_in_class (
   Ccode VARCHAR(10),
   Lcode VARCHAR(10),
   PRIMARY KEY (Ccode, Lcode),
-  FOREIGN KEY (Ccode) REFERENCES class (Ccode),
-  FOREIGN KEY (Lcode) REFERENCES lecturer (Lcode)
+  FOREIGN KEY (Ccode) REFERENCES class (Ccode) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (Lcode) REFERENCES lecturer (Lcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 	       
@@ -303,48 +385,56 @@ INSERT INTO Lecturer (Lcode, Lname) VALUES
 	       
 -- A questionnaire is filled for exactly one class and exactly one lecturer. (Constrain)
 -- -> Questionaire is relationship between class and lecturer    
-INSERT INTO Questionnaire (Ccode, Lcode) VALUES 
-	('C001t', 'L015m'),
-	('C001t', 'L002o'),
-
-	('C002h', 'L001v'),
-	('C002h', 'L003r'),
-	('C002h', 'L004v'),
-
-	('C003a', 'L002o'),
-	('C004m', 'L003r'),
-
-	('C005u', 'L001v'),
-	('C005u', 'L004v'),
-	('C005u', 'L005a'),
-
-	('C006y', 'L004v'),
-	('C007q', 'L001v'),
-	('C008n', 'L005a'),
-	('C009u', 'L006e'),
-
-	('C010i', 'L006e'),
-	('C010i', 'L001v'),
-
-	('C011z', 'L007u'),
-
-	('C012c', 'L008h'),
-	('C012c', 'L009f'),
-
-	('C013x', 'L007u'),
-	('C014d', 'L010m'),
-	('C015q', 'L011g'),
-	('C015q', 'L012m'),
-
-	('C016q', 'L013l'),
-	('C016q', 'L014a'),
-    
-    ('C017t', 'L014a'),
-    ('C017t', 'L015m'),
-    
-    ('C018t', 'L009f')
+ Insert into Questionnaire (Ccode, Lcode, Answers)
+Values 
+	( 'C002h', 'L001v',
+    '{ "attendance" : "often", "gender" : "male",
+    "question_1" : 3, "question_2" : 2, "question_3" : 2, 
+    "question_4" : 4, "question_5" : 5, "question_6" : 3, 
+    "question_7" : 4, "question_8" : 2, "question_9" : 5, 
+    "question_10" : 3, "question_11" : 1, "question_12" : 4, 
+    "question_13" : 5, "question_14" : 2, "question_15" : 4, 
+    "question_16" : 4, "question_17" : 5, 
+    "question_18" : "" }' ),
+	( 'C005u', 'L001v',
+    '{ "attendance" : "rarely", "gender" : "female",
+    "question_1" : 5, "question_2" : 2, "question_3" : 2, 
+    "question_4" : 4, "question_5" : 3, "question_6" : 1, 
+    "question_7" : 4, "question_8" : 2, "question_9" : 5, 
+    "question_10" : 1, "question_11" : 3, "question_12" : 4, 
+    "question_13" : 5, "question_14" : 5, "question_15" : 2, 
+    "question_16" : 4, "question_17" : 5, 
+    "question_18" : "" }' ),
+	( 'C003a', 'L002o',
+    '{ "attendance" : "sometimes", "gender" : "female",
+    "question_1" : 1, "question_2" : 2, "question_3" : 3, 
+    "question_4" : 5, "question_5" : 3, "question_6" : 4, 
+    "question_7" : 4, "question_8" : 4, "question_9" : 3, 
+    "question_10" : 1, "question_11" : 1, "question_12" : 5, 
+    "question_13" : 5, "question_14" : 2, "question_15" : 4, 
+    "question_16" : 4, "question_17" : 1, 
+    "question_18" : "" }' ),
+	( 'C002h', 'L001v',
+    '{ "attendance" : "rarely", "gender" : "female",
+    "question_1" : 2, "question_2" : 2, "question_3" : 4, 
+    "question_4" : 1, "question_5" : 5, "question_6" : 5, 
+    "question_7" : 3, "question_8" : 4, "question_9" : 5, 
+    "question_10" : 3, "question_11" : 1, "question_12" : 5, 
+    "question_13" : 4, "question_14" : 3, "question_15" : 3, 
+    "question_16" : 5, "question_17" : 1, 
+    "question_18" : "" }' ),
+	( 'C003a', 'L002o',
+    '{ "attendance" : "often", "gender" : "male",
+    "question_1" : 5, "question_2" : 2, "question_3" : 1, 
+    "question_4" : 4, "question_5" : 5, "question_6" : 3, 
+    "question_7" : 1, "question_8" : 3, "question_9" : 4, 
+    "question_10" : 3, "question_11" : 2, "question_12" : 4, 
+    "question_13" : 5, "question_14" : 3, "question_15" : 5, 
+    "question_16" : 3, "question_17" : 5, 
+    "question_18" : "" }' )
 ;
-
+	       
+	       
 -- A class has any number of lecturers. (Data constrain)
 -- This case, we asume a class can have 1, 2 or 3 lecturers
 -- -> Lecturers in each class must be unique     
