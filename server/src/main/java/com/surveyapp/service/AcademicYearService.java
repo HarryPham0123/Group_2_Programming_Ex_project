@@ -1,6 +1,7 @@
 package com.surveyapp.service;
 
 import com.surveyapp.model.AcademicYear;
+import com.surveyapp.model.Faculty;
 import com.surveyapp.service.dao.AcademicYearDAO;
 
 
@@ -19,5 +20,13 @@ public class AcademicYearService {
 
     public void save(AcademicYear academicYear) {
         academicYearDAO.save(academicYear);
+    }
+
+    public void update(String code, AcademicYear academicYear) {
+        academicYearDAO.update(code, academicYear);
+    }
+
+    public void delete(String code) {
+        academicYearDAO.delete(code);
     }
 }
