@@ -37,7 +37,7 @@ public class AcademicYearRoute {
         return Response.ok().entity("New faculty successfully inserted").build();
     }
 
-    @Path("/del/{code}")
+    @Path("/{code}")
     @DELETE
     public Response delete(@PathParam("code") String code) {
         academicYearService.delete(code);
