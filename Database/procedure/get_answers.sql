@@ -8,7 +8,7 @@ CREATE PROCEDURE `get_answers`(
 	class VARCHAR(50))
     
 BEGIN
-	SELECT q.Acode as 'Code', 
+	SELECT q.answer_id as 'ID', 
 		q.Answers->>'$.attendance' Attendance, 
 		q.Answers->>'$.gender' Gender,
 		q.Answers->>'$.question_1' Question1,
