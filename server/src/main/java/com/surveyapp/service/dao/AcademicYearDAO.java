@@ -66,7 +66,7 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
 
     @Override
     public void delete(String code) {
-        String script = "DELETE FROM academic_year WHERE AYcode = ? ";
+        String script = "DELETE FROM academic_year WHERE Mcode = ? ";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(script);
             preparedStatement.setString(1, code);

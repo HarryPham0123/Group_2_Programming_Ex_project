@@ -1,5 +1,6 @@
 package com.surveyapp.controller;
 
+
 import com.surveyapp.model.AcademicYear;
 import com.surveyapp.service.AcademicYearService;
 
@@ -35,8 +36,9 @@ public class AcademicYearRoute {
         academicYearService.save(academicYear);
         return Response.ok().entity("New faculty successfully inserted").build();
     }
+
+    @Path("/del/{code}")
     @DELETE
-    @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
         academicYearService.delete(code);
         return Response.ok().entity("Successfully deleted").build();
