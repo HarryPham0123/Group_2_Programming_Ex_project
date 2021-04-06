@@ -1,8 +1,7 @@
-package com.surveyapp.service;
+package com.surveyapp.service.procedure;
 
 import com.surveyapp.model.Code;
 import com.surveyapp.model.Questionnaire;
-import com.surveyapp.service.dao.*;
 
 public class ProcedureService {
     private ProcedureBaseDAO procedureDAO = new ProcedureDAO("general_information").setParameters();

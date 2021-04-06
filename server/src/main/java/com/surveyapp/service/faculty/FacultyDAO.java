@@ -1,6 +1,6 @@
-package com.surveyapp.service.dao;
-
-import com.surveyapp.model.Lecturer;
+package com.surveyapp.service.faculty;
+import com.surveyapp.model.Faculty;
+import com.surveyapp.service.DAO;
 import com.surveyapp.util.DBUtil;
 import com.surveyapp.util.ObjectConverter;
 
@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class LecturerDAO implements DAO<Lecturer> {
+public class FacultyDAO implements DAO<Faculty> {
     private Connection connection = new DBUtil().getConnection();
-    private String getAllScript = "SELECT * FROM lecturer";
-    private String getByCodeScript = "SELECT * FROM lecturer WHERE Lcode = ?";
-    private String saveScript = "INSERT INTO lecturer (Lcode, Lname) VALUES(?, ?)";
-    private String updateScript = "UPDATE lecturer SET Lcode = ?, Lname = ? WHERE Lcode = ?";
-    private String deleteScript = "DELETE FROM lecturer WHERE  Lcode = ?";
-
+    private String getAllScript = "SELECT * FROM faculty";
+    private String getByCodeScript = "SELECT * FROM faculty WHERE Fcode = ?";
+    private String saveScript = "INSERT INTO faculty (Fcode, Fname) VALUES(?, ?)";
+    private String updateScript = "UPDATE faculty SET Fcode = ?, Fname = ? WHERE Fcode = ?";
+    private String deleteScript = "DELETE FROM faculty WHERE  Fcode = ?";
+    
     private void executeInTransaction(Consumer<Connection> action) {
         try {
             connection.setAutoCommit(false);
@@ -38,17 +38,18 @@ public class LecturerDAO implements DAO<Lecturer> {
         }
     }
 
+
     @Override
-    public List<Lecturer> getAll() {
-        List<Lecturer> lecturerList = null;
+    public List<Faculty> getAll() {
+        List<Faculty> facultyList = null;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(getAllScript);
-            lecturerList = (List<Lecturer>) ObjectConverter.toObject(Lecturer.class, resultSet);
+            facultyList = (List<Faculty>) ObjectConverter.toObject(Faculty.class, resultSet);
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {
-            if (connection != null)  {
+            if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException sqlException) {
@@ -56,17 +57,17 @@ public class LecturerDAO implements DAO<Lecturer> {
                 }
             }
         }
-        return lecturerList;
+        return facultyList;
     }
 
-    @Override
-    public Optional<Lecturer> get(String code) {
+  @Override
+    public Optional<Faculty> get(String code) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Lecturer lecturer = (Lecturer) ObjectConverter.toObject(Lecturer.class, resultSet);
-            return Optional.ofNullable(lecturer);
+            Faculty faculty = (Faculty) ObjectConverter.toObject(Faculty.class, resultSet);
+            return Optional.ofNullable(faculty);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
@@ -74,11 +75,11 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public void save(Lecturer lecturer) {
+    public void save(Faculty faculty) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, lecturer.getCode());
-            preparedStatement.setString(2, lecturer.getName());
+            preparedStatement.setString(1, faculty.getFacultyCode());
+            preparedStatement.setString(2, faculty.getFacultyName());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -94,11 +95,11 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public void update(String code, Lecturer lecturer) {
+    public void update(String code, Faculty faculty) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, lecturer.getCode());
-            preparedStatement.setString(2, lecturer.getName());
+            preparedStatement.setString(1, faculty.getFacultyCode());
+            preparedStatement.setString(2, faculty.getFacultyName());
             preparedStatement.setString(3, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {

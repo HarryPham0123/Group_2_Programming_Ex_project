@@ -1,22 +1,22 @@
-package com.surveyapp.service.dao;
+package com.surveyapp.service.lecturer;
 
-import com.surveyapp.model.AcademicYear;
-import com.surveyapp.model.Semester;
-import com.surveyapp.service.AcademicYearService;
+import com.surveyapp.model.Lecturer;
+import com.surveyapp.service.DAO;
 import com.surveyapp.util.DBUtil;
 import com.surveyapp.util.ObjectConverter;
 
 import java.sql.*;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
-public class SemesterDAO implements DAO<Semester>{
+public class LecturerDAO implements DAO<Lecturer> {
     private Connection connection = new DBUtil().getConnection();
-    private String getAllScript = "SELECT * FROM semester";
-    private String getByCodeScript = "SELECT * FROM semester WHERE Scode = ?";
-    private String saveScript = "INSERT INTO semester (Scode, AYcode) VALUES(?, ?)";
-    private String updateScript = "UPDATE semester SET Scode = ?, AYcode = ? WHERE Scode = ?";
-    private String deleteScript = "DELETE FROM semester WHERE  Scode = ?";
+    private String getAllScript = "SELECT * FROM lecturer";
+    private String getByCodeScript = "SELECT * FROM lecturer WHERE Lcode = ?";
+    private String saveScript = "INSERT INTO lecturer (Lcode, Lname) VALUES(?, ?)";
+    private String updateScript = "UPDATE lecturer SET Lcode = ?, Lname = ? WHERE Lcode = ?";
+    private String deleteScript = "DELETE FROM lecturer WHERE  Lcode = ?";
 
     private void executeInTransaction(Consumer<Connection> action) {
         try {
@@ -40,55 +40,46 @@ public class SemesterDAO implements DAO<Semester>{
     }
 
     @Override
-    public List<Semester> getAll() {
-        List<Semester> semesterList = null;
+    public List<Lecturer> getAll() {
+        List<Lecturer> lecturerList = null;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(getAllScript);
-            semesterList = (List<Semester>) ObjectConverter.toObject(Semester.class, resultSet);
+            lecturerList = (List<Lecturer>) ObjectConverter.toObject(Lecturer.class, resultSet);
         } catch (Exception exception) {
             exception.printStackTrace();
-            return null;
         } finally {
-            if (connection != null) {
+            if (connection != null)  {
                 try {
                     connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
                 }
             }
         }
-        return semesterList;
+        return lecturerList;
     }
 
     @Override
-    public Optional<Semester> get(String code) {
+    public Optional<Lecturer> get(String code) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Semester semester = (Semester) ObjectConverter.toObject(Semester.class, resultSet);
-            return Optional.ofNullable(semester);
+            Lecturer lecturer = (Lecturer) ObjectConverter.toObject(Lecturer.class, resultSet);
+            return Optional.ofNullable(lecturer);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
         }
     }
 
     @Override
-    public void save(Semester semester) {
+    public void save(Lecturer lecturer) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, semester.getCode());
-            preparedStatement.setString(2, semester.getAYCode());
+            preparedStatement.setString(1, lecturer.getCode());
+            preparedStatement.setString(2, lecturer.getName());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -104,11 +95,11 @@ public class SemesterDAO implements DAO<Semester>{
     }
 
     @Override
-    public void update(String code, Semester semester) {
+    public void update(String code, Lecturer lecturer) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, semester.getCode());
-            preparedStatement.setString(2, semester.getAYCode());
+            preparedStatement.setString(1, lecturer.getCode());
+            preparedStatement.setString(2, lecturer.getName());
             preparedStatement.setString(3, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
@@ -142,5 +133,4 @@ public class SemesterDAO implements DAO<Semester>{
             }
         }
     }
-
 }

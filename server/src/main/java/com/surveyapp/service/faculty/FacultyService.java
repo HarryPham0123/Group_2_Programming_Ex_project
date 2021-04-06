@@ -1,7 +1,6 @@
-package com.surveyapp.service;
+package com.surveyapp.service.faculty;
 
 import com.surveyapp.model.Faculty;
-import com.surveyapp.service.dao.FacultyDAO;
 
 import java.util.List;
 import java.util.Optional;

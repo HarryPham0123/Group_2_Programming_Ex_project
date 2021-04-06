@@ -1,6 +1,6 @@
 package com.surveyapp.controller;
 import com.surveyapp.model.Program;
-import com.surveyapp.service.ProgramService;
+import com.surveyapp.service.program.ProgramService;
 
 import java.util.List;
 

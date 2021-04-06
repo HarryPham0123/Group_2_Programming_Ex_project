@@ -1,10 +1,8 @@
 package com.surveyapp.controller;
 
 import com.surveyapp.model.Faculty;
-import com.surveyapp.model.Lecturer;
 import com.surveyapp.model.Module;
-import com.surveyapp.service.LecturerService;
-import com.surveyapp.service.ModuleService;
+import com.surveyapp.service.module.ModuleService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

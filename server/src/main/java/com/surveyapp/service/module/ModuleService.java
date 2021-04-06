@@ -1,10 +1,7 @@
-package com.surveyapp.service;
+package com.surveyapp.service.module;
 
-import com.surveyapp.model.AcademicYear;
-import com.surveyapp.model.Faculty;
 import com.surveyapp.model.Module;
-import com.surveyapp.service.dao.AcademicYearDAO;
-import com.surveyapp.service.dao.ModuleDAO;
+import com.surveyapp.service.module.ModuleDAO;
 
 import java.util.List;
 import java.util.Optional;

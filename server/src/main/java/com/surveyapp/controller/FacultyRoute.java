@@ -2,7 +2,7 @@ package com.surveyapp.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.surveyapp.model.Faculty;
-import com.surveyapp.service.FacultyService;
+import com.surveyapp.service.faculty.FacultyService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

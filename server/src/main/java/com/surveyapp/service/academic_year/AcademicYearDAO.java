@@ -1,6 +1,7 @@
-package com.surveyapp.service.dao;
+package com.surveyapp.service.academic_year;
 
 import com.surveyapp.model.AcademicYear;
+import com.surveyapp.service.DAO;
 import com.surveyapp.util.DBUtil;
 import com.surveyapp.util.ObjectConverter;
 

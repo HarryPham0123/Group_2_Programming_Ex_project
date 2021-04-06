@@ -1,9 +1,8 @@
 package com.surveyapp.controller;
 import com.surveyapp.model.Semester;
-import com.surveyapp.service.SemesterService;
+import com.surveyapp.service.semester.SemesterService;
 import java.util.List;
 
-import javax.json.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

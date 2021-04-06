@@ -1,4 +1,4 @@
-package com.surveyapp.service.dao;
+package com.surveyapp.service.procedure;
 
 import com.surveyapp.model.Questionnaire;
 import lombok.NonNull;

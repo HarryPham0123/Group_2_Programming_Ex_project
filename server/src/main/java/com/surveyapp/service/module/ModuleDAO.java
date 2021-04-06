@@ -1,6 +1,7 @@
-package com.surveyapp.service.dao;
+package com.surveyapp.service.module;
 
 import com.surveyapp.model.Module;
+import com.surveyapp.service.DAO;
 import com.surveyapp.util.DBUtil;
 import com.surveyapp.util.ObjectConverter;
 

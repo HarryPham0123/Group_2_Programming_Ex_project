@@ -2,7 +2,7 @@ package com.surveyapp.controller;
 
 
 import com.surveyapp.model.AcademicYear;
-import com.surveyapp.service.AcademicYearService;
+import com.surveyapp.service.academic_year.AcademicYearService;
 
 
 import javax.ws.rs.*;

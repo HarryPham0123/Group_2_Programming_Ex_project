@@ -2,7 +2,7 @@ package com.surveyapp.controller;
 
 import com.surveyapp.model.Code;
 import com.surveyapp.model.Questionnaire;
-import com.surveyapp.service.ProcedureService;
+import com.surveyapp.service.procedure.ProcedureService;
 
 import javax.json.*;
 import javax.ws.rs.*;

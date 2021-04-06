@@ -1,10 +1,4 @@
-package com.surveyapp.service.dao;
-
-import com.surveyapp.model.Lecturer;
-import com.surveyapp.util.DBUtil;
-import com.surveyapp.util.ObjectConverter;
-
-import java.sql.*;
+package com.surveyapp.service.procedure;
 
 public class ProcedureDAO extends ProcedureBaseDAO {
     private String procedureQuery = "{CALL %s(%s, %s, %s, %s, %s, %s, %s)}";

@@ -1,6 +1,6 @@
 package com.surveyapp.controller;
 import com.surveyapp.model.Lecturer;
-import com.surveyapp.service.LecturerService;
+import com.surveyapp.service.lecturer.LecturerService;
 import java.util.List;
 
 import javax.ws.rs.*;

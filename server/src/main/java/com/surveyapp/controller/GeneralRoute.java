@@ -1,7 +1,7 @@
 package com.surveyapp.controller;
 
 import com.surveyapp.model.Code;
-import com.surveyapp.service.ProcedureService;
+import com.surveyapp.service.procedure.ProcedureService;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;

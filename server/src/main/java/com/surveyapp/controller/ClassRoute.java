@@ -1,14 +1,11 @@
 package com.surveyapp.controller;
 import com.surveyapp.model.Class;
-import com.surveyapp.model.Semester;
-import com.surveyapp.service.ClassService;
-import com.surveyapp.service.SemesterService;
+import com.surveyapp.service.clazz.ClassService;
+
 import java.util.List;
 
-import javax.json.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/classes")
 public class ClassRoute {

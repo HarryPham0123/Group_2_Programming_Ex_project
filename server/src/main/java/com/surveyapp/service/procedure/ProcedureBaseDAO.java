@@ -1,4 +1,4 @@
-package com.surveyapp.service.dao;
+package com.surveyapp.service.procedure;
 
 import com.surveyapp.util.DBUtil;
 import com.surveyapp.util.ObjectConverter;

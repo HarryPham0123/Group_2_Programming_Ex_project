@@ -1,21 +1,22 @@
-package com.surveyapp.service.dao;
-import com.surveyapp.model.Faculty;
+package com.surveyapp.service.semester;
+
+import com.surveyapp.model.Semester;
+import com.surveyapp.service.DAO;
 import com.surveyapp.util.DBUtil;
 import com.surveyapp.util.ObjectConverter;
 
 import java.sql.*;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 
-public class FacultyDAO implements DAO<Faculty> {
+public class SemesterDAO implements DAO<Semester> {
     private Connection connection = new DBUtil().getConnection();
-    private String getAllScript = "SELECT * FROM faculty";
-    private String getByCodeScript = "SELECT * FROM faculty WHERE Fcode = ?";
-    private String saveScript = "INSERT INTO faculty (Fcode, Fname) VALUES(?, ?)";
-    private String updateScript = "UPDATE faculty SET Fcode = ?, Fname = ? WHERE Fcode = ?";
-    private String deleteScript = "DELETE FROM faculty WHERE  Fcode = ?";
-    
+    private String getAllScript = "SELECT * FROM semester";
+    private String getByCodeScript = "SELECT * FROM semester WHERE Scode = ?";
+    private String saveScript = "INSERT INTO semester (Scode, AYcode) VALUES(?, ?)";
+    private String updateScript = "UPDATE semester SET Scode = ?, AYcode = ? WHERE Scode = ?";
+    private String deleteScript = "DELETE FROM semester WHERE  Scode = ?";
+
     private void executeInTransaction(Consumer<Connection> action) {
         try {
             connection.setAutoCommit(false);
@@ -37,48 +38,56 @@ public class FacultyDAO implements DAO<Faculty> {
         }
     }
 
-
     @Override
-    public List<Faculty> getAll() {
-        List<Faculty> facultyList = null;
+    public List<Semester> getAll() {
+        List<Semester> semesterList = null;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(getAllScript);
-            facultyList = (List<Faculty>) ObjectConverter.toObject(Faculty.class, resultSet);
+            semesterList = (List<Semester>) ObjectConverter.toObject(Semester.class, resultSet);
         } catch (Exception exception) {
             exception.printStackTrace();
+            return null;
         } finally {
             if (connection != null) {
                 try {
                     connection.close();
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
             }
         }
-        return facultyList;
+        return semesterList;
     }
 
-  @Override
-    public Optional<Faculty> get(String code) {
+    @Override
+    public Optional<Semester> get(String code) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Faculty faculty = (Faculty) ObjectConverter.toObject(Faculty.class, resultSet);
-            return Optional.ofNullable(faculty);
+            Semester semester = (Semester) ObjectConverter.toObject(Semester.class, resultSet);
+            return Optional.ofNullable(semester);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
         }
     }
 
     @Override
-    public void save(Faculty faculty) {
+    public void save(Semester semester) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, faculty.getFacultyCode());
-            preparedStatement.setString(2, faculty.getFacultyName());
+            preparedStatement.setString(1, semester.getCode());
+            preparedStatement.setString(2, semester.getAYCode());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -94,11 +103,11 @@ public class FacultyDAO implements DAO<Faculty> {
     }
 
     @Override
-    public void update(String code, Faculty faculty) {
+    public void update(String code, Semester semester) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, faculty.getFacultyCode());
-            preparedStatement.setString(2, faculty.getFacultyName());
+            preparedStatement.setString(1, semester.getCode());
+            preparedStatement.setString(2, semester.getAYCode());
             preparedStatement.setString(3, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
@@ -132,4 +141,5 @@ public class FacultyDAO implements DAO<Faculty> {
             }
         }
     }
+
 }

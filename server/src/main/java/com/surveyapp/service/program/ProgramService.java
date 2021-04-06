@@ -1,7 +1,6 @@
-package com.surveyapp.service;
+package com.surveyapp.service.program;
 
 import com.surveyapp.model.Program;
-import com.surveyapp.service.dao.ProgramDAO;
 
 import java.util.List;
 
