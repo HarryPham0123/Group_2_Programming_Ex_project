@@ -9,7 +9,7 @@
 
 ## Server API
 `GET:` /survey/api/questionnaire
-+ Get all survey information with corresponding filters.
++ Get all questionnaire with corresponding filters.
 + Params: 
     + `academic_year=[String or null]`
     + `semester=[String or null]`
@@ -18,6 +18,31 @@
     + `module=[String or null]`
     + `class=[String or null]`
     + `lecturer=[String or null]`
- 
- `POST:` /survey/api/questionnaire
+
+`GET:` /survey/api/questionnaire/attendance_question
++ Get attendance questionnaire statistic.
++ Params: same as router
++ Example response: `{"never": 0, "rarely": 0, "sometimes": 5, "often": 11, "always": 20}`
+
+`GET:` /survey/api/questionnaire/gender_question
++ Get gender questionnaire statistic.
++ Params: same as router.
++ Example response: `{"male": 20, "female": 18, "other": 0}`
+
+
+`GET:` /survey/api/questionnaire/question_1
++ Get question 1 questionnaire statistic.
++ Params: same as router.
++ Example response: `{"1": 20, "2": 18, "3": 10, "4": 15, "5": 10}`
+
+`GET:` /survey/api/questionnaire/question_2
++ Get question 2 questionnaire statistic.
++ Params: same as router.
++ Example response: `{"1": 21, "2": 17, "3": 11, "4": 12, "5": 9}`
+
+...Same as `GET` request question_3, question_4,... etc
+
+`POST:` /survey/api/questionnaire
 + Create a new survey.
++ Params: 
++ Request form: `{"lcode": "L001M", "ccode": "C005I", [{"question": "attendance", "answer": "often"}, {"question": "gender", "answer": "female"}, {"question": "1", "answer": 5}, {...}, {...}]}`
