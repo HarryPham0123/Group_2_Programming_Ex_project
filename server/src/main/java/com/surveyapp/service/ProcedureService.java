@@ -1,38 +1,32 @@
 package com.surveyapp.service;
 
-import com.surveyapp.service.dao.GetQuestionnaireDAO;
-import com.surveyapp.service.dao.ProcedureBaseDAO;
-import com.surveyapp.service.dao.ProcedureDAO;
-import com.surveyapp.service.dao.InsertQuestionnaireDAO;
-import lombok.NonNull;
+import com.surveyapp.model.Code;
+import com.surveyapp.model.Questionnaire;
+import com.surveyapp.service.dao.*;
 
 public class ProcedureService {
     private ProcedureBaseDAO procedureDAO = new ProcedureDAO("general_information").setParameters();
-    private InsertQuestionnaireDAO questionnaireDAO = new InsertQuestionnaireDAO("insert_questionnaire");
     private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO("get_answers");
+    private InsertQuestionnaireDAO insertQuestionnaireDAO = new InsertQuestionnaireDAO("insert_questionnaire");
+    private GetCodeDAO getCodeDAO = new GetCodeDAO("get_code");
 
     //Get all general information
     public String getAll() throws Exception {
-        return procedureDAO.getAll();
+        return procedureDAO.executeProcedure();
     }
 
-    public String insertAnswer(
-            @NonNull String Lcode,
-            @NonNull String Ccode,
-            @NonNull String answer
-    ) throws Exception {
-        return questionnaireDAO.setParameters(Lcode, Ccode, answer).getAll();
+    //Insert new questionnaire
+    public String insertQuestionnaire(Questionnaire questionnaire) throws Exception {
+        return insertQuestionnaireDAO.setParameters(questionnaire).executeProcedure();
     }
 
-    public String getAnswer(
-            String academicYear,
-            String semester,
-            String faculty,
-            String program,
-            String module,
-            String lecturer,
-            String clazz
-    ) throws Exception {
-        return getQuestionnaireDAO.setParameters(academicYear, semester, faculty, program, module, lecturer, clazz).getAll();
+    //Get questionnaire with corresponding code
+    public String getQuestionnaire(Code code) throws Exception {
+        return getQuestionnaireDAO.setParameters(code).executeProcedure();
+    }
+
+    //Retrieves all codes
+    public String getCode(Code code) throws Exception {
+        return getCodeDAO.setParameters(code).executeProcedure();
     }
 }

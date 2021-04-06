@@ -9,12 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class ProcedureBaseDAO {
-    private Connection connection = new DBUtil().getConnection();
+    protected Connection connection = new DBUtil().getConnection();
     protected String procedureQuery;
+    protected CallableStatement statement = null;
 
-    public String getAll() throws Exception {
+    public String executeProcedure() throws Exception {
         try {
-            CallableStatement statement = connection.prepareCall(procedureQuery);
             System.out.println("[LOGGER] Query executed: " + procedureQuery);
             ResultSet resultSet = statement.executeQuery();
             String result = ObjectConverter.toJSON(resultSet);

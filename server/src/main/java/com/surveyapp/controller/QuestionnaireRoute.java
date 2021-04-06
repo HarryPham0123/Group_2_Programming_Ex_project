@@ -1,9 +1,8 @@
 package com.surveyapp.controller;
 
-import com.sun.jdi.event.ExceptionEvent;
+import com.surveyapp.model.Code;
 import com.surveyapp.model.Questionnaire;
 import com.surveyapp.service.ProcedureService;
-import com.surveyapp.util.ObjectConverter;
 
 import javax.json.*;
 import javax.ws.rs.*;
@@ -25,36 +24,20 @@ public class QuestionnaireRoute {
             @QueryParam("lecturer") String lecturer
     ) {
         try {
-            return Response.status(200).entity(
-                    procedureService.getAnswer(
-                            academic_year,
-                            semester,
-                            faculty,
-                            program,
-                            module,
-                            lecturer,
-                            clazz
-                    )
-            ).build();
+            Code code = new Code(academic_year, semester, faculty, program, module, clazz, lecturer);
+            return Response.status(Response.Status.OK).entity(procedureService.getQuestionnaire(code)).build();
         } catch(Exception exception) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
             jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(400).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
         }
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertQuestionnaire(Questionnaire questionnaire) {
-        System.out.println(ObjectConverter.toJSON(questionnaire.getAnswer()));
         try {
-            return Response.status(200).entity(
-                    procedureService.insertAnswer(
-                            questionnaire.getCcode(),
-                            questionnaire.getLcode(),
-                            ObjectConverter.toJSON(questionnaire.getAnswer())
-                    )
-            ).build();
+            return Response.status(200).entity(procedureService.insertQuestionnaire(questionnaire)).build();
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
