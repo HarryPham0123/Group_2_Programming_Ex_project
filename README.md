@@ -45,4 +45,4 @@
 `POST:` /survey/api/questionnaire
 + Create a new survey.
 + Params: 
-+ Request form: `{"lcode": "L001M", "ccode": "C005I", [{"question": "attendance", "answer": "often"}, {"question": "gender", "answer": "female"}, {"question": "1", "answer": 5}, {...}, {...}]}`
++ Request form: `{"lcode": "L001M", "ccode": "C005I", "question_list": [{"question": "attendance", "answer": "often"}, {"question": "gender", "answer": "female"}, {"question": "1", "answer": 5}, {...}, {...}]}`
