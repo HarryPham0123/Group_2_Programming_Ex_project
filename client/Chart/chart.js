@@ -61,8 +61,8 @@ function  getForm(getLabel,getData,getChart){
        
     </canvas>
     <div class="stats">
-        <p>${mean}</p>
-        <p>${sd}</p>
+        <p>Mean:${mean}</p>
+        <p>SD:${sd}</p>
     </div>
     `).appendTo(".chart-container");
     
