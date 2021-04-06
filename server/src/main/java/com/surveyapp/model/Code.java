@@ -18,6 +18,11 @@ public class Code {
         this.lecturer = lecturer;
         this.clazz = clazz;
     }
+
+    public Code() {
+        this(null, null, null, null, null, null, null);
+    }
+
     public String getAcademic_year() {
         return academic_year;
     }

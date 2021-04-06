@@ -1,20 +1,25 @@
 package com.surveyapp.model;
 
-import lombok.*;
-
 import javax.persistence.Column;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@Setter
-@Getter
 public class AcademicYear {
     @Column(name = "AYcode")
     private String code;
 
+    public AcademicYear(String code) {
+        this.code = code;
+    }
+
+    public AcademicYear() {
+        this(null);
+    }
+
     public String getCode() {
-        return this.code;
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
 
