@@ -1,7 +1,7 @@
 package com.surveyapp.controller;
 
+
 import com.surveyapp.model.AcademicYear;
-import com.surveyapp.model.Lecturer;
 import com.surveyapp.service.AcademicYearService;
 
 
@@ -26,6 +26,22 @@ public class AcademicYearRoute {
     public AcademicYear getByCode(@PathParam("code") String code) {
         AcademicYear academicYear = academicYearService.get(code);
         return academicYear;
+    }
+
+    //PUT not needed
+
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response insert(AcademicYear academicYear) {
+        academicYearService.save(academicYear);
+        return Response.ok().entity("New faculty successfully inserted").build();
+    }
+
+    @Path("/{code}")
+    @DELETE
+    public Response delete(@PathParam("code") String code) {
+        academicYearService.delete(code);
+        return Response.ok().entity("Successfully deleted").build();
     }
 
 }

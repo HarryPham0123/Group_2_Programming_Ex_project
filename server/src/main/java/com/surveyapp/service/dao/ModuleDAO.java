@@ -49,17 +49,41 @@ public class ModuleDAO implements DAO<Module> {
 
     @Override
     public void save(Module module) {
-
+        String script = "INSERT INTO  module VALUES (?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(script);
+            preparedStatement.setString(1, module.getCode());
+            preparedStatement.setString(2, module.getName());
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
     public void update(String code, Module module) {
-
+        String script = "UPDATE module SET Mcode = ? , Mname = ? WHERE Mcode = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(script);
+            preparedStatement.setString(1, module.getCode());
+            preparedStatement.setString(2, module.getName());
+            preparedStatement.setString(3, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
     public void delete(String code) {
-
+        String script = "DELETE FROM module WHERE Mcode = ? ";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(script);
+            preparedStatement.setString(1, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
 }

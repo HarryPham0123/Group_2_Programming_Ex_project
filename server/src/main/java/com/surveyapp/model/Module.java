@@ -14,4 +14,11 @@ public class Module {
     private String code;
     @Column(name = "Mname")
     private String name;
+
+    public String getName() {
+        return this.name;
+    }
+    public String getCode() {
+        return this.code;
+    }
 }
