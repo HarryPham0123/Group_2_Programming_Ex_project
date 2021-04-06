@@ -57,11 +57,6 @@ function  getForm(getLabel,getData,getChart){
     console.log(getPercentage)
     const mean=Math.round(jStat.mean(getData));
     const sd=Math.round(jStat.stdev(getData));
-    console.log(mean)
-    console.log(sd)
-    for(let i=1;i<=20;i++){
-        
-    }
     $(`<canvas id="${getChart}">
        
     </canvas>
@@ -81,7 +76,7 @@ function  getForm(getLabel,getData,getChart){
         data: {
             labels: getLabel,
             datasets: [{
-                label: getLabel,
+                label: getChart,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
                 data: getPercentage
