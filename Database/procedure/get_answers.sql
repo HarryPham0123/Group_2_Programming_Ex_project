@@ -1,3 +1,5 @@
+DROP PROCEDURE IF EXISTS get_answers;
+DELIMITER //
 CREATE PROCEDURE `get_answers`(
 	academic_year VARCHAR(10), 
 	semester VARCHAR(10), 
@@ -5,8 +7,7 @@ CREATE PROCEDURE `get_answers`(
 	program VARCHAR(10), 
 	module VARCHAR(10), 
 	lecturer VARCHAR(10), 
-	class VARCHAR(10),
-    answer VARCHAR(10))
+	class VARCHAR(10))
 BEGIN
 	-- Check invalid parameter (Para NOT null but not in database)
 	IF (class not in (Select Ccode from class)) AND (class is not NULL) THEN
@@ -35,10 +36,6 @@ BEGIN
 
 	IF (academic_year not in (Select AYcode from academic_year)) AND (academic_year is not NULL) THEN
 		SET academic_year := NULL;
-	END IF;
-    
-	IF (answer not in (Select answer_id from questionnaire)) AND (answer is not NULL) THEN
-		SET answer := NULL;
 	END IF;
 
 	-- Query for getting the questionnaire's answer
@@ -73,11 +70,7 @@ BEGIN
 		NATURAL JOIN program p
 		NATURAL JOIN ay_faculty_pm 
 		NATURAL JOIN faculty f
-    WHERE 
-		( answer is null
-		or q.answer_id = answer
-		)
-	AND
+    WHERE
 		( lecturer is null
 		or q.Lcode = lecturer
 		)
@@ -106,3 +99,4 @@ BEGIN
 		or m.Mcode = module
 		);
 END
+//

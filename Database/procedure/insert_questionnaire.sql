@@ -1,3 +1,6 @@
+USE pe2018;
+DROP PROCEDURE IF EXISTS insert_questionnaire;
+DELIMITER //
 CREATE PROCEDURE `insert_questionnaire`(input_Ccode VARCHAR(10), input_Lcode VARCHAR(10), question_1_input Varchar(10), question_2_input Varchar(10), question_3_input Varchar(10),
 				       question_4_input Varchar(10), question_5_input Varchar(10), question_6_input Varchar(10), question_7_input Varchar(10), question_8_input Varchar(10), 
 					question_9_input Varchar(10), question_10_input Varchar(10), question_11_input Varchar(10), question_12_input Varchar(10), question_13_input Varchar(10),
@@ -15,3 +18,4 @@ BEGIN
 		CAST(question_12_input AS NCHAR), CAST(question_13_input AS NCHAR), CAST(question_14_input AS NCHAR), CAST(question_15_input AS NCHAR),
 		CAST(question_16_input AS NCHAR), CAST(question_17_input AS NCHAR), CAST(question_18_input AS NCHAR));
 END
+//

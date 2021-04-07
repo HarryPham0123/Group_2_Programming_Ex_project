@@ -1,3 +1,6 @@
+USE pe2018;
+DROP PROCEDURE IF EXISTS get_code;
+DELIMITER //
 CREATE PROCEDURE `get_code`()
 BEGIN
 	SELECT ay.AYcode,
@@ -16,3 +19,4 @@ BEGIN
 		NATURAL JOIN ay_faculty_pm 
 		NATURAL JOIN faculty f;
 END
+//

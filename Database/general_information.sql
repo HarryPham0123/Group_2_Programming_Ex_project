@@ -1,6 +1,6 @@
 USE pe2018;
-DELIMITER //
 DROP PROCEDURE IF EXISTS `general_information`;
+DELIMITER //
 CREATE PROCEDURE `general_information`(
 	academic_year VARCHAR(50), 
 	semester VARCHAR(50), 
@@ -41,10 +41,15 @@ END IF;
 
 -- Query for getting the general information
 SELECT ay.AYcode as 'Academic Year code', 
+	s.Scode,
 	lec.Lname as 'Lecturer',
+    lec.Lcode,
 	f.Fname as 'Faculty',
+    f.Fcode,
 	p.Pname as 'Program',
+    p.Pcode,
 	m.Mname as 'Module',
+    m.Mcode,
 	c.Ccode as 'Class code',
 	c.size as 'Class size'
 FROM class c
