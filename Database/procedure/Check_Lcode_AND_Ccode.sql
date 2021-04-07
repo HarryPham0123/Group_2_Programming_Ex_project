@@ -15,11 +15,11 @@ BEGIN
 END
 
 -- Check Lecturer code in DB example
-call your_db_name.check_Lcode('L001v', @Lcode_check);
+call YOUR_DB_NAME.check_Lcode('L001v', @Lcode_check);
 select @Lcode_check as Lcode_check;
 
 -- Check Class code in DB example
-call your_db_name.check_Ccode('C001t', @Ccode_check);
+call YOUR_DB_NAME.check_Ccode('C001t', @Ccode_check);
 select @Ccode_check as Ccode_check;
 
 -- Code explanation:
