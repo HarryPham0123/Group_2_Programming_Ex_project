@@ -28,16 +28,16 @@ public class ModuleRoute {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Faculty faculty) {
-        moduleService.save(faculty);
+    public Response insert(Module module) {
+        moduleService.save(module);
         return Response.ok().entity("New faculty successfully inserted").build();
     }
 
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response update(@PathParam("code") String code, Faculty faculty) {
-        moduleService.update(code, faculty);
+    public Response update(@PathParam("code") String code, Module module) {
+        moduleService.update(code, module);
         return Response.ok().entity("Successfully updated").build();
     }
 

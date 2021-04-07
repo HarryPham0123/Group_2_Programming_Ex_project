@@ -22,12 +22,12 @@ public class GeneralRoute {
             @QueryParam("module") String module,
             @QueryParam("class") String clazz,
             @QueryParam("lecturer") String lecturer
-    ) throws Exception {
+    ) {
         try {
             Code code = new Code(academic_year, semester, faculty, program, module, clazz, lecturer);
             return Response
                     .status(Response.Status.OK)
-                    .entity(code)
+                    .entity(procedureService.getAll(code))
                     .build();
         } catch (Exception exception) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();

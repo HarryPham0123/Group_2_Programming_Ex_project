@@ -4,18 +4,19 @@ import com.surveyapp.model.Code;
 import com.surveyapp.model.Questionnaire;
 
 public class ProcedureService {
-    private ProcedureBaseDAO procedureDAO = new ProcedureDAO("general_information").setParameters();
+    /*FIXME: procedureDAO and getQuestionnaireDAO generics type*/
+    private GetQuestionnaireDAO procedureDAO = new GetQuestionnaireDAO("general_information");
     private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO("get_answers");
     private InsertQuestionnaireDAO insertQuestionnaireDAO = new InsertQuestionnaireDAO("insert_questionnaire");
     private GetCodeDAO getCodeDAO = new GetCodeDAO("get_code");
 
     //Get all general information
-    public String getAll() throws Exception {
-        return procedureDAO.executeProcedure();
+    public String getAll(Code code) throws Exception {
+        return procedureDAO.setParameters(code).executeProcedure();
     }
 
     //Insert new questionnaire
-    public String insertQuestionnaire(Questionnaire questionnaire) throws Exception {
+    public String insertQuestionnaire(Questionnaire questionnaire) throws  Exception{
         return insertQuestionnaireDAO.setParameters(questionnaire).executeProcedure();
     }
 

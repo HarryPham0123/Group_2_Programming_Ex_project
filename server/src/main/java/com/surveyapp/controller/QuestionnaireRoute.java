@@ -1,5 +1,6 @@
 package com.surveyapp.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.surveyapp.model.Code;
 import com.surveyapp.model.Questionnaire;
 import com.surveyapp.service.procedure.ProcedureService;
@@ -37,10 +38,19 @@ public class QuestionnaireRoute {
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertQuestionnaire(Questionnaire questionnaire) {
         try {
-            return Response.status(200).entity(procedureService.insertQuestionnaire(questionnaire)).build();
+            procedureService.insertQuestionnaire(questionnaire);
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", "successfully insert to database");
+            return Response
+                    .status(Response.Status.CREATED)
+                    .entity(jsonObjectBuilder.build()).build();
         } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
             exception.printStackTrace();
-            return null;
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(jsonObjectBuilder.build()).build();
         }
     }
 }

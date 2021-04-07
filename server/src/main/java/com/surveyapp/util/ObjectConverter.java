@@ -33,6 +33,7 @@ public class ObjectConverter {
         ResultSetMetaData metaData = resultSet.getMetaData();
         List<Object> objectList = new ArrayList<Object>();
 
+
         while (resultSet.next()) {
             Object newInstance = mappingClass.getConstructor().newInstance();
             List<Field> fields = new ArrayList<Field>(Arrays.asList(newInstance.getClass().getDeclaredFields()));
@@ -78,9 +79,11 @@ public class ObjectConverter {
     public static String toJSON(ResultSet resultSet) throws Exception{
         ResultSetMetaData metaData = resultSet.getMetaData();
 
+        if (metaData.getColumnCount() == 0) {
+            return null;
+        }
 
         JsonArrayBuilder entryListModel = Json.createArrayBuilder();
-
         while(resultSet.next()) {
             JsonObjectBuilder entryModel = Json.createObjectBuilder();
 
