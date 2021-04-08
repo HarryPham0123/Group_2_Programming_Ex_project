@@ -8,6 +8,9 @@
 
 
 ## Server API
+
+### Questionnaire route
+
 `GET:` /survey/api/questionnaire
 + Get all questionnaire with corresponding filters.
 + Params: 
@@ -19,16 +22,10 @@
     + `class=[String or null]`
     + `lecturer=[String or null]`
 
-`GET:` /survey/api/general
-+ Get all available code with corresponding filters.
+`POST:` /survey/api/questionnaire
++ Create a new survey.
 + Params: 
-    + `academic_year=[String or null]`
-    + `semester=[String or null]`
-    + `faculty=[String or null]`
-    + `program=[String or null]`
-    + `module=[String or null]`
-    + `class=[String or null]`
-    + `lecturer=[String or null]`
++ Request form: `{"lcode": "L001M", "ccode": "C005I", "question_list": [{"question": "attendance", "answer": "often"}, {"question": "gender", "answer": "female"}, {"question": "1", "answer": 5}, {...}, {...}]}`
 
 `GET:` /survey/api/questionnaire/attendance_question
 + Get attendance questionnaire statistic.
@@ -53,7 +50,52 @@
 
 ...Same as `GET` request question_3, question_4,... etc
 
-`POST:` /survey/api/questionnaire
-+ Create a new survey.
+### General route
+
+`GET:` /survey/api/general
++ Get all available code with corresponding filters.
 + Params: 
-+ Request form: `{"lcode": "L001M", "ccode": "C005I", "question_list": [{"question": "attendance", "answer": "often"}, {"question": "gender", "answer": "female"}, {"question": "1", "answer": 5}, {...}, {...}]}`
+    + `academic_year=[String or null]`
+    + `semester=[String or null]`
+    + `faculty=[String or null]`
+    + `program=[String or null]`
+    + `module=[String or null]`
+    + `class=[String or null]`
+    + `lecturer=[String or null]`
+
+### Academic year route
+`GET:` /survey/api/academic_year
++ Get all available academic year code
+
+`GET:` /survey/api/academic_year/{code}
++ Get academic year with the corresponding code.
+
+`POST:` /survey/api/academic_year
++ Submit a new academic year code in request body with JSON format to create new academic year code
++ __Example body:__ {code: "A001M"}
+
+`DELETE:` /survey/api/academic_year/{code}
++ Delete the available code
++ __Request body:__ NONE
+
+### Semester route
+`GET:` /survey/api/semesters
++ Get all available semester code and name
++ __Request body:__ NONE
+
+`GET:` /survey/api/semesters/{code}
++ Get the semester code and name with the corresponding code.
++ __Request body:__ NONE
+
+`POST:` /survey/api/semesters
++ Submit a new semester code in request body with JSON format to create new academic year code
++ __Request body:__ NONE
++ __Example body:__ {code: "S004M", AYcode: "A001M"}
+
+`PUT:` /survey/api/semesters/{code}
++ Update the semester information with the corresponding code
++ __Request body:__ NONE
+
+`DELETE:` /survey/api/semesters/{code}
++ Delete the available code
++ __Request body:__ NONE
