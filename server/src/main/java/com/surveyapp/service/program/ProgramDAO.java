@@ -69,7 +69,7 @@ public class ProgramDAO implements DAO<Program> {
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Program program = (Program) ObjectConverter.toObject(Program.class, resultSet);
-            return Optional.ofNullable(faculty);
+            return Optional.ofNullable(program);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

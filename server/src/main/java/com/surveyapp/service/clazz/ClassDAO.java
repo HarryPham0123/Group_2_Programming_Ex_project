@@ -13,6 +13,9 @@ public class ClassDAO implements DAO<Class> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM class";
     private String getByCodeScript = "SELECT * FROM class WHERE Ccode = ?";
+    private String saveScript = "INSERT INTO class (Ccode, size, Scode, Mcode) VALUES(?, ?, ?, ?)";
+    private String updateScript = "UPDATE class SET Ccode = ?, size = ?, Scode = ?, Mcode = ? WHERE Ccode = ?";
+    private String deleteScript = "DELETE FROM class WHERE  Ccode = ?";
 
     private void executeInTransaction(Consumer<Connection> action) {
         try {
@@ -82,17 +85,65 @@ public class ClassDAO implements DAO<Class> {
 
     @Override
     public void save(Class aClass) {
-        
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+            preparedStatement.setString(1, aClass.getCode());
+            preparedStatement.setInt(2, aClass.getSize());
+            preparedStatement.setString(3, aClass.getScode());
+            preparedStatement.setString(4, aClass.getMcode());
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public void update(String code, Class aClass) {
-
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+            preparedStatement.setString(1, aClass.getCode());
+            preparedStatement.setInt(2, aClass.getSize());
+            preparedStatement.setString(3, aClass.getScode());
+            preparedStatement.setString(4, aClass.getMcode());
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally  {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public void delete(String code) {
-
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+            preparedStatement.setString(1, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch(Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
 }
