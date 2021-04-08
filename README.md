@@ -20,7 +20,7 @@
     + `lecturer=[String or null]`
 
 `GET:` /survey/api/general
-+ Get all academic information including code with corresponding name with corresponding filters.
++ Get all available code with corresponding filters.
 + Params: 
     + `academic_year=[String or null]`
     + `semester=[String or null]`
