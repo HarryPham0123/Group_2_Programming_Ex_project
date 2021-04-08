@@ -113,6 +113,7 @@ public class ClassDAO implements DAO<Class> {
             preparedStatement.setInt(2, aClass.getSize());
             preparedStatement.setString(3, aClass.getScode());
             preparedStatement.setString(4, aClass.getMcode());
+            preparedStatement.setString(5, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
