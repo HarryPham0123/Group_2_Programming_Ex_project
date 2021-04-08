@@ -1,14 +1,13 @@
 package com.surveyapp.service.procedure;
 
 import com.surveyapp.model.Code;
-import lombok.NonNull;
 
 import java.sql.SQLException;
 
-public class GetCodeDAO extends ProcedureBaseDAO {
-    private String procedureQuery = "{CALL get_code(?, ?, ?, ?, ?, ?, ?)}";
+public class GetGeneralDAO extends ProcedureBaseDAO {
+    private String procedureQuery = "{CALL general_information(?, ?, ?, ?, ?, ?, ?)}";
 
-    public GetCodeDAO setParameters(Code code) throws SQLException {
+    public GetGeneralDAO setParameters(Code code) throws SQLException {
         //Get database connection
         statement = connection.prepareCall(procedureQuery);
 
@@ -24,4 +23,3 @@ public class GetCodeDAO extends ProcedureBaseDAO {
         return this;
     }
 }
-

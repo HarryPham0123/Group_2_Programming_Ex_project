@@ -4,11 +4,10 @@ import com.surveyapp.model.Code;
 import com.surveyapp.model.Questionnaire;
 
 public class ProcedureService {
-    /*FIXME: procedureDAO and getQuestionnaireDAO generics type*/
-    private GetQuestionnaireDAO procedureDAO = new GetQuestionnaireDAO("general_information");
-    private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO("get_answers");
-    private InsertQuestionnaireDAO insertQuestionnaireDAO = new InsertQuestionnaireDAO("insert_questionnaire");
-    private GetCodeDAO getCodeDAO = new GetCodeDAO("get_code");
+    private GetGeneralDAO procedureDAO = new GetGeneralDAO();
+    private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO();
+    private InsertQuestionnaireDAO insertQuestionnaireDAO = new InsertQuestionnaireDAO();
+    private GetCodeDAO getCodeDAO = new GetCodeDAO();
 
     //Get all general information
     public String getAll(Code code) throws Exception {
