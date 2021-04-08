@@ -66,9 +66,11 @@
 ### Academic year route
 `GET:` /survey/api/academic_year
 + Get all available academic year code
++ __Request body:__ NONE
 
 `GET:` /survey/api/academic_year/{code}
 + Get academic year with the corresponding code.
++ __Request body:__ NONE
 
 `POST:` /survey/api/academic_year
 + Submit a new academic year code in request body with JSON format to create new academic year code
@@ -89,7 +91,6 @@
 
 `POST:` /survey/api/semesters
 + Submit a new semester code in request body with JSON format to create new academic year code
-+ __Request body:__ NONE
 + __Example body:__ {code: "S004M", AYcode: "A001M"}
 
 `PUT:` /survey/api/semesters/{code}
