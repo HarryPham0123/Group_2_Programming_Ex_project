@@ -19,6 +19,17 @@
     + `class=[String or null]`
     + `lecturer=[String or null]`
 
+`GET:` /survey/api/general
++ Get all academic information including code with corresponding name with corresponding filters.
++ Params: 
+    + `academic_year=[String or null]`
+    + `semester=[String or null]`
+    + `faculty=[String or null]`
+    + `program=[String or null]`
+    + `module=[String or null]`
+    + `class=[String or null]`
+    + `lecturer=[String or null]`
+
 `GET:` /survey/api/questionnaire/attendance_question
 + Get attendance questionnaire statistic.
 + Params: same as router
