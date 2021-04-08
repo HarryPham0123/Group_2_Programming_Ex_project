@@ -78,8 +78,8 @@ public class FacultyDAO implements DAO<Faculty> {
     public void save(Faculty faculty) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, faculty.getFacultyCode());
-            preparedStatement.setString(2, faculty.getFacultyName());
+            preparedStatement.setString(1, faculty.getCode());
+            preparedStatement.setString(2, faculty.getName());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -98,8 +98,8 @@ public class FacultyDAO implements DAO<Faculty> {
     public void update(String code, Faculty faculty) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, faculty.getFacultyCode());
-            preparedStatement.setString(2, faculty.getFacultyName());
+            preparedStatement.setString(1, faculty.getCode());
+            preparedStatement.setString(2, faculty.getName());
             preparedStatement.setString(3, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {

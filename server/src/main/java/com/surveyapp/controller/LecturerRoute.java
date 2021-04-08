@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 
 @Path("/lecturers")
@@ -14,7 +15,6 @@ public class LecturerRoute {
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Lecturer> getAll() {
         List<Lecturer> lecturerList = lecturerService.getAll();
-        System.out.println(lecturerList);
         return lecturerList;
     }
 
@@ -24,5 +24,27 @@ public class LecturerRoute {
     public Lecturer getByCode(@PathParam("code") String code) {
         Lecturer lecturer = lecturerService.get(code);
         return lecturer;
+    }
+
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response insert(Lecturer lecturer) {
+        lecturerService.save(lecturer);
+        return Response.ok().entity("New lecturer successfully inserted").build();
+    }
+
+    @PUT
+    @Path("/{code}")
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response update(@PathParam("code") String code, Lecturer lecturer) {
+        lecturerService.update(code, lecturer);
+        return Response.ok().entity("Successfully updated").build();
+    }
+
+    @DELETE
+    @Path("/{code}")
+    public Response delete(@PathParam("code") String code) {
+        lecturerService.delete(code);
+        return Response.ok().entity("Successfully deleted").build();
     }
 }

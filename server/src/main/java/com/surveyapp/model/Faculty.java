@@ -4,33 +4,33 @@ import javax.persistence.Column;
 
 public class Faculty {
     @Column(name = "Fcode")
-    private String facultyCode;
+    private String code;
 
     @Column(name = "Fname")
-    private String facultyName;
+    private String name;
 
-    public Faculty(String facultyCode, String facultyName) {
-        this.facultyCode = facultyCode;
-        this.facultyName = facultyName;
+    public Faculty(String code, String name) {
+        this.code = code;
+        this.name = name;
     }
 
     public Faculty() {
         this(null, null);
     }
 
-    public String getFacultyCode() {
-        return facultyCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setFacultyCode(String facultyCode) {
-        this.facultyCode = facultyCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getFacultyName() {
-        return facultyName;
+    public String getName() {
+        return name;
     }
 
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
+    public void setName(String name) {
+        this.name = name;
     }
 }
