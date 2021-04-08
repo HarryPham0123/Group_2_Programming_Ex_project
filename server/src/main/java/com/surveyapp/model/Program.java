@@ -11,7 +11,7 @@ public class Program {
 
     public Program(String code, String name) {
         this.code = code;
-        this.name =name;
+        this.name = name;
     }
 
     public Program() {
