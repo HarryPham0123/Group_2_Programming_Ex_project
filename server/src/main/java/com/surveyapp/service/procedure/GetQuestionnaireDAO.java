@@ -6,17 +6,9 @@ import lombok.NonNull;
 import java.sql.SQLException;
 
 public class GetQuestionnaireDAO extends ProcedureBaseDAO {
-    private String procedureQuery = "{CALL %s(?, ?, ?, ?, ?, ?, ?)}";
-    private String procedureName;
-
-    public GetQuestionnaireDAO(@NonNull String procedureName) {
-        this.procedureName = procedureName;
-    }
+    private String procedureQuery = "{CALL get_answers(?, ?, ?, ?, ?, ?, ?)}";
 
     public GetQuestionnaireDAO setParameters(Code code) throws SQLException {
-        //Set table-name
-        this.procedureQuery = String.format(this.procedureQuery, this.procedureName);
-
         //Get database connection
         statement = connection.prepareCall(procedureQuery);
 
