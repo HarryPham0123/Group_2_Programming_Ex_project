@@ -13,6 +13,10 @@ import java.util.function.Consumer;
 public class ProgramDAO implements DAO<Program> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM program";
+    private String getByCodeScript = "SELECT * FROM program WHERE Pcode = ?";
+    private String saveScript = "INSERT INTO program (Pcode, Pname) VALUES(?, ?)";
+    private String updateScript = "UPDATE program SET Pcode = ?, Pname = ? WHERE Pcode = ?";
+    private String deleteScript = "DELETE FROM program WHERE  Pcode = ?";
 
     private void executeInTransaction(Consumer<Connection> action) {
         try {
@@ -60,22 +64,75 @@ public class ProgramDAO implements DAO<Program> {
 
     @Override
     public Optional<Program> get(String id) {
-        return Optional.empty();
+       try {
+            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Program program = (Program) ObjectConverter.toObject(Program.class, resultSet);
+            return Optional.ofNullable(faculty);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public void save(Program program) {
-
+         try{
+            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+            preparedStatement.setString(1, program.getCode());
+            preparedStatement.setString(2, program.getName());
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public void update(String code, Program program) {
-
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+            preparedStatement.setString(1, program.getCode());
+            preparedStatement.setString(2, program.getName());
+            preparedStatement.setString(3, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally  {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public void delete(String code) {
-
+         try {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+            preparedStatement.setString(1, code);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch(Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
-
 }
