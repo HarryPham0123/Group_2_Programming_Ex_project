@@ -29,7 +29,7 @@ public class SemesterRoute {
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Semester semester) {
         semesterService.save(semester);
-        return Response.ok().entity("New faculty successfully inserted").build();
+        return Response.ok().entity("New semester successfully inserted").build();
     }
 
     @PUT

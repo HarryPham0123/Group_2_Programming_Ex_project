@@ -13,6 +13,8 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM academic_year";
     private String getByCodeScript = "SELECT * FROM academic_year WHERE AYcode = ?";
+    private String saveScript = "INSERT INTO  academic_year(AYcode) VALUES (?)";
+    private String deleteScript = "DELETE FROM academic_year WHERE AYcode = ? ";
     @Override
     public List<AcademicYear> getAll() {
         List<AcademicYear> academicYearList = null;
@@ -49,12 +51,11 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     }
 
     @Override
-    public void save(AcademicYear academicYear) {//tbh this should be named insert lmao
-        String script = "INSERT INTO  academic_year VALUES (?)";
+    public void save(AcademicYear academicYear) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(script);
+            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, academicYear.getCode());
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -62,16 +63,16 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
 
     @Override
     public void update(String code, AcademicYear academicYear) {
-        // Unnecessary
+
     }
 
     @Override
     public void delete(String code) {
-        String script = "DELETE FROM academic_year WHERE Mcode = ? ";
+
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(script);
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
