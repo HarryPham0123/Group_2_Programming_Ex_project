@@ -1,0 +1,168 @@
+.clear
+{
+    clear: both;
+}
+.container-fluid
+{
+    width: 100%;
+}
+.box
+{
+    width: 80%;
+    margin: auto;
+    padding: 5px;
+}
+.intro
+{
+    background-image: url("image/background.jpg");
+    height: 300px;
+    background-size: cover;
+    
+}
+*{
+  margin:15px 5px 15px 5px;
+}
+.logo,#intro-title  
+{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 45px;
+}
+#intro-title  
+{
+    width: 90%;
+    background-color: #fff;
+    opacity: 0.7;
+    padding-bottom: 40px;
+}
+
+.opening
+{
+    width: 97%;
+    background-color: #fff;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    border-radius: 10px;
+    border: 2px solid rgb(145, 145, 145);
+    box-shadow: 10px 10px 5px gray;
+}
+#paragraph
+{
+    font-size: 18px;
+}
+
+.acad-year, .semester, .faculty, .program, .module
+{
+    width: 80%;
+    border-bottom:solid 2px #000;
+}
+.personal, .organization, .workload, .teaching
+{
+    width: 98%;
+    background-color: #fff;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    border-radius: 10px;
+    border: 2px solid rgb(145, 145, 145);
+    box-shadow: 10px 10px 5px gray;
+}
+.tag1, .tag2, .tag3, .tag4
+{
+    width: 100%;
+    height: 100%;
+    background-color: #f58427;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#subtitle,#subtitle1, #subtitle2, #subtitle3
+{
+    font-size: 28px;
+    color: #fff;
+}
+#notice1, #notice2
+{
+    font-size: 16px;
+    color: red;
+    text-align: center;
+}
+#comment
+{
+    background-color: white;
+    width: 80%;
+    height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.submit-btn
+{
+    width: 100px;
+    height: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fc7608;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    color: #fff;
+}
+.sel-class,.sel-lec
+{
+    
+    border-radius: 5px;
+    width: 180px;
+    height: 30px;
+    border-color:gray;
+    text-align: center;
+}
+.sel-class1
+{
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.acad-year, .semester, .faculty, .program, .module
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    border: gray solid 1.55px ;
+    border-radius: 5px;
+    height: 23px;
+}
+.box2
+{
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.box3
+{
+    width: 65%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.box4
+{
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+body
+{
+    font-size: 17px;
+    background-color: #ffb9809d;
+}

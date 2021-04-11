@@ -122,6 +122,35 @@ Create table If not exists questionnaire
     question_18 Varchar(100)
 )
 ENGINE = InnoDB;
+				    
+
+-- -----------------------------------------------------
+-- Table question_support_gender
+-- -----------------------------------------------------
+				    
+Create table if not exists question_support_gender(
+     gender Varchar(10),
+	PRIMARY KEY (gender)
+);
+				    
+
+-- -----------------------------------------------------
+-- Table question_support_attendance
+-- -----------------------------------------------------
+				    
+Create table if not exists question_support_attendance(
+     attendance Varchar(10),
+	PRIMARY KEY (attendance)
+);
+				    
+-- -----------------------------------------------------
+-- Table question_support_number
+-- -----------------------------------------------------
+				    
+Create table if not exists question_support_number(
+     answer_key Varchar(10),
+	PRIMARY KEY (answer_key)
+);
 
 
 -- -----------------------------------------------------
@@ -357,8 +386,32 @@ Values
     '2', '1', '3', '4', '5', '1', 
     '5', '2', 'Hi 4')
 ;
+	
+-- Support table to summary the gender, attendance and answer of each student
+INSERT INTO question_support_gender(gender) VALUES
+	('male'),
+	('female'),
+	('other')
+;
 	       
-	       
+
+INSERT INTO question_support_attendance(attendance) VALUES
+	('never'),
+	('rarely'),
+	('sometimes'),
+	('often'),
+    	('always')
+;
+
+INSERT INTO question_support_number(answer_key) VALUES
+	('1'),
+	('2'),
+	('3'),
+    	('4'),
+    	('5')
+;
+				    
+				    
 -- A class has any number of lecturers. (Data constrain)
 -- This case, we asume a class can have 1, 2 or 3 lecturers
 -- -> Lecturers in each class must be unique     

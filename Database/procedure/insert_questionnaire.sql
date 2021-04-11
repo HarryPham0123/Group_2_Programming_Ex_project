@@ -21,3 +21,4 @@ IF EXISTs (SELECT lc.Ccode, lc.Lcode
     question_13_input , question_14_input , question_15_input , question_16_input , question_17_input , question_18_input);
 END IF;
 END
+

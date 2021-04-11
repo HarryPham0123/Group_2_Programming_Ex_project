@@ -1,3 +1,7 @@
+USE pe2018;
+DROP PROCEDURE IF EXISTS check_Lcode;
+
+DELIMITER //
 -- Stored procedure to check Lecturer code in DB
 CREATE PROCEDURE `check_Lcode`(IN Lecturer_code VARCHAR(10), OUT Lcode_check INT)
 BEGIN
@@ -5,6 +9,9 @@ BEGIN
     FROM lecturer l
     WHERE l.Lcode = Lecturer_code;
 END
+//
+
+DROP PROCEDURE IF EXISTS check_Ccode //
 
 -- Stored procedure to check Class code in DB
 CREATE PROCEDURE `check_Ccode`(IN Class_code VARCHAR(10), OUT Ccode_check INT)
@@ -13,7 +20,8 @@ BEGIN
 	FROM Class c
 	WHERE c.Ccode = Class_code;
 END
-
+//
+DELIMITER ;
 -- Check Lecturer code in DB example
 call YOUR_DB_NAME.check_Lcode('L001v', @Lcode_check);
 select @Lcode_check as Lcode_check;
