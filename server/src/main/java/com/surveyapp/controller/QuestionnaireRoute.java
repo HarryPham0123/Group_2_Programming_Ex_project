@@ -25,7 +25,7 @@ public class QuestionnaireRoute {
             @QueryParam("lecturer") String lecturer
     ) {
         try {
-            Code code = new Code(academic_year, semester, faculty, program, module, clazz, lecturer);
+            Code code = new Code(academic_year, semester, faculty, program, module, lecturer, clazz);
             return Response.status(Response.Status.OK).entity(procedureService.getQuestionnaire(code)).build();
         } catch(Exception exception) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
