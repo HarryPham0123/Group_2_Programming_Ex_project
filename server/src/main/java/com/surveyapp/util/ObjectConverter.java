@@ -110,6 +110,26 @@ public class ObjectConverter {
         }
         return entryListModel.build().toString();
     }
+
+    @NotNull(message = "Can not be null")
+    public static String toSummaryJSON(ResultSet resultSet) throws Exception {
+        ResultSetMetaData metaData = resultSet.getMetaData();
+
+        if(metaData.getColumnCount() == 0) {
+            return null;
+        }
+
+        JsonArrayBuilder entryListModel = Json.createArrayBuilder();
+        while(resultSet.next()) {
+            String keyJSON = resultSet.getString(1);
+            String valueJSON = resultSet.getString(2);
+            JsonObject entry = Json.createObjectBuilder().add(keyJSON, valueJSON).build();
+            entryListModel.add(entry);
+        }
+
+        return entryListModel.build().toString();
+    }
+
     public static String toJSON(Object mappingObject) {
         try {
             return new ObjectMapper().writeValueAsString(mappingObject);
