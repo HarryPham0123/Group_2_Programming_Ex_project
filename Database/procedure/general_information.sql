@@ -38,11 +38,12 @@ IF (academic_year not in (Select AYcode from academic_year)) AND (academic_year 
 END IF;
 
 -- Query for getting the general information
-SELECT ay.AYcode as 'Academic Year code', 
-	f.Fname as 'Faculty',
-        p.Pname as 'Program',
-        m.Mname as 'Module',
-        c.Ccode as 'Class code',
+SELECT ay.AYcode as 'Academic Year code',
+	s.Scode as 'Semester',
+	f.Fcode as 'Faculty',
+	p.Pcode as 'Program',
+	m.Mcode as 'Module',
+	c.Ccode as 'Class code',
 	c.size as 'Class size'
 FROM class c
    NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
