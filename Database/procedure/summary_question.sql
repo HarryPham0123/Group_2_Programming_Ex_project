@@ -1,4 +1,7 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `summary_question`(
+USE pe2018;
+DROP PROCEDURE IF EXISTS summary_question;
+DELIMITER //
+CREATE PROCEDURE `summary_question`(
 	input_academic_year VARCHAR(50), 
 	input_semester VARCHAR(50), 
 	input_faculty VARCHAR(50), 
@@ -84,3 +87,4 @@ END IF;
     EXECUTE stmt ;
 	DEALLOCATE PREPARE stmt;
 END
+//
