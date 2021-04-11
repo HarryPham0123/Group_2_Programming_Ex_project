@@ -8,7 +8,9 @@ BEGIN
         f.Fcode,
         p.Pcode,
         m.Mcode,
-        c.Ccode
+        c.Ccode,
+        lec.Lcode,
+        c.size
 	FROM class c
 		NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
 		NATURAL JOIN semester s
