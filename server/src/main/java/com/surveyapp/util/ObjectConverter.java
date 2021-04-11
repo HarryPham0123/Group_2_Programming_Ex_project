@@ -119,15 +119,14 @@ public class ObjectConverter {
             return null;
         }
 
-        JsonArrayBuilder entryListModel = Json.createArrayBuilder();
+        JsonObjectBuilder entryModel = Json.createObjectBuilder();
         while(resultSet.next()) {
             String keyJSON = resultSet.getString(1);
             String valueJSON = resultSet.getString(2);
-            JsonObject entry = Json.createObjectBuilder().add(keyJSON, valueJSON).build();
-            entryListModel.add(entry);
+            entryModel.add(keyJSON, valueJSON);
         }
 
-        return entryListModel.build().toString();
+        return entryModel.build().toString();
     }
 
     public static String toJSON(Object mappingObject) {
