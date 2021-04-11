@@ -1,3 +1,6 @@
+USE pe2018;
+DROP PROCEDURE IF EXISTS summary_gender;
+DELIMITER //
 CREATE DEFINER=`HoangPham`@`localhost` PROCEDURE `summary_gender`(
 	input_academic_year VARCHAR(50), 
 	input_semester VARCHAR(50), 
@@ -81,3 +84,4 @@ AND
 	)
 GROUP BY 1;
 END
+//
