@@ -14,12 +14,11 @@ import java.util.List;
 import javax.json.*;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Response;
 
 /**
  * Mapping utilization to map the corresponding column into POJO (Plain old Java object) or JSON format
- * @version 0.0.2
- * @author Khoa Dang Nguyen
+ * @version 0.0.3
+ * @author Khoa Dang Nguyen, Phan Cong Huy
  * */
 public class ObjectConverter {
     /**
@@ -111,6 +110,11 @@ public class ObjectConverter {
         return entryListModel.build().toString();
     }
 
+    /**
+     * Map the 2 columns into JSON, the first column is the VALUE and the second one is the KEY in JSON format
+     * @param resultSet result set retrieve from the database
+     * @return JSON array
+     * */
     @NotNull(message = "Can not be null")
     public static String toSummaryJSON(ResultSet resultSet) throws Exception {
         ResultSetMetaData metaData = resultSet.getMetaData();
@@ -129,6 +133,11 @@ public class ObjectConverter {
         return entryModel.build().toString();
     }
 
+    /**
+     * Map the Plain old Java Object into JSON format, in which values are the member variables with the corresponding values.
+     * @param mappingObject object to be mapped
+     * @return JSON format of the object
+     * @see ObjectMapper*/
     public static String toJSON(Object mappingObject) {
         try {
             return new ObjectMapper().writeValueAsString(mappingObject);
