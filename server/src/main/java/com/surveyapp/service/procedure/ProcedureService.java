@@ -8,6 +8,8 @@ public class ProcedureService {
     private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO();
     private InsertQuestionnaireDAO insertQuestionnaireDAO = new InsertQuestionnaireDAO();
     private GetCodeDAO getCodeDAO = new GetCodeDAO();
+    private GetSummaryAttendanceDAO getSummaryAttendanceDAO= new GetSummaryAttendanceDAO();
+    private GetSummaryGenderDAO getSummaryGenderDAO = new GetSummaryGenderDAO();
 
     //Get all general information
     public String getAll(Code code) throws Exception {
@@ -28,4 +30,16 @@ public class ProcedureService {
     public String getCode(Code code) throws Exception {
         return getCodeDAO.setParameters(code).executeProcedure();
     }
+
+    // Retrieve Summary Attendance
+    public String getSummaryAttendance(Code code) throws Exception {
+        return getSummaryAttendanceDAO.setParameters(code).executeProcedure();
+    }
+
+    // Retrieve Summary Gender
+    public String getSummaryGender(Code code) throws Exception {
+        return getSummaryGenderDAO.setParameters(code).executeProcedure();
+    }
+
+
 }
