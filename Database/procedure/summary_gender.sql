@@ -1,7 +1,7 @@
 USE pe2018;
 DROP PROCEDURE IF EXISTS summary_gender;
 DELIMITER //
-CREATE DEFINER=`HoangPham`@`localhost` PROCEDURE `summary_gender`(
+CREATE PROCEDURE `summary_gender`(
 	input_academic_year VARCHAR(50), 
 	input_semester VARCHAR(50), 
 	input_faculty VARCHAR(50), 
