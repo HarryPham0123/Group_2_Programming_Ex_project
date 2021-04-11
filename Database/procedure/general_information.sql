@@ -1,3 +1,5 @@
+USE pe2018;
+DROP PROCEDURE IF EXISTS general_information;
 DELIMITER //
 CREATE PROCEDURE `general_information`(
 	academic_year VARCHAR(50), 
@@ -44,6 +46,7 @@ SELECT ay.AYcode as 'Academic Year code',
 	p.Pcode as 'Program',
 	m.Mcode as 'Module',
 	c.Ccode as 'Class code',
+    lec.Lcode as 'Lecturer code',
 	c.size as 'Class size'
 FROM class c
    NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
