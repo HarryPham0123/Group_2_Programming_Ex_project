@@ -206,7 +206,7 @@ function getData7(){
 //Ham DataRender de keo data ve display, nhet vao bang
 function dataRender1(data) {
 data.map(val=>{
-  $(`<tr>
+  $(`<tr class=${val.code}>
     <td>${val.code}</td>
     <td><button id=${val.code} type="button" onClick="deleteAcademicYear(this.id)">Delete</button></td>
       <tr>`).appendTo(".table-list1");
@@ -214,7 +214,7 @@ data.map(val=>{
 }
 function dataRender2(data) {
   data.map(val=>{
-    $(`<tr>
+    $(`<tr class=${val.code}>
       <td>${val.code}</td>
       <td>${val.aycode}</td>
       <td><button id=${val.code} type="button" onClick="deleteSemester(this.id)">Delete</button></td>
@@ -224,7 +224,7 @@ function dataRender2(data) {
  }
   function dataRender3(data) {
     data.map(val=>{
-      $(`<tr>
+      $(`<tr class=${val.code}>
         <td>${val.code}</td>
         <td>${val.name}</td>
         <td><button id=${val.code} type="button" onClick="deleteFaculty(this.id)">Delete</button></td>
@@ -233,7 +233,7 @@ function dataRender2(data) {
 }
 function dataRender4(data) {
   data.map(val=>{
-    $(`<tr>
+    $(`<tr class=${val.code}>
       <td>${val.code}</td>
       <td>${val.name}</td>
       <td><button id=${val.code} type="button" onClick="deleteProgram(this.id)">Delete</button></td>
@@ -242,7 +242,7 @@ function dataRender4(data) {
 }
 function dataRender5(data) {
   data.map(val=>{
-    $(`<tr>
+    $(`<tr class=${val.code}>
       <td>${val.code}</td>
       <td>${val.name}</td>
       <td><button id=${val.code} type="button" onClick="deleteModule(this.id)">Delete</button></td>
@@ -251,7 +251,7 @@ function dataRender5(data) {
 }
 function dataRender6(data) {
   data.map(val=>{
-    $(`<tr>
+    $(`<tr class=${val.code}>
       <td>${val.code}</td>
       <td>${val.size}</td>
       <td>${val.scode}</td>
@@ -262,7 +262,7 @@ function dataRender6(data) {
 }
 function dataRender7(data) {
   data.map(val=>{
-    $(`<tr>
+    $(`<tr class=${val.code}>
       <td>${val.code}</td>
       <td>${val.name}</td>
       <td><button id=${val.code} type="button" onClick="deleteLecturer(this.id)">Delete</button></td>
@@ -291,6 +291,11 @@ function createAYear(){
       alert("Create new academic year successfully");
       }
   })
+	 //Load data dynamically right after click New button
+  $(`<tr  class=${code}>
+  <td>${code}</td>
+  <td><button id=${code} type="button" onClick="deleteAcademicYear(this.id)">Delete</button></td>
+    <tr>`).appendTo(".table-list1");
 }
 
 function createSemester(){
@@ -314,6 +319,12 @@ function createSemester(){
         alert("Create new semester successfully");
         }
     })
+	    //Load data dynamically right after click New button
+    $(`<tr  class=${code}>
+    <td>${code}</td>
+    <td>${aycode}</td>
+    <td><button id=${code} type="button" onClick="deleteSemester(this.id)">Delete</button></td>
+      <tr>`).appendTo(".table-list2");
   }
 
 
@@ -338,6 +349,12 @@ function createFaculty(){
         alert("Create new faculty successfully");
         }
     })
+	    //Load data dynamically right after click New button
+    $(`<tr class=${fcode}>
+    <td>${fcode}</td>
+    <td>${fname}</td>
+    <td><button id=${fcode} type="button" onClick="deleteFaculty(this.id)">Delete</button></td>
+      <tr>`).appendTo(".table-list3");
   }
 
 
@@ -362,6 +379,12 @@ function createFaculty(){
         alert("Create new program successfully");
         }
     })
+	      //Load data dynamically right after click New button
+    $(`<tr  class=${programcode}>
+    <td>${programcode}</td>
+    <td>${programname}</td>
+    <td><button id=${programcode} type="button" onClick="deleteProgram(this.id)">Delete</button></td>
+      <tr>`).appendTo(".table-list4");
   }
 
 
@@ -386,6 +409,11 @@ function createFaculty(){
         alert("Create new module successfully");
         }
     })
+	     $(`<tr  class=${code}>
+    <td>${code}</td>
+    <td>${name}</td>
+    <td><button id=${code} type="button" onClick="deleteModule(this.id)">Delete</button></td>
+      <tr>`).appendTo(".table-list5");
   }
 
 
@@ -414,6 +442,15 @@ function createFaculty(){
         alert("Create new class successfully");
         }
     })
+	      //Load data dynamically right after click New button
+    $(`<tr  class=${code}>
+    <td>${code}</td>
+    <td>${size}</td>
+    <td>${scode}</td>
+    <td>${mcode}</td>
+    <td><button id=${code} type="button" onClick="deleteClass(this.id)">Delete</button></td>
+      <tr>`).appendTo(".table-list6");
+ 
   }
 
 
@@ -438,12 +475,19 @@ function createFaculty(){
         alert("Create new lecturer successfully");
         }
     })
+	      $(`<tr class=${code}>
+    <td>${code}</td>
+    <td>${name}</td>
+    <td><button id=${code} type="button" onClick="deleteLecturer(this.id)">Delete</button></td>
+      <tr>`).appendTo(".table-list7");
   }
 
 
   //Delete functions
   function deleteAcademicYear(clicked_id)
   {
+	  //Delete the append row automatically
+    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
@@ -458,6 +502,8 @@ function createFaculty(){
   }
   function deleteSemester(clicked_id)
   {
+	  //Delete the append row automatically
+    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
@@ -472,6 +518,8 @@ function createFaculty(){
   }
   function deleteFaculty(clicked_id)
   {
+	  //Delete the append row automatically
+    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
@@ -486,6 +534,8 @@ function createFaculty(){
   }
   function deleteProgram(clicked_id)
   {
+	  //Delete the append row automatically
+    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
@@ -500,6 +550,8 @@ function createFaculty(){
   }
   function deleteModule(clicked_id)
   {
+	  //Delete the append row automatically
+    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
@@ -514,6 +566,8 @@ function createFaculty(){
   }
   function deleteClass(clicked_id)
   {
+	  //Delete the append row automatically
+    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
@@ -528,6 +582,8 @@ function createFaculty(){
   }
   function deleteLecturer(clicked_id)
   {
+	  //Delete the append row automatically
+    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
