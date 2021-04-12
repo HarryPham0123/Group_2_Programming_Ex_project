@@ -3,16 +3,16 @@
 * */
 $(function () {
     $("input").empty();
-    $("body").one("click",".sel-class", function () {
         getData();
-    });
     $(".sel-class").change(function (e) {
          const newVal=getVal();
          addInput(newVal)
          changLec(newVal)
     });
 
-    $('.submit-btn').click(function() {
+    $('.submit-btn').click(function(event) {
+        event.preventDefault();
+        console.log(gatherQuestionAnswer());
         var isNotValid = answerValidator();
 
         if (isNotValid) {
@@ -70,7 +70,7 @@ function gatherQuestionAnswer() {
     });
 
     //Questions
-    for(let i = 1; i <= questions.length ; i++){
+    for(let i = 1; i <= questions.length; i++){
         questionList.push({
             "question": String(i),
             "answer": parseInt($(`input[name=question${i}]:checked`).val())
@@ -91,6 +91,7 @@ function submitQuestionnaire() {
         ccode: String($(".sel-lec option:selected").val()),
         question_list: gatherQuestionAnswer()
     };
+    console.log(requestBody);
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/survey/api/questionnaire",
@@ -100,7 +101,7 @@ function submitQuestionnaire() {
             alert(data.message.string);
         },
         error: function(data) {
-            console.log(data.message.string)
+            console.log(data);
         }
     })
     return requestBody;
@@ -112,8 +113,8 @@ function getData(){
 		success: function(data) {
 			data.map(val=>{
             $(`
-                <option>${val.Ccode}</option>
-            `).appendTo(".sel-class");
+                <option value=${val.Ccode}>${val.Ccode}</option>
+            `).appendTo($(".sel-class"));
             })
 		},
         error:function () {

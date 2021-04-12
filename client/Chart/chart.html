@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="chart.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>--!>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
   <script src="dist/js/chartjs-chart-error-bars.min.js" type="module"></script>
@@ -22,45 +22,64 @@
     <h1>VGU Data Visualization</h1>
     <p>Academic Year</p>
     <select class="sel-acad" name="" id="">
-        <option value="starter">--any--</option>
+        <option value="null">--any--</option>
     </select>
     <p>Semester</p>
     <select class="sel-sem" name="" id="">
-        <option value="starter">--any--</option>
+        <option value="null">--any--</option>
     </select>
     <p>Faculty</p>
     <select class="sel-faculty" name="" id="">
-        <option value="starter">--any--</option>
+        <option value="null">--any--</option>
     </select>
     <p>Program</p>
     <select class="sel-pro" name="" id="">
-        <option value="starter">--any--</option>
+        <option value="null">--any--</option>
     </select>
     <p>Module</p>
     <select class="sel-module" name="" id="">
-        <option value="starter">--any--</option>
+        <option value="null">--any--</option>
     </select>
     <p>Class</p>
     <select class="sel-class" name="" id="">
-        <option value="starter">--any--</option>
+        <option value="null">--any--</option>
     </select>
     <p>Lecturer</p>
     <select class="sel-lec" name="" id="">
-        <option value="starter">--any--</option>
+        <option value="null">--any--</option>
     </select>
     <br>
     <button class="visual">visualize</button>
     
     
-    <div class="chart-container" style="position: relative; width:80vw">
-        
+    <div class="chart-container">
+        <canvas width="400" height="400" id="gender_chart"></canvas>
+        <canvas width="400" height="400" id="attendance_chart"></canvas>
+        <canvas width="400" height="400" id="question_1_chart"></canvas>
+        <canvas width="400" height="400" id="question_2_chart"></canvas>
+        <canvas width="400" height="400" id="question_3_chart"></canvas>
+        <canvas width="400" height="400" id="question_4_chart"></canvas>
+        <canvas width="400" height="400" id="question_5_chart"></canvas>
+        <canvas width="400" height="400" id="question_6_chart"></canvas>
+        <canvas width="400" height="400" id="question_7_chart"></canvas>
+        <canvas width="400" height="400" id="question_8_chart"></canvas>
+        <canvas width="400" height="400" id="question_9_chart"></canvas>
+        <canvas width="400" height="400" id="question_10_chart"></canvas>
+        <canvas width="400" height="400" id="question_11_chart"></canvas>
+        <canvas width="400" height="400" id="question_12_chart"></canvas>
+        <canvas width="400" height="400" id="question_13_chart"></canvas>
+        <canvas width="400" height="400" id="question_14_chart"></canvas>
+        <canvas width="400" height="400" id="question_15_chart"></canvas>
+        <canvas width="400" height="400" id="question_16_chart"></canvas>
+        <canvas width="400" height="400" id="question_17_chart"></canvas>
+
+
     </div>
-    
 
     
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script src="mainchart.js"></script>
+<script src="chart.js"></script>
 </html>

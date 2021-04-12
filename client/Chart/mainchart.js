@@ -348,7 +348,7 @@ function  getForm(getLabel,getData,getChart,meanArr){
     //console.log(sd)
     
         $(`<div class=${getChart}></div>
-        <canvas id="${getChart}">
+        <canvas width="100" height="100" id="${getChart}">
         
         </canvas>
         <div class="stats">
@@ -368,7 +368,7 @@ function  getForm(getLabel,getData,getChart,meanArr){
                 ctxPlugin.strokeStyle = "green";
                 ctxPlugin.beginPath();
                 lineAt = 100;
-                ctx.arc(3*215,315,15,0,2*Math.PI);
+                ctx.arc(3*215,315,5,0,2*Math.PI);
                 ctxPlugin.moveTo(xAxe.left, lineAt);
                 ctxPlugin.stroke();
                 ctxPlugin.closePath();
@@ -394,8 +394,8 @@ function  getForm(getLabel,getData,getChart,meanArr){
             labels: getLabel,
             datasets: [{
                 label: getChart,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
                 data: getPercentage,
                 // errorBars: {
                 //     '1': {plus: 0},
