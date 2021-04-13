@@ -102,23 +102,23 @@ Create table If not exists questionnaire
 	
     gender Varchar(10), CHECK (gender IN ('male', 'female', 'other')),
     attendance Varchar(10), CHECK (attendance IN ('never', 'rarely', 'sometimes', 'often', 'always')),
-    question_1 INT, CHECK (question_1 IN (1, 2, 3, 4, 5)),
-    question_2 INT, CHECK (question_2 IN (1, 2, 3, 4, 5)),
-    question_3 INT, CHECK (question_3 IN (1, 2, 3, 4, 5)),
-    question_4 INT, CHECK (question_4 IN (1, 2, 3, 4, 5)),
-    question_5 INT, CHECK (question_5 IN (1, 2, 3, 4, 5)),
-    question_6 INT, CHECK (question_6 IN (1, 2, 3, 4, 5)),
-    question_7 INT, CHECK (question_7 IN (1, 2, 3, 4, 5)),
-    question_8 INT, CHECK (question_8 IN (1, 2, 3, 4, 5)),
-    question_9 INT, CHECK (question_9 IN (1, 2, 3, 4, 5)),
-    question_10 INT, CHECK (question_10 IN (1, 2, 3, 4, 5)),
-    question_11 INT, CHECK (question_11 IN (1, 2, 3, 4, 5)),
-    question_12 INT, CHECK (question_12 IN (1, 2, 3, 4, 5)),
-    question_13 INT, CHECK (question_13 IN (1, 2, 3, 4, 5)),
-    question_14 INT, CHECK (question_14 IN (1, 2, 3, 4, 5)),
-    question_15 INT, CHECK (question_15 IN (1, 2, 3, 4, 5)),
-    question_16 INT, CHECK (question_16 IN (1, 2, 3, 4, 5)),
-    question_17 INT, CHECK (question_17 IN (1, 2, 3, 4, 5)),
+    question_1 Varchar(10), CHECK (question_1 IN ('1', '2', '3', '4', '5', 'not')),
+    question_2 Varchar(10), CHECK (question_2 IN ('1', '2', '3', '4', '5', 'not')),
+    question_3 Varchar(10), CHECK (question_3 IN ('1', '2', '3', '4', '5', 'not')),
+    question_4 Varchar(10), CHECK (question_4 IN ('1', '2', '3', '4', '5', 'not')),
+    question_5 Varchar(10), CHECK (question_5 IN ('1', '2', '3', '4', '5', 'not')),
+    question_6 Varchar(10), CHECK (question_6 IN ('1', '2', '3', '4', '5', 'not')),
+    question_7 Varchar(10), CHECK (question_7 IN ('1', '2', '3', '4', '5', 'not')),
+    question_8 Varchar(10), CHECK (question_8 IN ('1', '2', '3', '4', '5', 'not')),
+    question_9 Varchar(10), CHECK (question_9 IN ('1', '2', '3', '4', '5', 'not')),
+    question_10 Varchar(10), CHECK (question_10 IN ('1', '2', '3', '4', '5', 'not')),
+    question_11 Varchar(10), CHECK (question_11 IN ('1', '2', '3', '4', '5', 'not')),
+    question_12 Varchar(10), CHECK (question_12 IN ('1', '2', '3', '4', '5', 'not')),
+    question_13 Varchar(10), CHECK (question_13 IN ('1', '2', '3', '4', '5', 'not')),
+    question_14 Varchar(10), CHECK (question_14 IN ('1', '2', '3', '4', '5', 'not')),
+    question_15 Varchar(10), CHECK (question_15 IN ('1', '2', '3', '4', '5', 'not')),
+    question_16 Varchar(10), CHECK (question_16 IN ('1', '2', '3', '4', '5', 'not')),
+    question_17 Varchar(10), CHECK (question_17 IN ('1', '2', '3', '4', '5', 'not')),
     question_18 Varchar(100) DEFAULT ('')
 )
 ENGINE = InnoDB;
@@ -148,7 +148,7 @@ Create table if not exists question_support_attendance(
 -- -----------------------------------------------------
 				    
 Create table if not exists question_support_number(
-     answer_key INT,
+     answer_key Varchar(10),
 	PRIMARY KEY (answer_key)
 );
 
@@ -361,30 +361,30 @@ Insert into Questionnaire
 	 question_12, question_13, question_14, question_15, question_16, question_17, question_18)
 Values 
 	( 'C002h', 'L001v',
-    'often', 'male', 3, 2, 2, 
-    4,5,3, 4, 2, 5, 
-    3, 1, 4, 5, 2, 4, 
-    4, 5, 'Hello'),
+    'often', 'male', '3', '2', '2', 
+    '4','5','3', '4', '2', '5', 
+    '3', '1', '4', '5', '2', '4', 
+    '4', '5', 'Hello'),
 	( 'C005u', 'L001v',
-    'rarely', 'female', 5, 2, 2, 
-    4, 3, 1, 4, 2, 5, 
-    1, 3, 4, 5, 5, 2, 
-    4, 5, 'Hi 1'),
+    'rarely', 'female', '5', '2', '2', 
+    '4', '3', '1', '4', '2', '5', 
+    '1', '3', '4', '5', '5', '2', 
+    '4', '5', 'Hi 1'),
 	( 'C003a', 'L002o',
-    'sometimes', 'female', 3, 2, 4, 
-    4, 5, 1, 2, 2, 1, 
-    1, 4, 2, 5, 3, 2, 
-    4, 2, 'Hi 2'),
+    'sometimes', 'female', '3', '2', '4', 
+    '4', '5', '1', '2', '2', '1', 
+    '1', '4', '2', '5', '3', '2', 
+    '4', '2', 'Hi 2'),
 	( 'C002h', 'L001v',
-    'rarely', 'male', 4, 5, 4, 
-    4, 2, 4, 2, 5, 1, 
-    2, 1, 4, 3, 5, 2, 
-    4, 2, 'Hi 3'),
+    'rarely', 'male', '4', '5', '4', 
+    '4', '2', '4', '2', '5', '1', 
+    '2', '1', '4', '3', '5', '2', 
+    '4', '2', 'Hi 3'),
 	( 'C001t', 'L002o',
-    'often', 'male', 2, 5, 4, 
-    5, 3, 1, 3, 4, 1, 
-    2, 1, 3, 4, 5, 1, 
-    5, 2, 'Hi 4')
+    'often', 'male', '2', '5', '4', 
+    '5', '3', '1', '3', '4', '1', 
+    '2', '1', '3', '4', '5', '1', 
+    '5', '2', 'Hi 4')
 ;
 	
 -- Support table to summary the gender, attendance and answer of each student
@@ -404,11 +404,12 @@ INSERT INTO question_support_attendance(attendance) VALUES
 ;
 
 INSERT INTO question_support_number(answer_key) VALUES
-	(1),
-	(2),
-	(3),
-    	(4),
-    	(5)
+	('1'),
+	('2'),
+	('3'),
+    	('4'),
+    	('5'),
+	('not')
 ;
 				    
 				    
