@@ -61,18 +61,24 @@ $(function () {
         e.preventDefault();
         //Attendance question
         makeRequestTo(
+            "gender_question",
+            createChart('gender_chart'),
+            displayDescription('gender_chart'),
+            displayTitle('gender_chart', 'Percentage of respondents by gender'))(...selectedArray);
+        makeRequestTo(
             "attendance_question",
             createChart('attendance_chart'),
-            displayDescription('attendance_chart')
+            displayDescription('attendance_chart'),
+            displayTitle('attendance_chart', 'Percentage of respondents by class attendance')
         )(...selectedArray);
-
-        makeRequestTo("gender_question", createChart('gender_chart'))(...selectedArray);
+        /*
         for (index = 1; index < 18; index++) {
             makeRequestTo(`question_${index}`, createChart(`question_${index}_chart`))(...selectedArray);
         }
+         */
     });
 });
-function makeRequestTo(questionURL = "", chartCreation, chartDescription) {
+function makeRequestTo(questionURL = "", chartCreation, chartDescription, chartTitle) {
     return function addParameters(
         academic_year = null,
         semester = null,
@@ -98,35 +104,59 @@ function makeRequestTo(questionURL = "", chartCreation, chartDescription) {
                 //Add the keys and values to create charts
                 chartCreation(keys, values);
 
-                //Display description for the charts
+                //Display description for the current chart
                 chartDescription(values);
+
+                //Display title for the current chart
+                chartTitle();
             }
         })
     }
 }
-function displayDescription(toChartAfter) {
-    return (keys, values) => {
-        //Array to be calculated the mean
-        console.log(values);
-        var refinedValues = values.map((value, index) => value * (index + 1));
+function displayDescription(forChart) {
+    return (values) => {
+        //Refine the retrieved values
+        var calculatedValues = refinedValues(values);
 
-        var mean = Math.round(refinedValues / 15);
-        var standardDeviation = Math.round(jStat.stdev(refinedValues));
+        //Calculate mean and standard deviation
+        var mean = Math.round(jStat.mean(calculatedValues));
+        var standardDeviation = Math.round(jStat.stdev(calculatedValues));
 
-        $(`<p>Mean: ${mean}</p>`).insertAfter($(`#${toChartAfter}`))
-        $(`<p>Standard Deviation: ${standardDeviation}</p>`).insertAfter($(`#${toChartAfter}`))
-    }
-}
+        //Display the calculation
+        $(`<p>Mean: ${mean}</p>`).insertAfter($(`#${forChart}`))
+        $(`<p>Standard Deviation: ${standardDeviation}</p>`).insertAfter($(`#${forChart}`));
+};
+
+function refinedValues (calculateValues) {
+    //Copy the current array
+    var arrayValues = [...calculateValues];
+    //Loop through current array
+    for (let index = 0; index < calculateValues.length; index++)
+        for (let times = 1; times <= (index + 1); times++) {
+            arrayValues.push(calculateValues[index]);
+        }
+};
+
+return arrayValues;
+};
+
+function displayTitle(forChart, chartTitle) {
+    //Set title for current chart
+    $(`<h1 class="chart-title">${chartTitle}</h1>`).insertBefore($(`#${forChart}`));
+
+};
+
 function createChart(chart) {
     var ctx = document.getElementById(chart).getContext('2d');
     return (keys, values) => {
+        var percentageArray = calculatePercentage(values);
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: keys,
                 datasets: [{
-                    label: '# of choice',
-                    data: values,
+                    label: 'Percentage',
+                    data: percentageArray,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -150,10 +180,17 @@ function createChart(chart) {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true,
-                            max: parseInt(Math.max(...values) + 1)
-
-                        }
+                            max: 100,
+                            min: 0,
+                            stepSize: 10,
+                            callback: function (value) {
+                                return value + "%"; // convert it to percentage
+                            },
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'PERCENTAGE',
+                        },
                     }]
 
                 },
@@ -178,6 +215,15 @@ function createChart(chart) {
         });
     }
 }
+function calculatePercentage(values) {
+    //Calculate the sum
+    let sumValues = jStat.sum(values);
+
+    //Calculate the percentages array
+    let percentageValues = values.map(value => {return (value / sumValues) * 100;});
+
+    return percentageValues
+};
 function getCodes(
     code,
     appendMode,
@@ -190,7 +236,6 @@ function getCodes(
     clazz = null
 ) {
     var url = `http://localhost:8080/survey/api/general?academic_year=${encodeURI(academic_year)}&semester=${encodeURI(semester)}&faculty=${encodeURI(faculty)}&program=${encodeURI(program)}&module=${encodeURI(module)}&lecturer=${encodeURI(lecturer)}&class=${encodeURI(clazz)}`;
-    console.log(url);
     $.ajax({
         type: "GET",
         contentType: "application/json",
