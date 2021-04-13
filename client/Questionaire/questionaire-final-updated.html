@@ -38,15 +38,15 @@
             <h2 id="subtitle"><center>CLASS INFORMATION</center></h2>
         </div> <br>
         <div class="sel-class1" >
-        <label for="sel-class" class="sel-class" style="float: left;">Class</label>
-        <select class= "sel-class" name="" id="" style="float: left;">
+        <label for="sel-class" style="float: left;">Class</label>
+        <select class= "sel-class" name="" id="" style="float: right;">
             <option value="starter">--Please select Class--</option>
         </select>
         </div>
         <div class="clear"></div>
         <div class="sel-class1">
-        <label for="sel-lec" class="sel-lec" style="float: left;">Lecturer</label>
-        <select class="sel-lec" name="" id="" style="float: left;">
+        <label for="sel-lec" style="float: left;">Lecturer</label>
+        <select class="sel-lec" name="" id="" style="float: right;">
             <option value="starter">--Please select Lecturer--</option>
         </select>
         </div>
@@ -79,15 +79,15 @@
         <div class="box3">
         <label for="attend" style="float: left;">How often did you attend class for this module?</label>
         <label for="never" style="float: right;">Never</label>
-        <input autocomplete="off"  type="radio" name="attend" value="never" style="float: right;">
+        <input autocomplete="off"  type="radio" name="attendance" value="never" style="float: right;">
         <label for="rarely" style="float: right;">Rarely</label>
-        <input autocomplete="off"  type="radio" name="attend" value="rarely" style="float: right;">
+        <input autocomplete="off"  type="radio" name="attendance" value="rarely" style="float: right;">
         <label for="sometimes" style="float: right;">Sometimes</label>
-        <input autocomplete="off"  type="radio" name="attend" value="sometimes" style="float: right;">
+        <input autocomplete="off"  type="radio" name="attendance" value="sometimes" style="float: right;">
         <label for="often" style="float: right;">Often</label>
-        <input autocomplete="off"  type="radio" name="attend" value="often" style="float: right;">
+        <input autocomplete="off"  type="radio" name="attendance" value="often" style="float: right;">
         <label for="always" style="float: right;">Always</label>
-        <input autocomplete="off"  type="radio" name="attend" value="always" style="float: right;">
+        <input autocomplete="off"  type="radio" name="attendance" value="always" style="float: right;">
         </div> 
         <div class="clear"></div>
         <div class="box3">
@@ -359,7 +359,7 @@
         <input autocomplete="off" type="radio" name="question17" value="1" style="float: right;">
         </div>
         <div class="clear"></div> <br>
-        <textarea id="comment" placeholder="Please enter your comment here (Optional)"></textarea><br>
+        <textarea id="comment" placeholder="Please enter your comment here (Optional)" name="question18"></textarea><br>
     </div>
 
     <button class="submit-btn">Submit</button>

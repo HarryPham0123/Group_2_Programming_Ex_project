@@ -1,4 +1,7 @@
-CREATE DEFINER=`HoangPham`@`localhost` PROCEDURE `summary_attendance`(
+USE pe2018;
+DROP PROCEDURE IF EXISTS summary_attendance;
+DELIMITER //
+CREATE PROCEDURE `summary_attendance`(
 	input_academic_year VARCHAR(50), 
 	input_semester VARCHAR(50), 
 	input_faculty VARCHAR(50), 
@@ -81,3 +84,4 @@ AND
 	)
 GROUP BY 1;
 END
+//
