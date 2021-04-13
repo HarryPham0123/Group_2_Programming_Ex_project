@@ -1,5 +1,9 @@
 var selectedArray = [];
+var chartContainer;
+var classSize = 32;
 $(function () {
+    chartContainer = $(".chart-container").detach();
+
     //Load Academic year first
     getCodes("AYcode", ".sel-acad");
     //Academic year listener
@@ -28,7 +32,7 @@ $(function () {
     //Program listener
     $(".sel-pro").change(function() {
         selectedArray.push($(".sel-pro option:selected").val());
-        $(".sel-pro option").not(":first").remove();
+        $(".sel-module option").not(":first").remove();
         getCodes("Mcode", ".sel-module", ...selectedArray);
     })
 
@@ -44,41 +48,43 @@ $(function () {
     //Class listener
     $(".sel-class").change(function() {
         selectedArray.push($(".sel-class option:selected").val());
-
+        var selectedClass = $(".sel-class option:selected").val();
         //Remove the next siblings select
         $(".sel-lec option").not(":first").remove();
         //Append to lecturer select
         getCodes("Lcode", ".sel-lec", ...selectedArray);
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: `http://localhost:8080/survey/api/classes/${encodeURI(selectedClass)}`,
+            success: function(data) {
+                classSize = data.size;
+            }
+        })
     })
 
-    //Module listener
+    //Lecturer listener
     $(".sel-lec").change(function() {
         selectedArray.push($(".sel-lec option:selected").val());
-        console.log(selectedArray);
     })
 
     $(".visual").click(function (e) {
+        chartContainer.appendTo("body");
         e.preventDefault();
         //Attendance question
-        makeRequestTo(
-            "gender_question",
-            createChart('gender_chart'),
-            displayDescription('gender_chart'),
-            displayTitle('gender_chart', 'Percentage of respondents by gender'))(...selectedArray);
-        makeRequestTo(
-            "attendance_question",
-            createChart('attendance_chart'),
-            displayDescription('attendance_chart'),
-            displayTitle('attendance_chart', 'Percentage of respondents by class attendance')
-        )(...selectedArray);
-        /*
+        makeRequestTo("gender_question", "gender_chart", )(...selectedArray);
+        makeRequestTo("attendance_question",'attendance_chart', )(...selectedArray);
+
         for (index = 1; index < 18; index++) {
-            makeRequestTo(`question_${index}`, createChart(`question_${index}_chart`))(...selectedArray);
+            makeRequestTo(`question_${index}`,`question_${index}_chart`)(...selectedArray);
         }
-         */
+        //Class size
+        $(`<h3>Class size: ${classSize}</h3>`).insertAfter($("#question_17_chart"));
+
     });
 });
-function makeRequestTo(questionURL = "", chartCreation, chartDescription, chartTitle) {
+function makeRequestTo(questionURL = "", chartName) {
     return function addParameters(
         academic_year = null,
         semester = null,
@@ -102,13 +108,13 @@ function makeRequestTo(questionURL = "", chartCreation, chartDescription, chartT
                 }
 
                 //Add the keys and values to create charts
-                chartCreation(keys, values);
+                createChart(chartName)(keys, values);
 
                 //Display description for the current chart
-                chartDescription(values);
+                displayDescription(chartName)(values);
 
                 //Display title for the current chart
-                chartTitle();
+                displayTitle(chartName);
             }
         })
     }
@@ -116,18 +122,23 @@ function makeRequestTo(questionURL = "", chartCreation, chartDescription, chartT
 function displayDescription(forChart) {
     return (values) => {
         //Refine the retrieved values
-        var calculatedValues = refinedValues(values);
+        let calculatedValues = refinedValues(values);
+
 
         //Calculate mean and standard deviation
-        var mean = Math.round(jStat.mean(calculatedValues));
-        var standardDeviation = Math.round(jStat.stdev(calculatedValues));
+        let mean = jStat.mean(calculatedValues).toFixed(1);
+        let standardDeviation = jStat.stdev(calculatedValues).toFixed(1);
+        let numberOfResponds = jStat.sum(values.slice(0, values.length - 1));
+        let respondRate = ((numberOfResponds/classSize) * 100).toFixed(1) + "%";
 
         //Display the calculation
-        $(`<p>Mean: ${mean}</p>`).insertAfter($(`#${forChart}`))
+        $(`<p>Number of responses: ${numberOfResponds}</p>`).insertAfter($(`#${forChart}`));
+        $(`<p>Response rate: ${respondRate}</p>`).insertAfter($(`#${forChart}`));
         $(`<p>Standard Deviation: ${standardDeviation}</p>`).insertAfter($(`#${forChart}`));
+        $(`<p>Mean: ${mean}</p>`).insertAfter($(`#${forChart}`))
 };
 
-function refinedValues (calculateValues) {
+function refinedValues(calculateValues) {
     //Copy the current array
     var arrayValues = [...calculateValues];
     //Loop through current array
@@ -135,14 +146,19 @@ function refinedValues (calculateValues) {
         for (let times = 1; times <= (index + 1); times++) {
             arrayValues.push(calculateValues[index]);
         }
+
+    return arrayValues;
 };
 
 return arrayValues;
 };
 
-function displayTitle(forChart, chartTitle) {
-    //Set title for current chart
-    $(`<h1 class="chart-title">${chartTitle}</h1>`).insertBefore($(`#${forChart}`));
+function displayTitle(forChart) {
+    $.getJSON( "questions.json", function(questions) {
+        let chartTitle = questions[forChart];
+        //Set title for current chart
+        $(`<h1 class="chart-title">${chartTitle}</h1>`).insertBefore($(`#${forChart}`));
+    });
 
 };
 
@@ -199,9 +215,9 @@ function createChart(chart) {
                         formatter: (value, ctx) => {
                             let sum = 0;
                             let dataArr = ctx.chart.data.datasets[0].data;
-
+                            console.log(dataArr);
                             dataArr.map(data => {
-                                sum += data;
+                                sum += parseFloat(data);
                             });
                             let percentage = Math.round(value * 100 / sum) + "%";
                             return percentage;
@@ -220,7 +236,7 @@ function calculatePercentage(values) {
     let sumValues = jStat.sum(values);
 
     //Calculate the percentages array
-    let percentageValues = values.map(value => {return (value / sumValues) * 100;});
+    let percentageValues = values.map(value => {return ((value / sumValues) * 100).toFixed(2);});
 
     return percentageValues
 };

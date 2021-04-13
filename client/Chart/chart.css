@@ -1,5 +1,8 @@
+p {
+	margin: 0.5rem;
+}
 .chart-container {
-	width: 600px;
+	width: 650px;
 	height: auto;
 	margin: 0 auto;
 	display: flex;
@@ -8,6 +11,9 @@
 
 .chart-title {
 	font-family: 'Roboto', sans-serif;
+	font-size: 1.5rem;
+	margin-bottom: 1.5rem;
+	margin-top: 2rem;
 	align-self: center;
 }
 

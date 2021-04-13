@@ -1,0 +1,21 @@
+{
+  "gender_chart": "Percentage of respondents by gender",
+  "attendance_chart": "Percentage of respondents by class attendance",
+  "question_1_chart": "Clearance of the Module Objectives",
+  "question_2_chart": "Useful & Sufficient Learning Materials",
+  "question_3_chart": "Relevance of the Module Content",
+  "question_4_chart": "Interesting Lessons",
+  "question_5_chart": "Time spent on module workload outside classroom",
+  "question_6_chart": "Perceived overall module workload",
+  "question_7_chart": "Perceived difficulty of the module",
+  "question_8_chart": "Understandable Presentation of the Module Contents",
+  "question_9_chart": "Variety of Learning Activities",
+  "question_10_chart": "Supportive learning activities",
+  "question_11_chart": "Appropriate Assessment Method",
+  "question_12_chart": "Lecturer's Encouragement in Critial Thinking and Logics",
+  "question_13_chart": "Helpful Feedback from Lecturer",
+  "question_14_chart": "Language Skill (English/German)",
+  "question_15_chart": "Appreciation of Students' Ideas and Contributions",
+  "question_16_chart": "Lecturer's In-class Encouragement in Discussion and Questions",
+  "question_17_chart": "Offering Consulation to Individuals for Academic Support"
+}

@@ -20,10 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20e5aa9a-6db9-431c-abb0-4e4e7ae20241" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Database/procedure/insert_questionnaire.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Database/procedure/insert_questionnaire.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Chart/chart.css" beforeDir="false" afterPath="$PROJECT_DIR$/Chart/chart.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Chart/chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/Chart/chart.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Chart/chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/Chart/chart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Questionaire/questionaire-final-updated.html" beforeDir="false" afterPath="$PROJECT_DIR$/Questionaire/questionaire-final-updated.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Questionaire/script-final.js" beforeDir="false" afterPath="$PROJECT_DIR$/Questionaire/script-final.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Questionaire/style-final-updated.css" beforeDir="false" afterPath="$PROJECT_DIR$/Questionaire/style-final-updated.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/surveyapp/controller/QuestionnaireRoute.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/surveyapp/controller/QuestionnaireRoute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/surveyapp/service/procedure/GetCodeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/surveyapp/service/procedure/GetCodeDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/surveyapp/service/procedure/GetGeneralDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/surveyapp/service/procedure/GetGeneralDAO.java" afterDir="false" />
@@ -76,6 +79,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="jsx.switch.disabled" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../torus" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Project" />
@@ -140,6 +144,8 @@
       <workItem from="1618232527885" duration="13393000" />
       <workItem from="1618279521720" duration="7522000" />
       <workItem from="1618297812722" duration="3255000" />
+      <workItem from="1618315135736" duration="6991000" />
+      <workItem from="1618325423906" duration="8981000" />
     </task>
     <servers />
   </component>

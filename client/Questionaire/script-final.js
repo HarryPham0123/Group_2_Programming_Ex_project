@@ -73,7 +73,7 @@ function gatherQuestionAnswer() {
     for(let i = 1; i <= questions.length; i++){
         questionList.push({
             "question": String(i),
-            "answer": parseInt($(`input[name=question${i}]:checked`).val())
+            "answer": $(`input[name=question${i}]:checked`).val()
         })
     }
 
