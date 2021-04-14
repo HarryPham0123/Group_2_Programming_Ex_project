@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.surveyapp.model.Faculty;
 import com.surveyapp.service.faculty.FacultyService;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,23 +33,44 @@ public class FacultyRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Faculty faculty) {
-        facultyService.save(faculty);
-        return Response.ok().entity("New faculty successfully inserted").build();
+        try {
+            facultyService.save(faculty);
+            return Response.ok().entity("New faculty successfully inserted").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response update(@PathParam("code") String code, Faculty faculty) {
-        facultyService.update(code, faculty);
-        return Response.ok().entity("Successfully updated").build();
+        try {
+            facultyService.update(code, faculty);
+            return Response.ok().entity("Successfully updated").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        facultyService.delete(code);
-        return Response.ok().entity("Successfully deleted").build();
+        try {
+            facultyService.delete(code);
+            return Response.ok().entity("Successfully deleted").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 
 }

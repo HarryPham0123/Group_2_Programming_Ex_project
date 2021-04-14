@@ -4,6 +4,8 @@ import com.surveyapp.model.Faculty;
 import com.surveyapp.model.Module;
 import com.surveyapp.service.module.ModuleService;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -29,22 +31,43 @@ public class ModuleRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Module module) {
-        moduleService.save(module);
-        return Response.ok().entity("New faculty successfully inserted").build();
+        try {
+            moduleService.save(module);
+            return Response.ok().entity("New faculty successfully inserted").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response update(@PathParam("code") String code, Module module) {
-        moduleService.update(code, module);
-        return Response.ok().entity("Successfully updated").build();
+        try {
+            moduleService.update(code, module);
+            return Response.ok().entity("Successfully updated").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        moduleService.delete(code);
-        return Response.ok().entity("Successfully deleted").build();
+        try {
+            moduleService.delete(code);
+            return Response.ok().entity("Successfully deleted").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 }
