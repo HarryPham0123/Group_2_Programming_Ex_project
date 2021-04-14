@@ -17,15 +17,15 @@ public class LecturerService {
         return lecturer.orElseGet(() -> new Lecturer());
     }
 
-    public void save(Lecturer lecturer) {
-        lecturerDAO.save(lecturer);
+    public boolean save(Lecturer lecturer) {
+        return lecturerDAO.save(lecturer);
     }
 
-    public void update(String code, Lecturer lecturer) {
-        lecturerDAO.update(code, lecturer);
+    public boolean update(String code, Lecturer lecturer) {
+        return lecturerDAO.update(code, lecturer);
     }
 
-    public void delete(String code) {
-        lecturerDAO.delete(code);
+    public boolean delete(String code) {
+        return lecturerDAO.delete(code);
     }
 }

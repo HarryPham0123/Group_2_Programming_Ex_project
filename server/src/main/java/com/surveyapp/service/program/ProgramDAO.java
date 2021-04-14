@@ -64,7 +64,7 @@ public class ProgramDAO implements DAO<Program> {
 
     @Override
     public Optional<Program> get(String id) {
-       try {
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -77,14 +77,16 @@ public class ProgramDAO implements DAO<Program> {
     }
 
     @Override
-    public void save(Program program) {
-         try{
+    public boolean save(Program program) {
+        boolean isSaved = true;
+        try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, program.getCode());
             preparedStatement.setString(2, program.getName());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isSaved = false;
         } finally {
             if(connection != null) {
                 try {
@@ -94,10 +96,12 @@ public class ProgramDAO implements DAO<Program> {
                 }
             }
         }
+        return isSaved;
     }
 
     @Override
-    public void update(String code, Program program) {
+    public boolean update(String code, Program program) {
+        boolean isUpdated = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, program.getCode());
@@ -106,6 +110,7 @@ public class ProgramDAO implements DAO<Program> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isUpdated = false;
         } finally  {
             if(connection != null) {
                 try {
@@ -115,16 +120,19 @@ public class ProgramDAO implements DAO<Program> {
                 }
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(String code) {
-         try {
+    public boolean delete(String code) {
+        boolean isDeleted = true;
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isDeleted = false;
         } finally {
             if(connection != null) {
                 try {
@@ -134,5 +142,6 @@ public class ProgramDAO implements DAO<Program> {
                 }
             }
         }
+        return isDeleted;
     }
 }

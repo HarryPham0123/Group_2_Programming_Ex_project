@@ -16,7 +16,7 @@ public class FacultyDAO implements DAO<Faculty> {
     private String saveScript = "INSERT INTO faculty (Fcode, Fname) VALUES(?, ?)";
     private String updateScript = "UPDATE faculty SET Fcode = ?, Fname = ? WHERE Fcode = ?";
     private String deleteScript = "DELETE FROM faculty WHERE  Fcode = ?";
-    
+
     private void executeInTransaction(Consumer<Connection> action) {
         try {
             connection.setAutoCommit(false);
@@ -60,7 +60,7 @@ public class FacultyDAO implements DAO<Faculty> {
         return facultyList;
     }
 
-  @Override
+    @Override
     public Optional<Faculty> get(String code) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
@@ -75,7 +75,8 @@ public class FacultyDAO implements DAO<Faculty> {
     }
 
     @Override
-    public void save(Faculty faculty) {
+    public boolean save(Faculty faculty) {
+        boolean isSaved = true;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, faculty.getCode());
@@ -83,6 +84,7 @@ public class FacultyDAO implements DAO<Faculty> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isSaved = false;
         } finally {
             if(connection != null) {
                 try {
@@ -92,10 +94,12 @@ public class FacultyDAO implements DAO<Faculty> {
                 }
             }
         }
+        return isSaved;
     }
 
     @Override
-    public void update(String code, Faculty faculty) {
+    public boolean update(String code, Faculty faculty) {
+        boolean isUpdated = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, faculty.getCode());
@@ -104,6 +108,7 @@ public class FacultyDAO implements DAO<Faculty> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isUpdated = false;
         } finally  {
             if(connection != null) {
                 try {
@@ -113,16 +118,19 @@ public class FacultyDAO implements DAO<Faculty> {
                 }
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(String code) {
+    public boolean delete(String code) {
+        boolean isDeleted = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isDeleted = false;
         } finally {
             if(connection != null) {
                 try {
@@ -132,5 +140,6 @@ public class FacultyDAO implements DAO<Faculty> {
                 }
             }
         }
+        return isDeleted;
     }
 }

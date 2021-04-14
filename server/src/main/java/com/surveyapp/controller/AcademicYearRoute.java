@@ -35,29 +35,21 @@ public class AcademicYearRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(AcademicYear academicYear) {
-        try {
-            academicYearService.save(academicYear);
-            return Response.ok().entity("New academic year successfully inserted").build();
-        } catch (Exception exception) {
+        if(!academicYearService.save(academicYear)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-
+        return Response.status(Response.Status.OK).build();
     }
 
     @Path("/{code}")
     @DELETE
     public Response delete(@PathParam("code") String code) {
-        try {
-            academicYearService.delete(code);
-            return Response.ok().entity("Successfully deleted").build();
-        } catch (Exception exception) {
+        if(!academicYearService.delete(code)){
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-
+        return Response.status(Response.Status.OK).build();
     }
 
 }
