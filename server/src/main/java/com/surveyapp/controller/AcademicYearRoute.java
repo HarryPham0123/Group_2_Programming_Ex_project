@@ -5,6 +5,8 @@ import com.surveyapp.model.AcademicYear;
 import com.surveyapp.service.academic_year.AcademicYearService;
 
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -33,15 +35,29 @@ public class AcademicYearRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(AcademicYear academicYear) {
-        academicYearService.save(academicYear);
-        return Response.ok().entity("New academic year successfully inserted").build();
+        try {
+            academicYearService.save(academicYear);
+            return Response.ok().entity("New academic year successfully inserted").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 
     @Path("/{code}")
     @DELETE
     public Response delete(@PathParam("code") String code) {
-        academicYearService.delete(code);
-        return Response.ok().entity("Successfully deleted").build();
+        try {
+            academicYearService.delete(code);
+            return Response.ok().entity("Successfully deleted").build();
+        } catch (Exception exception) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
+
     }
 
 }
