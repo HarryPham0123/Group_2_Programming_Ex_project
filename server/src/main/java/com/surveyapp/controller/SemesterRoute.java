@@ -30,14 +30,11 @@ public class SemesterRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Semester semester) {
-        try {
-            semesterService.save(semester);
-            return Response.ok().entity("New semester successfully inserted").build();
-        } catch (Exception exception) {
+        if(!semesterService.save(semester)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
 
     }
@@ -46,14 +43,11 @@ public class SemesterRoute {
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response update(@PathParam("code") String code, Semester semester) {
-        try {
-            semesterService.update(code, semester);
-            return Response.ok().entity("Successfully updated").build();
-        } catch (Exception exception) {
+        if(!semesterService.update(code, semester)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
 
     }
@@ -61,14 +55,11 @@ public class SemesterRoute {
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        try {
-            semesterService.delete(code);
-            return Response.ok().entity("Successfully deleted").build();
-        } catch (Exception exception) {
+        if(!semesterService.delete(code)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
 
     }
