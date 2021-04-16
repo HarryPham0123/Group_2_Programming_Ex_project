@@ -83,7 +83,8 @@ public class SemesterDAO implements DAO<Semester> {
     }
 
     @Override
-    public void save(Semester semester) {
+    public boolean save(Semester semester) {
+        boolean isSaved = true;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, semester.getCode());
@@ -91,6 +92,7 @@ public class SemesterDAO implements DAO<Semester> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isSaved = false;
         } finally {
             if(connection != null) {
                 try {
@@ -100,10 +102,12 @@ public class SemesterDAO implements DAO<Semester> {
                 }
             }
         }
+        return isSaved;
     }
 
     @Override
-    public void update(String code, Semester semester) {
+    public boolean update(String code, Semester semester) {
+        boolean isUpdated = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, semester.getCode());
@@ -112,6 +116,7 @@ public class SemesterDAO implements DAO<Semester> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isUpdated = false;
         } finally  {
             if(connection != null) {
                 try {
@@ -121,16 +126,19 @@ public class SemesterDAO implements DAO<Semester> {
                 }
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(String code) {
+    public boolean delete(String code) {
+        boolean isDeleted = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isDeleted = false;
         } finally {
             if(connection != null) {
                 try {
@@ -140,6 +148,7 @@ public class SemesterDAO implements DAO<Semester> {
                 }
             }
         }
+        return isDeleted;
     }
 
 }
