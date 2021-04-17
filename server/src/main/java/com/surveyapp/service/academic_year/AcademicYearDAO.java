@@ -16,7 +16,7 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     private String saveScript = "INSERT INTO  academic_year(AYcode) VALUES (?)";
     private String deleteScript = "DELETE FROM academic_year WHERE AYcode = ? ";
     @Override
-    public List<AcademicYear> getAll() {
+    public List<AcademicYear> getAll() throws Exception {
         List<AcademicYear> academicYearList = null;
         try {
             Statement statement = connection.createStatement();
@@ -37,7 +37,7 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     }
 
     @Override
-    public Optional<AcademicYear> get(String code) { //code inputted by FE
+    public Optional<AcademicYear> get(String code) throws Exception { //code inputted by FE
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
@@ -51,35 +51,33 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     }
 
     @Override
-    public boolean save(AcademicYear academicYear) {
-        boolean isSaved = true;
+    public void save(AcademicYear academicYear) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, academicYear.getCode());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isSaved = false;
         }
-        return isSaved;
     }
 
     @Override
-    public boolean update(String code, AcademicYear academicYear) {
-        return true;
+    public void update(String code, AcademicYear academicYear) throws Exception {
+        try{
+
+        }catch(Exception exception){
+            exception.printStackTrace();
+        }
     }
 
     @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
+    public void delete(String code) throws Exception{
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isDeleted = false;
         }
-        return isDeleted;
     }
 }

@@ -9,56 +9,75 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 @Path("/module")
 public class ModuleRoute {
     private ModuleService moduleService = new ModuleService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Module> getAll() {
-        List<Module> moduleList = moduleService.getAll();
+    public List<Module> getAll() throws Exception{
+        List<Module> moduleList = new ArrayList<>();
+        try{
+            moduleList = moduleService.getAll();
+            return moduleList;
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
         return moduleList;
     }
 
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Module getByCode(@PathParam("code") String code) {
-        Module module = moduleService.get(code);
+    public Module getByCode(@PathParam("code") String code)throws Exception {
+        Module module = new Module();
+        try{
+            module = moduleService.get(code);
+            return module;
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
         return module;
     }
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Module module) {
-        if(!moduleService.save(module)) {
+    public Response insert(Module module) throws Exception{
+        try{
+            moduleService.save(module);
+            return Response.status(Response.Status.OK).build();
+        } catch(Exception exception){
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-        return Response.status(Response.Status.OK).build();
-
     }
 
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response update(@PathParam("code") String code, Module module) {
-        if(!moduleService.update(code, module)) {
+        try{
+            moduleService.update(code, module);
+            return Response.status(Response.Status.OK).build();
+        } catch(Exception exception){
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-        return Response.status(Response.Status.OK).build();
-
     }
 
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        if(!moduleService.delete(code)) {
+        try{
+            moduleService.delete(code);
+            return Response.status(Response.Status.OK).build();
+        } catch(Exception exception){
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-        return Response.status(Response.Status.OK).build();
-
     }
 }

@@ -40,7 +40,7 @@ public class FacultyDAO implements DAO<Faculty> {
 
 
     @Override
-    public List<Faculty> getAll() {
+    public List<Faculty> getAll() throws Exception {
         List<Faculty> facultyList = null;
         try {
             Statement statement = connection.createStatement();
@@ -61,7 +61,7 @@ public class FacultyDAO implements DAO<Faculty> {
     }
 
     @Override
-    public Optional<Faculty> get(String code) {
+    public Optional<Faculty> get(String code) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
@@ -75,8 +75,7 @@ public class FacultyDAO implements DAO<Faculty> {
     }
 
     @Override
-    public boolean save(Faculty faculty) {
-        boolean isSaved = true;
+    public void save(Faculty faculty) throws Exception {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, faculty.getCode());
@@ -84,7 +83,6 @@ public class FacultyDAO implements DAO<Faculty> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isSaved = false;
         } finally {
             if(connection != null) {
                 try {
@@ -94,12 +92,10 @@ public class FacultyDAO implements DAO<Faculty> {
                 }
             }
         }
-        return isSaved;
     }
 
     @Override
-    public boolean update(String code, Faculty faculty) {
-        boolean isUpdated = true;
+    public void update(String code, Faculty faculty) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, faculty.getCode());
@@ -108,7 +104,6 @@ public class FacultyDAO implements DAO<Faculty> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isUpdated = false;
         } finally  {
             if(connection != null) {
                 try {
@@ -118,19 +113,16 @@ public class FacultyDAO implements DAO<Faculty> {
                 }
             }
         }
-        return isUpdated;
     }
 
     @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
+    public void delete(String code) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isDeleted = false;
         } finally {
             if(connection != null) {
                 try {
@@ -140,6 +132,5 @@ public class FacultyDAO implements DAO<Faculty> {
                 }
             }
         }
-        return isDeleted;
     }
 }

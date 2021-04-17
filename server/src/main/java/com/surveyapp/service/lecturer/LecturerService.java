@@ -8,24 +8,24 @@ import java.util.Optional;
 public class LecturerService {
     private LecturerDAO lecturerDAO = new LecturerDAO();
 
-    public List<Lecturer> getAll() {
+    public List<Lecturer> getAll() throws Exception {
         return lecturerDAO.getAll();
     }
 
-    public Lecturer get(String code) {
+    public Lecturer get(String code) throws Exception {
         Optional<Lecturer> lecturer = new LecturerDAO().get(code);
         return lecturer.orElseGet(() -> new Lecturer());
     }
 
-    public boolean save(Lecturer lecturer) {
-        return lecturerDAO.save(lecturer);
+    public void save(Lecturer lecturer) throws Exception {
+         lecturerDAO.save(lecturer);
     }
 
-    public boolean update(String code, Lecturer lecturer) {
-        return lecturerDAO.update(code, lecturer);
+    public void update(String code, Lecturer lecturer) throws Exception {
+         lecturerDAO.update(code, lecturer);
     }
 
-    public boolean delete(String code) {
-        return lecturerDAO.delete(code);
+    public void delete(String code) throws Exception {
+        lecturerDAO.delete(code);
     }
 }

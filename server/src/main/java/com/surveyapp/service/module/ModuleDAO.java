@@ -17,7 +17,7 @@ public class ModuleDAO implements DAO<Module> {
     private String updateScript = "UPDATE module SET Mcode = ? , Mname = ? WHERE Mcode = ?";
     private String deleteScript = "DELETE FROM module WHERE Mcode = ? ";
     @Override
-    public List<Module> getAll() {
+    public List<Module> getAll() throws Exception {
         List<Module> modulelist = null;
         try {
             Statement statement = connection.createStatement();
@@ -38,7 +38,7 @@ public class ModuleDAO implements DAO<Module> {
     }
 
     @Override
-    public Optional<Module> get(String code) {
+    public Optional<Module> get(String code) throws Exception{
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
@@ -52,8 +52,8 @@ public class ModuleDAO implements DAO<Module> {
     }
 
     @Override
-    public boolean save(Module module) {
-        boolean isSaved = true;
+    public void save(Module module) throws Exception{
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, module.getCode());
@@ -61,14 +61,14 @@ public class ModuleDAO implements DAO<Module> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isSaved = false;
+
         }
-        return isSaved;
+
     }
 
     @Override
-    public boolean update(String code, Module module) {
-        boolean isUpdated = true;
+    public void update(String code, Module module) throws Exception{
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, module.getCode());
@@ -77,23 +77,20 @@ public class ModuleDAO implements DAO<Module> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isUpdated = false;
+
         }
-        return isUpdated;
+
     }
 
     @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
+    public void delete(String code) throws Exception{
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isDeleted = false;
         }
-        return isDeleted;
     }
 
 }

@@ -7,24 +7,24 @@ import java.util.Optional;
 
 public class SemesterService {
     SemesterDAO semesterDAO = new SemesterDAO();
-    public List<Semester> getAll() {
+    public List<Semester> getAll() throws Exception {
         return semesterDAO.getAll();
     }
 
-    public Semester get(String code) {
+    public Semester get(String code) throws Exception {
         Optional<Semester> semester = semesterDAO.get(code);
         return semester.orElseGet(() -> new Semester());
     }
 
-    public boolean save(Semester semester) {
-        return semesterDAO.save(semester);
+    public void save(Semester semester)throws Exception  {
+         semesterDAO.save(semester);
     }
 
-    public boolean update(String code, Semester semester) {
-        return semesterDAO.update(code, semester);
+    public void update(String code, Semester semester)throws Exception  {
+         semesterDAO.update(code, semester);
     }
 
-    public boolean delete(String code) {
-        return semesterDAO.delete(code);
+    public void delete(String code)throws Exception  {
+         semesterDAO.delete(code);
     }
 }

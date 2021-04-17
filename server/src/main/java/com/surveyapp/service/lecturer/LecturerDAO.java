@@ -18,7 +18,7 @@ public class LecturerDAO implements DAO<Lecturer> {
     private String updateScript = "UPDATE lecturer SET Lcode = ?, Lname = ? WHERE Lcode = ?";
     private String deleteScript = "DELETE FROM lecturer WHERE  Lcode = ?";
 
-    private void executeInTransaction(Consumer<Connection> action) {
+    private void executeInTransaction(Consumer<Connection> action) throws Exception{
         try {
             connection.setAutoCommit(false);
             action.accept(connection);
@@ -40,7 +40,7 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public List<Lecturer> getAll() {
+    public List<Lecturer> getAll()throws Exception {
         List<Lecturer> lecturerList = null;
         try {
             Statement statement = connection.createStatement();
@@ -61,7 +61,7 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public Optional<Lecturer> get(String code) {
+    public Optional<Lecturer> get(String code)throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
@@ -75,8 +75,7 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public boolean save(Lecturer lecturer) {
-        boolean isSaved = true;
+    public void save(Lecturer lecturer) throws Exception{
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, lecturer.getCode());
@@ -84,7 +83,6 @@ public class LecturerDAO implements DAO<Lecturer> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isSaved = false;
         } finally {
             if(connection != null) {
                 try {
@@ -94,12 +92,10 @@ public class LecturerDAO implements DAO<Lecturer> {
                 }
             }
         }
-        return isSaved;
     }
 
     @Override
-    public boolean update(String code, Lecturer lecturer) {
-        boolean isUpdated = true;
+    public void update(String code, Lecturer lecturer) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, lecturer.getCode());
@@ -108,7 +104,6 @@ public class LecturerDAO implements DAO<Lecturer> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isUpdated = false;
         } finally  {
             if(connection != null) {
                 try {
@@ -118,19 +113,16 @@ public class LecturerDAO implements DAO<Lecturer> {
                 }
             }
         }
-        return isUpdated;
     }
 
     @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
+    public void delete(String code) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isDeleted = false;
         } finally {
             if(connection != null) {
                 try {
@@ -140,6 +132,5 @@ public class LecturerDAO implements DAO<Lecturer> {
                 }
             }
         }
-        return isDeleted;
     }
 }

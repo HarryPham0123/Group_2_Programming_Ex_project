@@ -46,7 +46,6 @@ public class ClassRoute {
     public Response insert(Class aClass) throws Exception {
         try{
             classService.save(aClass);
-            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
             return Response.status(Response.Status.OK).build();
         } catch(Exception exception){
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
@@ -61,7 +60,6 @@ public class ClassRoute {
     public Response update(@PathParam("code") String code, Class aClass) throws Exception {
         try{
             classService.update(code, aClass);
-            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
             return Response.status(Response.Status.OK).build();
         } catch(Exception exception){
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
@@ -75,7 +73,6 @@ public class ClassRoute {
     public Response delete(@PathParam("code") String code) throws Exception {
         try{
             classService.delete(code);
-            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
             return Response.status(Response.Status.OK).build();
         } catch(Exception exception){
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
