@@ -239,6 +239,25 @@ function displayTitle(forChart) {
 function createChart(chart) {
     var ctx = document.getElementById(chart).getContext('2d');
     return (keys, values) => {
+<<<<<<< HEAD
+=======
+        var percentageArray = calculatePercentage(values);
+        let calculateValues=refinedValues(values);
+        let mean = jStat.mean(calculateValues).toFixed(1);
+        let meanDot=mean-0.5
+        let upperBound=Math.ceil(parseFloat(mean))
+        let lowerBound=Math.ceil(parseFloat(mean))-1.5
+        if(lowerBound<1){
+            lowerBound=0
+
+        }
+        if(upperBound>=5){
+            upperBound=5
+        }
+        if(mean==5){
+            lowerBound=Math.ceil(parseFloat(mean))-1
+        }
+>>>>>>> 9f003059a96efcb38b938a0cf2c1c686ca2d5503
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {

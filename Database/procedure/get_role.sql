@@ -1,3 +1,6 @@
+USE pe2018;
+DROP PROCEDURE IF EXISTS get_role;
+DELIMITER //
 CREATE PROCEDURE `get_role`(input_login VARCHAR(50), input_password VARCHAR(50))
 BEGIN
 SET @valid = 0;
@@ -18,3 +21,4 @@ IF EXISTS(SELECT * FROM account WHERE login = input_login AND password = input_p
 ;
 END IF;
 END
+//

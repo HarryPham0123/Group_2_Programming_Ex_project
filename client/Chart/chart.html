@@ -22,41 +22,60 @@
 </head>
 
 <body>
-    <img src="vgu_logo.png" alt="">
-    <h1>VGU Data Visualization</h1>
-    <p>Academic Year</p>
-
-    <div class="select-form">
-    <select class="sel-acad" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Semester</p>
-    <select class="sel-sem" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Faculty</p>
-    <select class="sel-faculty" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Program</p>
-    <select class="sel-pro" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Module</p>
-    <select class="sel-module" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Class</p>
-    <select class="sel-class" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Lecturer</p>
-    <select class="sel-lec" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <br>
-    <button class="visual">visualize</button>
+    <div class="container-fluid">
+    <div class="box">
+        <img src="vgu_logo.png" alt="" id="logo" style="transform: scale(0.55)">
+        <h1 id="title">VGU Data Visualization</h1>
     </div>
+    </div>
+
+    <div class="container">
+        <div class="box1">
+            <p id="subtitle">Academic Year</p>
+            <select class="sel-acad" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="box1">
+            <p id="subtitle">Semester</p>
+            <select class="sel-sem" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="box1">
+            <p id="subtitle">Faculty</p>
+            <select class="sel-faculty" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="box1">
+            <p id="subtitle">Program</p>
+            <select class="sel-pro" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="box1">
+            <p id="subtitle">Module</p>
+            <select class="sel-module" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="box1">
+            <p id="subtitle">Class</p>
+            <select class="sel-class" name="" id="select">
+            <option value="null">--any--</option>
+        </select>
+        </div>
+        <div class="box1">
+            <p id="subtitle">Lecturer</p>
+            <select class="sel-lec" name="" id="select">
+            <option value="null">--any--</option>
+        </select>
+        </div>
+        <br>
+    <button class="visual" id="button">Visualize</button>
+    </div>
+
     
     <div class="chart-container">
         <canvas width="400" height="400" id="gender_chart"></canvas>
