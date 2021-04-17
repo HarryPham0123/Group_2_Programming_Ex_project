@@ -17,9 +17,15 @@ public class ClassService {
         return aClass.orElseGet(() -> new Class());
     }
 
-    public void save(Class aClass) throws Exception { }
+    public void save(Class aClass) throws Exception {
+        classDAO.save(aClass);
+    }
 
-    public void update(String code, Class aClass) throws Exception { }
+    public void update(String code, Class aClass) throws Exception {
+        classDAO.update(code, aClass);
+    }
 
-    public void delete(String code) throws Exception {}
+    public void delete(String code) throws Exception {
+        classDAO.delete(code);
+    }
 }
