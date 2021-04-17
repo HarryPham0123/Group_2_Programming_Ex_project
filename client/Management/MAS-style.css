@@ -1,0 +1,10 @@
+.table-container table {
+	margin: 25px 0;
+}
+th{
+  padding:12px 15px;
+}
+td{
+  padding:12px 30px;
+}
+

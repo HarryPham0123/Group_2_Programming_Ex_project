@@ -14,12 +14,11 @@ import java.util.List;
 import javax.json.*;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Response;
 
 /**
  * Mapping utilization to map the corresponding column into POJO (Plain old Java object) or JSON format
- * @version 0.0.2
- * @author Khoa Dang Nguyen
+ * @version 0.0.3
+ * @author Khoa Dang Nguyen, Phan Cong Huy
  * */
 public class ObjectConverter {
     /**
@@ -32,6 +31,7 @@ public class ObjectConverter {
     public static Object toObject(Class mappingClass, ResultSet resultSet) throws Exception {
         ResultSetMetaData metaData = resultSet.getMetaData();
         List<Object> objectList = new ArrayList<Object>();
+
 
         while (resultSet.next()) {
             Object newInstance = mappingClass.getConstructor().newInstance();
@@ -78,9 +78,11 @@ public class ObjectConverter {
     public static String toJSON(ResultSet resultSet) throws Exception{
         ResultSetMetaData metaData = resultSet.getMetaData();
 
+        if (metaData.getColumnCount() == 0) {
+            return null;
+        }
 
         JsonArrayBuilder entryListModel = Json.createArrayBuilder();
-
         while(resultSet.next()) {
             JsonObjectBuilder entryModel = Json.createObjectBuilder();
 
@@ -96,7 +98,7 @@ public class ObjectConverter {
                     entryModel.add(fieldName, fieldNumericValue);
                 }
                 // Column contains string values
-                else if (columnType == 12) {
+                else if (columnType == 12 || columnType == -1) {
                     fieldStringValue = resultSet.getString(i);
                     entryModel.add(fieldName, fieldStringValue);
                 }
@@ -107,6 +109,35 @@ public class ObjectConverter {
         }
         return entryListModel.build().toString();
     }
+
+    /**
+     * Map the 2 columns into JSON, the first column is the VALUE and the second one is the KEY in JSON format
+     * @param resultSet result set retrieve from the database
+     * @return JSON array
+     * */
+    @NotNull(message = "Can not be null")
+    public static String toSummaryJSON(ResultSet resultSet) throws Exception {
+        ResultSetMetaData metaData = resultSet.getMetaData();
+
+        if(metaData.getColumnCount() == 0) {
+            return null;
+        }
+
+        JsonObjectBuilder entryModel = Json.createObjectBuilder();
+        while(resultSet.next()) {
+            String keyJSON = resultSet.getString(1);
+            String valueJSON = resultSet.getString(2);
+            entryModel.add(keyJSON, valueJSON);
+        }
+
+        return entryModel.build().toString();
+    }
+
+    /**
+     * Map the Plain old Java Object into JSON format, in which values are the member variables with the corresponding values.
+     * @param mappingObject object to be mapped
+     * @return JSON format of the object
+     * @see ObjectMapper*/
     public static String toJSON(Object mappingObject) {
         try {
             return new ObjectMapper().writeValueAsString(mappingObject);
