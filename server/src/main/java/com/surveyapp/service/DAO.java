@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DAO<T> {
-    List<T> getAll();
+    List<T> getAll() throws Exception;
 
-    Optional<T> get(String id);
+    Optional<T> get(String id) throws Exception;
 
-    boolean save(T t);
+    void save(T t) throws Exception;
 
-    boolean update(String code, T t);
+    void update(String code, T t) throws Exception;
 
-    boolean delete(String code);
+    void delete(String code)throws Exception;
 }

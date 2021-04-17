@@ -38,7 +38,7 @@ public class ClassDAO implements DAO<Class> {
         }
     }
 
-    public List<Class> getAll() {
+    public List<Class> getAll() throws Exception {
         List<Class> classList = null;
 
         try {
@@ -62,7 +62,7 @@ public class ClassDAO implements DAO<Class> {
     }
 
     @Override
-    public Optional<Class> get(String code) {
+    public Optional<Class> get(String code) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
             preparedStatement.setString(1, code);
@@ -84,8 +84,7 @@ public class ClassDAO implements DAO<Class> {
     }
 
     @Override
-    public boolean save(Class aClass) {
-        boolean isSaved = true;
+    public void save(Class aClass) throws Exception {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, aClass.getCode());
@@ -95,7 +94,6 @@ public class ClassDAO implements DAO<Class> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isSaved = false;
         } finally {
             if(connection != null) {
                 try {
@@ -105,12 +103,11 @@ public class ClassDAO implements DAO<Class> {
                 }
             }
         }
-        return isSaved;
+
     }
 
     @Override
-    public boolean update(String code, Class aClass) {
-        boolean isUpdated = true;
+    public void update(String code, Class aClass) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, aClass.getCode());
@@ -121,7 +118,6 @@ public class ClassDAO implements DAO<Class> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isUpdated = false;
         } finally  {
             if(connection != null) {
                 try {
@@ -131,19 +127,16 @@ public class ClassDAO implements DAO<Class> {
                 }
             }
         }
-        return isUpdated;
     }
 
     @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
+    public void delete(String code) throws Exception {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
-            isDeleted = false;
         } finally {
             if(connection != null) {
                 try {
@@ -153,7 +146,6 @@ public class ClassDAO implements DAO<Class> {
                 }
             }
         }
-        return isDeleted;
     }
 
 }

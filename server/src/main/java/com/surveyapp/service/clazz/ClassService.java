@@ -8,24 +8,18 @@ import java.util.Optional;
 
 public class ClassService {
     ClassDAO classDAO = new ClassDAO();
-    public List<Class> getAll() {
+    public List<Class> getAll() throws Exception {
         return classDAO.getAll();
     }
 
-    public Class get(String code) {
+    public Class get(String code) throws Exception{
         Optional<Class> aClass = classDAO.get(code);
         return aClass.orElseGet(() -> new Class());
     }
 
-    public boolean save(Class aClass) {
-        return classDAO.save(aClass);
-    }
+    public void save(Class aClass) throws Exception { }
 
-    public boolean update(String code, Class aClass) {
-        return classDAO.update(code, aClass);
-    }
+    public void update(String code, Class aClass) throws Exception { }
 
-    public boolean delete(String code) {
-        return classDAO.delete(code);
-    }
+    public void delete(String code) throws Exception {}
 }

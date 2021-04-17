@@ -3,6 +3,7 @@ import com.surveyapp.model.Class;
 import com.surveyapp.service.clazz.ClassService;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -15,49 +16,71 @@ public class ClassRoute {
     private ClassService classService = new ClassService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Class> getAll() {
-        List<Class> classList = classService.getAll();
+    public List<Class> getAll() throws Exception {
+        List<Class> classList = new ArrayList<>();
+        try{
+            classList = classService.getAll();
+            return classList;
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
         return classList;
     }
 
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Class getByCode(@PathParam("code") String code) {
-        Class aClass = classService.get(code);
+    public Class getByCode(@PathParam("code") String code) throws Exception {
+        Class aClass = new Class();
+        try{
+            aClass = classService.get(code);
+            return aClass;
+        } catch(Exception exception){
+            System.out.println(exception);
+        }
         return aClass;
     }
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Class aClass) {
-        if(!classService.save(aClass)) {
+    public Response insert(Class aClass) throws Exception {
+        try{
+            classService.save(aClass);
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.OK).build();
+        } catch(Exception exception){
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-        return Response.status(Response.Status.OK).build();
     }
 
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response update(@PathParam("code") String code, Class aClass) {
-        if(!classService.update(code, aClass)) {
+    public Response update(@PathParam("code") String code, Class aClass) throws Exception {
+        try{
+            classService.update(code, aClass);
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.OK).build();
+        } catch(Exception exception){
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-        return Response.status(Response.Status.OK).build();
-
     }
 
     @DELETE
     @Path("/{code}")
-    public Response delete(@PathParam("code") String code) {
-        if(!classService.delete(code)) {
+    public Response delete(@PathParam("code") String code) throws Exception {
+        try{
+            classService.delete(code);
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.OK).build();
+        } catch(Exception exception){
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
-        return Response.status(Response.Status.OK).build();
-
     }
 }
