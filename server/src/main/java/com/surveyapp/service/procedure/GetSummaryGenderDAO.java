@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GetSummaryGenderDAO{
+public class GetSummaryGenderDAO {
     private String procedureQuery = "{CALL summary_gender(?, ?, ?, ?, ?, ?, ?)}";
     private Connection connection = new DBUtil().getConnection();
     private CallableStatement statement;
@@ -41,7 +41,7 @@ public class GetSummaryGenderDAO{
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                    System.out.println("[LOGGER] Database resultset: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryGenderDAO resultset: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -49,7 +49,7 @@ public class GetSummaryGenderDAO{
             if (statement != null) {
                 try {
                     statement.close();
-                    System.out.println("[LOGGER] Database statement: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryGenderDAO statement: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -57,7 +57,7 @@ public class GetSummaryGenderDAO{
             if (connection != null) {
                 try {
                     connection.close();
-                    System.out.println("[LOGGER] Database connection: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryGenderDAO connection: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }

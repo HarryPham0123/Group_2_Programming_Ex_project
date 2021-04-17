@@ -1,6 +1,6 @@
 var selectedArray = [];
 var chartContainer;
-var classSize = 32;
+var classSize = 10;
 $(function () {
     chartContainer = $(".chart-container").detach();
 

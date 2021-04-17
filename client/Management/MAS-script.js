@@ -531,12 +531,12 @@ function createFaculty(){
   function deleteAcademicYear(clicked_id)
   {
 	  //Delete the append row automatically
-    $('tr[class*="' + clicked_id + '"]').remove();
     var ID=clicked_id;
     $.ajax({
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/academic_year/'+`${ID}`,
       success: function() {
+        $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
       error:function () {
