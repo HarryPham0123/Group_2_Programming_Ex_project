@@ -172,7 +172,7 @@ function createChart(chart) {
         let calculateValues=refinedValues(values);
         let mean = jStat.mean(calculateValues).toFixed(1);
         let meanDot=mean-0.5
-        let upperBound=parseInt(mean)+1.5
+        let upperBound=Math.ceil(parseFloat(mean))
         let lowerBound=Math.ceil(parseFloat(mean))-1.5
         if(lowerBound<1){
             lowerBound=0
