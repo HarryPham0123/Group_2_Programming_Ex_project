@@ -21,3 +21,16 @@ canvas {
 	width: 600px;
 	height: 600px;
 }
+
+select {
+	border-radius: 5px;
+	width: 120px;
+	height: 30px;
+	border-color:gray;
+	text-align: center;
+}
+
+option {
+	padding: 5px;
+	height: 50px;
+}
