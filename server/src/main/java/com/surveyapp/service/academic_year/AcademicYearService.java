@@ -17,15 +17,15 @@ public class AcademicYearService {
         return academicYear.orElseGet(() -> new AcademicYear());
     }
 
-    public void save(AcademicYear academicYear) {
-        academicYearDAO.save(academicYear);
+    public boolean save(AcademicYear academicYear) {
+        return academicYearDAO.save(academicYear);
     }
 
-    public void update(String code, AcademicYear academicYear) {
-        academicYearDAO.update(code, academicYear);
+    public boolean update(String code, AcademicYear academicYear) {
+        return academicYearDAO.update(code, academicYear);
     }
 
-    public void delete(String code) {
-        academicYearDAO.delete(code);
+    public boolean delete(String code) {
+        return academicYearDAO.delete(code);
     }
 }

@@ -17,15 +17,15 @@ public class ClassService {
         return aClass.orElseGet(() -> new Class());
     }
 
-    public void save(Class aClass) {
-        classDAO.save(aClass);
+    public boolean save(Class aClass) {
+        return classDAO.save(aClass);
     }
 
-    public void update(String code, Class aClass) {
-        classDAO.update(code, aClass);
+    public boolean update(String code, Class aClass) {
+        return classDAO.update(code, aClass);
     }
 
-    public void delete(String code) {
-        classDAO.delete(code);
+    public boolean delete(String code) {
+        return classDAO.delete(code);
     }
 }

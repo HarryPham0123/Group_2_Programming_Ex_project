@@ -51,31 +51,35 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     }
 
     @Override
-    public void save(AcademicYear academicYear) {
+    public boolean save(AcademicYear academicYear) {
+        boolean isSaved = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, academicYear.getCode());
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isSaved = false;
         }
+        return isSaved;
     }
 
     @Override
-    public void update(String code, AcademicYear academicYear) {
-
+    public boolean update(String code, AcademicYear academicYear) {
+        return true;
     }
 
     @Override
-    public void delete(String code) {
-
+    public boolean delete(String code) {
+        boolean isDeleted = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isDeleted = false;
         }
+        return isDeleted;
     }
-
 }

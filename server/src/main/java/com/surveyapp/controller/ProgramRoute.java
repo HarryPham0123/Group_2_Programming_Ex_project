@@ -32,14 +32,11 @@ public class ProgramRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Program program) {
-        try {
-            programService.save(program);
-            return Response.ok().entity("New program successfully inserted").build();
-        } catch (Exception exception) {
+        if(!programService.save(program)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
     }
 
@@ -47,28 +44,22 @@ public class ProgramRoute {
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response update(@PathParam("code") String code, Program program) {
-        try {
-            programService.update(code, program);
-            return Response.ok().entity("Successfully updated").build();
-        } catch (Exception exception) {
+        if(!programService.update(code, program)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
     }
 
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        try {
-            programService.delete(code);
-            return Response.ok().entity("Successfully deleted").build();
-        } catch (Exception exception) {
+        if(!programService.delete(code)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
     }
 }

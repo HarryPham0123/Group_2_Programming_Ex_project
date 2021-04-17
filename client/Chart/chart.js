@@ -2,6 +2,7 @@ var selectedArray = [];
 var chartContainer;
 var classSize = 32;
 $(function () {
+    Chart.defaults.global.tooltips.enabled = false;
     chartContainer = $(".chart-container").detach();
 
     //Load Academic year first
@@ -119,6 +120,17 @@ function makeRequestTo(questionURL = "", chartName) {
         })
     }
 }
+function refinedValues(calculateValues) {
+    //Copy the current array
+    var arrayValues = [...calculateValues];
+    //Loop through current array
+    for (let index = 0; index < calculateValues.length; index++)
+        for (let times = 1; times <= (index + 1); times++) {
+            arrayValues.push(calculateValues[index]);
+        }
+
+    return arrayValues;
+};
 function displayDescription(forChart) {
     return (values) => {
         //Refine the retrieved values
@@ -138,19 +150,9 @@ function displayDescription(forChart) {
         $(`<p>Mean: ${mean}</p>`).insertAfter($(`#${forChart}`))
 };
 
-function refinedValues(calculateValues) {
-    //Copy the current array
-    var arrayValues = [...calculateValues];
-    //Loop through current array
-    for (let index = 0; index < calculateValues.length; index++)
-        for (let times = 1; times <= (index + 1); times++) {
-            arrayValues.push(calculateValues[index]);
-        }
 
-    return arrayValues;
-};
 
-return arrayValues;
+//return arrayValues;
 };
 
 function displayTitle(forChart) {
@@ -164,8 +166,24 @@ function displayTitle(forChart) {
 
 function createChart(chart) {
     var ctx = document.getElementById(chart).getContext('2d');
+
     return (keys, values) => {
         var percentageArray = calculatePercentage(values);
+        let calculateValues=refinedValues(values);
+        let mean = jStat.mean(calculateValues).toFixed(1);
+        let meanDot=mean-0.5
+        let upperBound=Math.ceil(parseFloat(mean))
+        let lowerBound=Math.ceil(parseFloat(mean))-1.5
+        if(lowerBound<1){
+            lowerBound=0
+
+        }
+        if(upperBound>=5){
+            upperBound=5
+        }
+        if(mean==5){
+            lowerBound=Math.ceil(parseFloat(mean))-1
+        }
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -190,10 +208,45 @@ function createChart(chart) {
                         'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1
+                    }, {
+                         type: 'scatterWithErrorBars',
+                         label: 'Mean',
+                         xAxisID:  'mean_id',
+                         // yAxisID: 'invoice-amount',
+
+                         data: [
+                             {x: meanDot,
+                             xMin: lowerBound,
+                             xMax:upperBound,
+                             y: Math.max(...percentageArray)+10
+                              }],
+                         backgroundColor: 'rgb(255, 99, 132)',
                 }]
             },
             options: {
                 scales: {
+                xAxes: [{
+                        display: true,
+                        stacked: true,
+                        scaleLabel: {
+                            display: true,
+                        },
+                        },{
+                        id: "mean_id",
+                        type: 'linear',
+                        display: false,
+                        stacked: false,
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Days',
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                            suggestedMin: 0,
+                            suggestedMax: 5
+                        }
+                    }],
                     yAxes: [{
                         ticks: {
                             max: 100,
@@ -219,8 +272,14 @@ function createChart(chart) {
                             dataArr.map(data => {
                                 sum += parseFloat(data);
                             });
-                            let percentage = Math.round(value * 100 / sum) + "%";
-                            return percentage;
+                            let percentage = Math.round(value * 100 / sum)
+                                if(!isNaN(percentage)){
+                                    console.log(isNaN(percentage))
+                                    return percentage+"%";
+                                }else{
+                                    return mean;
+
+                                }
                         },
                         color: '#000000',
                         anchor: 'end',

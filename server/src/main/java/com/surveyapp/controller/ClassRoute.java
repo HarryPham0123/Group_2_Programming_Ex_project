@@ -31,42 +31,33 @@ public class ClassRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Class aClass) {
-        try {
-            classService.save(aClass);
-            return Response.ok().entity("New class successfully inserted").build();
-        } catch (Exception exception) {
+        if(!classService.save(aClass)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
     }
 
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response update(@PathParam("code") String code, Class aClass) {
-        try {
-            classService.update(code, aClass);
-            return Response.ok().entity("Successfully updated").build();
-        } catch (Exception exception) {
+        if(!classService.update(code, aClass)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
     }
 
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        try {
-            classService.delete(code);
-            return Response.ok().entity("Successfully deleted").build();
-        } catch (Exception exception) {
+        if(!classService.delete(code)) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            jsonObjectBuilder.add("message", exception.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
         }
+        return Response.status(Response.Status.OK).build();
 
     }
 }

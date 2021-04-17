@@ -15,15 +15,15 @@ public class FacultyService {
         return faculty.orElseGet(() -> new Faculty());
     }
 
-    public void save(Faculty faculty) {
-        facultyDAO.save(faculty);
+    public boolean save(Faculty faculty) {
+        return facultyDAO.save(faculty);
     }
 
-    public void update(String code, Faculty faculty) {
-        facultyDAO.update(code, faculty);
+    public boolean update(String code, Faculty faculty) {
+        return facultyDAO.update(code, faculty);
     }
 
-    public void delete(String code) {
-        facultyDAO.delete(code);
+    public boolean delete(String code) {
+        return facultyDAO.delete(code);
     }
 }

@@ -75,7 +75,8 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public void save(Lecturer lecturer) {
+    public boolean save(Lecturer lecturer) {
+        boolean isSaved = true;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, lecturer.getCode());
@@ -83,6 +84,7 @@ public class LecturerDAO implements DAO<Lecturer> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isSaved = false;
         } finally {
             if(connection != null) {
                 try {
@@ -92,10 +94,12 @@ public class LecturerDAO implements DAO<Lecturer> {
                 }
             }
         }
+        return isSaved;
     }
 
     @Override
-    public void update(String code, Lecturer lecturer) {
+    public boolean update(String code, Lecturer lecturer) {
+        boolean isUpdated = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, lecturer.getCode());
@@ -104,6 +108,7 @@ public class LecturerDAO implements DAO<Lecturer> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isUpdated = false;
         } finally  {
             if(connection != null) {
                 try {
@@ -113,16 +118,19 @@ public class LecturerDAO implements DAO<Lecturer> {
                 }
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(String code) {
+    public boolean delete(String code) {
+        boolean isDeleted = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isDeleted = false;
         } finally {
             if(connection != null) {
                 try {
@@ -132,5 +140,6 @@ public class LecturerDAO implements DAO<Lecturer> {
                 }
             }
         }
+        return isDeleted;
     }
 }

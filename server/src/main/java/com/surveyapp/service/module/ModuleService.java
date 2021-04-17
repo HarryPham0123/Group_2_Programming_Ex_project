@@ -16,15 +16,15 @@ public class ModuleService {
         return module.orElseGet(() -> new Module());
     }
 
-    public void save(Module module) {
-        DAO.save(module);
+    public boolean save(Module module) {
+        return DAO.save(module);
     }
 
-    public void update(String code, Module module) {
-        DAO.update(code, module);
+    public boolean update(String code, Module module) {
+        return DAO.update(code, module);
     }
 
-    public void delete(String code) {
-        DAO.delete(code);
+    public boolean delete(String code) {
+        return DAO.delete(code);
     }
 }
