@@ -12,12 +12,11 @@ $(function () {
         selectedArray.length = 1;
         selectedArray[0] = selectedAcademicYear;
 
-        $(".sel-acad").nextAll("select").empty().append("<option value=null>--any--</option>");
+        $(".academic-box")
+            .nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
 
         console.log(selectedArray);
-        if (selectedAcademicYear != null) {
-          getCodes("Scode", ".sel-sem", ...selectedArray);
-        }
+        getCodes("Scode", ".sel-sem", ...selectedArray);
 
     });
 
@@ -26,7 +25,7 @@ $(function () {
         selectedArray.length = 2;
         selectedArray[1] = ($(".sel-sem option:selected").val());
 
-        $(".sel-sem").nextAll("select").empty().append("<option value=null>--any--</option>");
+        $(".semester-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
         getCodes("Fcode", ".sel-faculty", ...selectedArray);
 
     })
@@ -36,7 +35,7 @@ $(function () {
         selectedArray.length = 3;
         selectedArray[2] = $(".sel-faculty option:selected").val();
 
-        $(".sel-faculty").nextAll("select").empty().append("<option value=null>--any--</option>");
+        $(".faculty-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
         getCodes("Pcode", ".sel-pro", ...selectedArray);
     })
 
@@ -45,7 +44,7 @@ $(function () {
         selectedArray.length = 4;
         selectedArray[3] = $(".sel-pro option:selected").val();
 
-        $(".sel-pro").nextAll("select").empty().append("<option value=null>--any--</option>");
+        $(".program-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
         getCodes("Mcode", ".sel-module", ...selectedArray);
     })
 
@@ -55,7 +54,7 @@ $(function () {
         selectedArray[4] = $(".sel-module option:selected").val();
 
         //Remove the next select
-        $(".sel-module").nextAll("select").empty().append("<option value=null>--any--</option>");
+        $(".module-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
         getCodes("Ccode", ".sel-class", ...selectedArray);
     })
 
@@ -65,7 +64,7 @@ $(function () {
         var selectedClass = selectedArray[5] = $(".sel-class option:selected").val();
 
         //Remove the next siblings select
-        $(".sel-class").nextAll("select").empty().append("<option value=null>--any--</option>");
+        $(".class-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
         //Append to lecturer select
         getCodes("Lcode", ".sel-lec", ...selectedArray);
 
@@ -100,7 +99,11 @@ $(function () {
 
     });
 
+    //Pre-loading the chart
+    preLoader();
 
+});
+function preLoader() {
     //Render the chart
     renderChart("gender_chart");
     renderChart("attendance_chart");
@@ -110,8 +113,7 @@ $(function () {
 
     //Class size
     $(`<h3>Class size: ${classSize}</h3>`).insertAfter($("#question_17_chart"));
-
-});
+}
 function renderChart(chartName) {
     //Create charts
     createChart(chartName)([], [])
@@ -267,8 +269,6 @@ function createChart(chart) {
                          type: 'scatterWithErrorBars',
                          label: 'Mean',
                          xAxisID:  'mean_id',
-                         // yAxisID: 'invoice-amount',
-
                          data: [],
                          backgroundColor: 'rgb(255, 99, 132)',
                 }]
