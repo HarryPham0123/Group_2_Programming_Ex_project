@@ -140,27 +140,14 @@
     border-radius: 5px;
     height: 23px;
 }
-.box2
+.box2, .box3, .box4
 {
     width: 80%;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-.box3
-{
-    width: 80%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-.box4
-{
-    width: 80%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 body
 {
     font-size: 17px;
