@@ -52,8 +52,8 @@ public class ModuleDAO implements DAO<Module> {
     }
 
     @Override
-    public void save(Module module) {
-
+    public boolean save(Module module) {
+        boolean isSaved = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
             preparedStatement.setString(1, module.getCode());
@@ -61,11 +61,14 @@ public class ModuleDAO implements DAO<Module> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isSaved = false;
         }
+        return isSaved;
     }
 
     @Override
-    public void update(String code, Module module) {
+    public boolean update(String code, Module module) {
+        boolean isUpdated = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
             preparedStatement.setString(1, module.getCode());
@@ -74,18 +77,23 @@ public class ModuleDAO implements DAO<Module> {
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isUpdated = false;
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(String code) {
+    public boolean delete(String code) {
+        boolean isDeleted = true;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
             preparedStatement.setString(1, code);
             preparedStatement.executeUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
+            isDeleted = false;
         }
+        return isDeleted;
     }
 
 }

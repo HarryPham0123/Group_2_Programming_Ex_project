@@ -10,21 +10,21 @@ public class SemesterService {
     public List<Semester> getAll() {
         return semesterDAO.getAll();
     }
-    
+
     public Semester get(String code) {
         Optional<Semester> semester = semesterDAO.get(code);
         return semester.orElseGet(() -> new Semester());
     }
-    
-    public void save(Semester semester) {
-        semesterDAO.save(semester);
+
+    public boolean save(Semester semester) {
+        return semesterDAO.save(semester);
     }
 
-    public void update(String code, Semester semester) {
-        semesterDAO.update(code, semester);
+    public boolean update(String code, Semester semester) {
+        return semesterDAO.update(code, semester);
     }
 
-    public void delete(String code) {
-        semesterDAO.delete(code);
+    public boolean delete(String code) {
+        return semesterDAO.delete(code);
     }
 }

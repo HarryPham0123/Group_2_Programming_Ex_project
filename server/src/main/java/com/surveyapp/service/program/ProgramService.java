@@ -16,16 +16,16 @@ public class ProgramService {
         return program.orElseGet(() -> new Program());
     }
 
-    public void save(Program program) {
-        programDAO.save(program);
+    public boolean save(Program program) {
+        return programDAO.save(program);
     }
 
-    public void update(String code, Program program) {
-        programDAO.update(code, program);
+    public boolean update(String code, Program program) {
+        return programDAO.update(code, program);
     }
 
-    public void delete(String code) {
-        programDAO.delete(code);
+    public boolean delete(String code) {
+        return programDAO.delete(code);
     }
-    
+
 }

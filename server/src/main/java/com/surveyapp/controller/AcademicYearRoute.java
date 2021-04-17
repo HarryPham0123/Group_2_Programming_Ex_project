@@ -5,6 +5,8 @@ import com.surveyapp.model.AcademicYear;
 import com.surveyapp.service.academic_year.AcademicYearService;
 
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -33,15 +35,21 @@ public class AcademicYearRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(AcademicYear academicYear) {
-        academicYearService.save(academicYear);
-        return Response.ok().entity("New academic year successfully inserted").build();
+        if(!academicYearService.save(academicYear)) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
+        }
+        return Response.status(Response.Status.OK).build();
     }
 
     @Path("/{code}")
     @DELETE
     public Response delete(@PathParam("code") String code) {
-        academicYearService.delete(code);
-        return Response.ok().entity("Successfully deleted").build();
+        if(!academicYearService.delete(code)){
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
+        }
+        return Response.status(Response.Status.OK).build();
     }
 
 }
