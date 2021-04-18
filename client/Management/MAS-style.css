@@ -30,6 +30,12 @@ td{
   justify-content: center;
   align-items: center;
 }
+.container1
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 *{
   margin:15px 5px 15px 5px;
 }
@@ -79,12 +85,12 @@ td{
   }
 }
 #button {
-  display: inline-block;
+  display: inline-block flex;
+  align-items: center;
   vertical-align: middle;
   width: 200px;
   height: 70px;
   border: none;
-  left: 220px;
   padding: auto;
   border-radius: 15px;
   position: relative;
@@ -134,3 +140,8 @@ body{
   background-color: rgb(250, 218, 169);
 }
 
+input {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+} 
