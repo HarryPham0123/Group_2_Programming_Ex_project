@@ -19,7 +19,7 @@ public class AcademicYearRoute {
     private AcademicYearService academicYearService = new AcademicYearService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<AcademicYear> getAll() throws Exception {
+    public List<AcademicYear> getAll() {
         List<AcademicYear> academicYearList = new ArrayList<>();
         try{
              academicYearList = academicYearService.getAll();
@@ -33,7 +33,7 @@ public class AcademicYearRoute {
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public AcademicYear getByCode(@PathParam("code") String code) throws Exception {
+    public AcademicYear getByCode(@PathParam("code") String code) {
         AcademicYear academicYear = new AcademicYear();
         try{
             academicYear = academicYearService.get(code);
@@ -48,7 +48,7 @@ public class AcademicYearRoute {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(AcademicYear academicYear) throws Exception {
+    public Response insert(AcademicYear academicYear) {
         try {
             academicYearService.save(academicYear);
             return Response.status(Response.Status.OK).build();
@@ -61,7 +61,7 @@ public class AcademicYearRoute {
 
     @Path("/{code}")
     @DELETE
-    public Response delete(@PathParam("code") String code) throws Exception {
+    public Response delete(@PathParam("code") String code) {
         try{
             academicYearService.delete(code);
             return Response.status(Response.Status.OK).build();
