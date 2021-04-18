@@ -4,7 +4,7 @@ package com.surveyapp.service.Login_test_Huy_Pham;
 import com.surveyapp.model.AcademicYear;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
+import javax.ws.rs.core.NewCookie;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.naming.NamingException;
@@ -36,15 +36,17 @@ public class LoginRoute {
         if (data.get().getValid().equals("Yes")){
             User user = new User(username,password,data);
             String token = JWTService.createJWT(user);
-            System.out.println(token);
-            return Response.ok(token).build();
+            NewCookie cookie = new NewCookie("sqmvsa", token, "/", "", "token", NewCookie.DEFAULT_MAX_AGE, false);
+
+            return Response.ok("OK").cookie(cookie).build();
+
         }
         //
         else {
             return Response.status(Response.Status.FORBIDDEN).entity("Wrong username or password").build();
         }
     }
-
+//UNDER CONSTRUCTION LMAO
     @GET
     @Path("/{token}")
     @Produces({ MediaType.APPLICATION_JSON})
