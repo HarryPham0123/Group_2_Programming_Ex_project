@@ -17,7 +17,7 @@ public class ProgramRoute {
     private ProgramService programService = new ProgramService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Program> getAll() throws Exception{
+    public List<Program> getAll(){
         List<Program> programList = new ArrayList<>();
         try{
             programList = programService.getAll();
@@ -31,7 +31,7 @@ public class ProgramRoute {
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Program getByCode(@PathParam("code") String code) throws Exception{
+    public Program getByCode(@PathParam("code") String code) {
         Program program = new Program();
         try{
             program = programService.get(code);
@@ -44,7 +44,7 @@ public class ProgramRoute {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Program program)throws Exception {
+    public Response insert(Program program) {
         try{
             programService.save(program);
             return Response.status(Response.Status.OK).build();
@@ -58,7 +58,7 @@ public class ProgramRoute {
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response update(@PathParam("code") String code, Program program) throws Exception{
+    public Response update(@PathParam("code") String code, Program program){
         try{
             programService.update(code, program);
             return Response.status(Response.Status.OK).build();
@@ -71,7 +71,7 @@ public class ProgramRoute {
 
     @DELETE
     @Path("/{code}")
-    public Response delete(@PathParam("code") String code)throws Exception {
+    public Response delete(@PathParam("code") String code){
         try{
             programService.delete(code);
             return Response.status(Response.Status.OK).build();

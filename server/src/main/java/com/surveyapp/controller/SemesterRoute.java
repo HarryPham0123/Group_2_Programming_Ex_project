@@ -16,7 +16,7 @@ public class SemesterRoute {
     private SemesterService semesterService = new SemesterService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Semester> getAll() throws Exception {
+    public List<Semester> getAll() {
         List<Semester> semesterList = new ArrayList<>();
         try{
             semesterList = semesterService.getAll();
@@ -30,7 +30,7 @@ public class SemesterRoute {
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Semester getByCode(@PathParam("code") String code)throws Exception {
+    public Semester getByCode(@PathParam("code") String code){
         Semester semester = new Semester();
         try{
             semester = semesterService.get(code);
@@ -43,7 +43,7 @@ public class SemesterRoute {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Semester semester)throws Exception {
+    public Response insert(Semester semester){
         try{
             semesterService.save(semester);
             return Response.status(Response.Status.OK).build();
@@ -57,7 +57,7 @@ public class SemesterRoute {
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response update(@PathParam("code") String code, Semester semester) throws Exception{
+    public Response update(@PathParam("code") String code, Semester semester) {
         try{
             semesterService.update(code, semester);
             return Response.status(Response.Status.OK).build();
@@ -70,7 +70,7 @@ public class SemesterRoute {
 
     @DELETE
     @Path("/{code}")
-    public Response delete(@PathParam("code") String code) throws Exception{
+    public Response delete(@PathParam("code") String code) {
         try{
             semesterService.delete(code);
             return Response.status(Response.Status.OK).build();

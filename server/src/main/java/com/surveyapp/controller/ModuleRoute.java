@@ -16,7 +16,7 @@ public class ModuleRoute {
     private ModuleService moduleService = new ModuleService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Module> getAll() throws Exception{
+    public List<Module> getAll() {
         List<Module> moduleList = new ArrayList<>();
         try{
             moduleList = moduleService.getAll();
@@ -30,7 +30,7 @@ public class ModuleRoute {
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Module getByCode(@PathParam("code") String code)throws Exception {
+    public Module getByCode(@PathParam("code") String code){
         Module module = new Module();
         try{
             module = moduleService.get(code);
@@ -43,7 +43,7 @@ public class ModuleRoute {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Module module) throws Exception{
+    public Response insert(Module module) {
         try{
             moduleService.save(module);
             return Response.status(Response.Status.OK).build();
