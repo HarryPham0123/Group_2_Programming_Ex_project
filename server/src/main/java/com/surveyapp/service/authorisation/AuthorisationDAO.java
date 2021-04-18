@@ -6,7 +6,7 @@ import com.surveyapp.util.DBUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Encoders;
-import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.*;
 
 import javax.naming.NamingException;
 import javax.ws.rs.core.NewCookie;

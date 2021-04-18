@@ -16,8 +16,14 @@ public class LecturerRoute {
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Lecturer> getAll() {
-        List<Lecturer> lecturerList = lecturerService.getAll();
-        return lecturerList;
+        try {
+            List<Lecturer> lecturerList = lecturerService.getAll();
+            return lecturerList;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @GET
