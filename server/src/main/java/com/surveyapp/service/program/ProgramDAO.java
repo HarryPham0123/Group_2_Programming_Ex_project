@@ -42,21 +42,17 @@ public class ProgramDAO implements DAO<Program> {
 
     @Override
     public List<Program> getAll() throws Exception {
-
         List<Program> programList = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getAllScript);
-            programList = (List<Program>) ObjectConverter.toObject(Program.class, resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
-                }
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getAllScript);
+        programList = (List<Program>) ObjectConverter.toObject(Program.class, resultSet);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
             }
         }
         return programList;
@@ -64,74 +60,59 @@ public class ProgramDAO implements DAO<Program> {
 
     @Override
     public Optional<Program> get(String id) throws Exception{
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
-            preparedStatement.setString(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Program program = (Program) ObjectConverter.toObject(Program.class, resultSet);
-            return Optional.ofNullable(program);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        }
+        PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        preparedStatement.setString(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Program program = (Program) ObjectConverter.toObject(Program.class, resultSet);
+        return Optional.ofNullable(program);
     }
 
     @Override
     public void save(Program program) throws Exception{
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, program.getCode());
-            preparedStatement.setString(2, program.getName());
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        preparedStatement.setString(1, program.getCode());
+        preparedStatement.setString(2, program.getName());
+        preparedStatement.executeUpdate();
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
+
     }
 
     @Override
     public void update(String code, Program program)throws Exception {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, program.getCode());
-            preparedStatement.setString(2, program.getName());
-            preparedStatement.setString(3, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally  {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+
+        PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+        preparedStatement.setString(1, program.getCode());
+        preparedStatement.setString(2, program.getName());
+        preparedStatement.setString(3, code);
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
+
     }
 
     @Override
     public void delete(String code)throws Exception {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-            preparedStatement.setString(1, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch(Exception exception) {
-                    exception.printStackTrace();
-                }
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        preparedStatement.setString(1, code);
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch(Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
