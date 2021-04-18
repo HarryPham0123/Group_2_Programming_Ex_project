@@ -18,19 +18,16 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     @Override
     public List<AcademicYear> getAll() throws Exception {
         List<AcademicYear> academicYearList = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getAllScript);
-            academicYearList = (List<AcademicYear>) ObjectConverter.toObject(AcademicYear.class, resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
-                }
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getAllScript);
+        academicYearList = (List<AcademicYear>) ObjectConverter.toObject(AcademicYear.class, resultSet);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
             }
         }
         return academicYearList;
@@ -38,46 +35,29 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
 
     @Override
     public Optional<AcademicYear> get(String code) throws Exception { //code inputted by FE
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
-            preparedStatement.setString(1, code);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            AcademicYear academicYear = (AcademicYear) ObjectConverter.toObject(AcademicYear.class, resultSet);
-            return Optional.ofNullable(academicYear);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        }
+        PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        preparedStatement.setString(1, code);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        AcademicYear academicYear = (AcademicYear) ObjectConverter.toObject(AcademicYear.class, resultSet);
+        return Optional.ofNullable(academicYear);
     }
 
     @Override
     public void save(AcademicYear academicYear) throws Exception {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, academicYear.getCode());
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        preparedStatement.setString(1, academicYear.getCode());
+        preparedStatement.executeUpdate();
     }
 
     @Override
     public void update(String code, AcademicYear academicYear) throws Exception {
-        try{
 
-        }catch(Exception exception){
-            exception.printStackTrace();
-        }
     }
 
     @Override
     public void delete(String code) throws Exception{
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-            preparedStatement.setString(1, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        preparedStatement.setString(1, code);
+        preparedStatement.executeUpdate();
     }
 }
