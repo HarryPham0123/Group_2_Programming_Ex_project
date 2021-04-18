@@ -41,111 +41,77 @@ public class ClassDAO implements DAO<Class> {
     public List<Class> getAll() throws Exception {
         List<Class> classList = null;
 
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getAllScript);
-            classList = (List<Class>) ObjectConverter.toObject(Class.class, resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getAllScript);
+        classList = (List<Class>) ObjectConverter.toObject(Class.class, resultSet);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
-
         return classList;
     }
 
     @Override
     public Optional<Class> get(String code) throws Exception {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
-            preparedStatement.setString(1, code);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Class aClass = (Class) ObjectConverter.toObject(Class.class, resultSet);
-            return Optional.ofNullable(aClass);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }
+        PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        preparedStatement.setString(1, code);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Class aClass = (Class) ObjectConverter.toObject(Class.class, resultSet);
+        return Optional.ofNullable(aClass);
     }
 
     @Override
     public void save(Class aClass) throws Exception {
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, aClass.getCode());
-            preparedStatement.setInt(2, aClass.getSize());
-            preparedStatement.setString(3, aClass.getScode());
-            preparedStatement.setString(4, aClass.getMcode());
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        preparedStatement.setString(1, aClass.getCode());
+        preparedStatement.setInt(2, aClass.getSize());
+        preparedStatement.setString(3, aClass.getScode());
+        preparedStatement.setString(4, aClass.getMcode());
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
-
     }
 
     @Override
     public void update(String code, Class aClass) throws Exception {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, aClass.getCode());
-            preparedStatement.setInt(2, aClass.getSize());
-            preparedStatement.setString(3, aClass.getScode());
-            preparedStatement.setString(4, aClass.getMcode());
-            preparedStatement.setString(5, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally  {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+        preparedStatement.setString(1, aClass.getCode());
+        preparedStatement.setInt(2, aClass.getSize());
+        preparedStatement.setString(3, aClass.getScode());
+        preparedStatement.setString(4, aClass.getMcode());
+        preparedStatement.setString(5, code);
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
 
     @Override
     public void delete(String code) throws Exception {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-            preparedStatement.setString(1, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch(Exception exception) {
-                    exception.printStackTrace();
-                }
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        preparedStatement.setString(1, code);
+        preparedStatement.executeUpdate();
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch(Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
-
 }
