@@ -1,6 +1,6 @@
 package com.surveyapp.controller;
 
-import com.surveyapp.model.Faculty;
+
 import com.surveyapp.model.Module;
 import com.surveyapp.service.module.ModuleService;
 
