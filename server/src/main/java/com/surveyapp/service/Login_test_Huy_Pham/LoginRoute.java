@@ -4,14 +4,12 @@ package com.surveyapp.service.Login_test_Huy_Pham;
 import com.surveyapp.model.AcademicYear;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.NewCookie;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.naming.NamingException;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
@@ -27,7 +25,7 @@ public class LoginRoute {
 
         return data;
     }
-    @GET
+    @POST
     @Path("/{username}/{password}")
     @Produces({ MediaType.APPLICATION_JSON})
     public Response verif(@PathParam("username")String username, @PathParam("password") String password) {
