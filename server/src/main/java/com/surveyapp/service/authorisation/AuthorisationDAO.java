@@ -8,51 +8,64 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.SecretKey;
 import javax.naming.NamingException;
 import javax.ws.rs.core.NewCookie;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class AuthorisationDAO {
-    private AuthorisedUser verifyLogin(LoginCredential loginCredential) throws Exception{
+    private String secretString = "Ih9Zh7BBGpyIkIZmK/5qdBQmfyw+EEsBUy+M6/n3Woux9y1Do7ql1mhayBL01+FKG5FpoJCnXSzivk5WY/egTg==";
+    private SecretKey key = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
 
+    private AuthorisedUser verifyLogin(LoginCredential loginCredential) throws Exception{
         // Create new connection to DB
         Connection connection = new DBUtil().getConnection();
 
-        String verifyingQuery = "{CALL get_role(?, ?)}";
+        try {
+            String verifyingQuery = "{CALL get_role(?, ?)}";
 
-        PreparedStatement statement = connection.prepareStatement(verifyingQuery);
-        statement.setString(1, loginCredential.getUsername());
-        statement.setString(2, loginCredential.getPassword());
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.next();
+            PreparedStatement statement = connection.prepareStatement(verifyingQuery);
+            statement.setString(1, loginCredential.getUsername());
+            statement.setString(2, loginCredential.getPassword());
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
 
-        int valid = resultSet.getInt("valid");
-        if(valid == 0) {
-            return null;
-        } else {
-            String lecturerCode = resultSet.getString("lecturer");
-            String classCode = resultSet.getString("class_code");
-            int coordinatorCode = resultSet.getInt("coordinator");
-            String program = resultSet.getString("program");
-            int dean = resultSet.getInt("dean");
-            String faculty = resultSet.getString("faculty");
+            int valid = resultSet.getInt("valid");
+            if(valid == 0) {
+                return null;
+            } else {
+                String lecturerCode = resultSet.getString("lecturer");
+                String classCode = resultSet.getString("class_code");
+                int coordinatorCode = resultSet.getInt("coordinator");
+                String program = resultSet.getString("program");
+                int dean = resultSet.getInt("dean");
+                String faculty = resultSet.getString("faculty");
 
-            AuthorisedUser authUser = new AuthorisedUser(lecturerCode, classCode, coordinatorCode, program, dean, faculty);
+                AuthorisedUser authUser = new AuthorisedUser(lecturerCode, classCode, coordinatorCode, program, dean, faculty);
 
-            return authUser;
+                return authUser;
+            }
+        } finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch(Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
         }
     }
 
     private String issueToken(AuthorisedUser authUser) throws NamingException {
+        /*
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-
         String secretString = Encoders.BASE64.encode(key.getEncoded());
 
-        System.out.println(secretString);
-
+         */
         String authToken = Jwts.builder()
                 .claim("lecturerCode", authUser.getLecturerCode())
                 .claim("classCode", authUser.getClassCode())
