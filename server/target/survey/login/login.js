@@ -1,10 +1,9 @@
 $(function () {
-
     $(".login-btn").click(function() {
         const usernamevalid=$('#username').val();
         const passwordvalid=$('#password').val();
         if(usernamevalid.length == 0 || passwordvalid.length == 0){
-            alert("Please provide all the input fields before login");
+            $(".login-form").children().addClass("was-validated");
         }
         else{
             let PostJson = {
@@ -19,6 +18,7 @@ $(function () {
                 dataType: "text",
                 error: function(e) {
                     alert("Something wrong");
+                    $(".login-form").children().addClass("was-validated")
                     console.log(e);
                 },
                 success : function(data){
