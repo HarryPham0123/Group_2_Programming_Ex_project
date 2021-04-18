@@ -29,7 +29,7 @@ public class LoginRoute {
     }
     @GET
     @Path("/{username}/{password}")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response verif(@PathParam("username")String username, @PathParam("password") String password) {
         Optional<LoginModel> data  = verify(username,password);
         System.out.println("Confirmed data packet, user validity is "+data.get().getValid());
@@ -47,7 +47,7 @@ public class LoginRoute {
 
     @GET
     @Path("/{token}")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response verif(@PathParam("token")String jwt) {
         Boolean info = JWTService.isTokenExpired(jwt);
 
