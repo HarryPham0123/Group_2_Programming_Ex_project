@@ -18,7 +18,7 @@ public class FacultyRoute {
     private FacultyService facultyService = new FacultyService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Faculty> getAll() throws Exception {
+    public List<Faculty> getAll() {
         List<Faculty> facultyList = new ArrayList<>();
         try{
             facultyList = facultyService.getAll();
@@ -32,7 +32,7 @@ public class FacultyRoute {
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Faculty getByCode(@PathParam("code") String code) throws Exception {
+    public Faculty getByCode(@PathParam("code") String code) {
         Faculty faculty = new Faculty();
         try{
             faculty = facultyService.get(code);
@@ -45,7 +45,7 @@ public class FacultyRoute {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Faculty faculty) throws Exception {
+    public Response insert(Faculty faculty) {
         try{
             facultyService.save(faculty);
             return Response.status(Response.Status.OK).build();
@@ -59,7 +59,7 @@ public class FacultyRoute {
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response update(@PathParam("code") String code, Faculty faculty) throws Exception {
+    public Response update(@PathParam("code") String code, Faculty faculty){
         try{
             facultyService.update(code, faculty);
             return Response.status(Response.Status.OK).build();
@@ -72,7 +72,7 @@ public class FacultyRoute {
 
     @DELETE
     @Path("/{code}")
-    public Response delete(@PathParam("code") String code) throws Exception {
+    public Response delete(@PathParam("code") String code) {
         try{
             facultyService.delete(code);
             return Response.status(Response.Status.OK).build();
