@@ -16,7 +16,7 @@ public class ClassRoute {
     private ClassService classService = new ClassService();
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Class> getAll() throws Exception {
+    public List<Class> getAll()  {
         List<Class> classList = new ArrayList<>();
         try{
             classList = classService.getAll();
@@ -30,7 +30,7 @@ public class ClassRoute {
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Class getByCode(@PathParam("code") String code) throws Exception {
+    public Class getByCode(@PathParam("code") String code) {
         Class aClass = new Class();
         try{
             aClass = classService.get(code);
@@ -43,7 +43,7 @@ public class ClassRoute {
 
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response insert(Class aClass) throws Exception {
+    public Response insert(Class aClass) {
         try{
             classService.save(aClass);
             return Response.status(Response.Status.OK).build();
@@ -57,7 +57,7 @@ public class ClassRoute {
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response update(@PathParam("code") String code, Class aClass) throws Exception {
+    public Response update(@PathParam("code") String code, Class aClass) {
         try{
             classService.update(code, aClass);
             return Response.status(Response.Status.OK).build();
@@ -70,7 +70,7 @@ public class ClassRoute {
 
     @DELETE
     @Path("/{code}")
-    public Response delete(@PathParam("code") String code) throws Exception {
+    public Response delete(@PathParam("code") String code) {
         try{
             classService.delete(code);
             return Response.status(Response.Status.OK).build();
