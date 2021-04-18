@@ -1,4 +1,4 @@
-package com.surveyapp.service.Login_Testing_Cong_Huy;
+package com.surveyapp.model;
 
 public class LoginCredential {
     private String username;

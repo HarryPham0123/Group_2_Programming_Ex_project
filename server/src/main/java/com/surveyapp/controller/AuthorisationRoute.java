@@ -1,7 +1,7 @@
-package com.surveyapp.service.Login_Testing_Cong_Huy;
+package com.surveyapp.controller;
 
-import com.surveyapp.service.Login_Testing_Cong_Huy.LoginCredential;
-import com.surveyapp.service.Login_Testing_Cong_Huy.AuthorisationService;
+import com.surveyapp.model.LoginCredential;
+import com.surveyapp.service.authorisation.AuthorisationService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

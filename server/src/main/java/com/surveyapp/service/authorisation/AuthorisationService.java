@@ -1,4 +1,6 @@
-package com.surveyapp.service.Login_Testing_Cong_Huy;
+package com.surveyapp.service.authorisation;
+
+import com.surveyapp.model.LoginCredential;
 
 import javax.ws.rs.core.NewCookie;
 
