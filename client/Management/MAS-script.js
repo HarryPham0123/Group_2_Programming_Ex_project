@@ -312,6 +312,8 @@ function createAYear(){
   else{
     alert("Wrong input, please provide the input in correct form");
   }
+//Auto erase the New fields
+  $("#create-AYCode").val('');
 }
 
 function createSemester(){
@@ -346,6 +348,8 @@ function createSemester(){
     else{
       alert("Wrong input, please provide the input in correct form");
     }
+    $('#create-semCode').val('');
+    $('#create-semAyCode').val('');
   }
 
 
@@ -383,6 +387,8 @@ function createFaculty(){
     else{
       alert("Wrong input, please provide the input in correct form");
     }
+    $("#create-fcode").val('');
+    $("#create-faculty").val('');
   }
 
 
@@ -420,6 +426,8 @@ function createFaculty(){
      else{
        alert("Wrong input, please provide the input in correct form");
      }
+     $("#create-programCode").val('');
+     $("#create-programName").val('');
   }
 
 
@@ -456,7 +464,9 @@ function createFaculty(){
   } 
      else{
        alert("Wrong input, please provide the input in correct form");
-     }
+     } 
+     $("#create-moduleCode").val('');
+     $("#create-moduleName").val('');
   }
 
 
@@ -499,7 +509,11 @@ function createFaculty(){
   } 
      else{
        alert("Wrong input, please provide input in the correct form");
-     }
+     } 
+     $("#create-classCode").val('');
+     $("#create-size").val('');
+     $("#create-semesterCode").val('');
+     $("#create-modCode").val('');
   }
 
 
@@ -537,6 +551,8 @@ function createFaculty(){
      else{
        alert("Wrong input, please provide input in the correct form");
      }
+     $("#create-lecturerCode").val('');
+     $("#create-lecturerName").val('');
   }
 
 
