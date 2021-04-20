@@ -11,13 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GetCodeDAO {
-    private Connection connection = new DBUtil().getConnection();
+    private Connection connection = null;
     private String procedureQuery = "{CALL get_code(?, ?, ?, ?, ?, ?, ?)}";
     private CallableStatement statement = null;
     private ResultSet resultSet = null;
 
     public GetCodeDAO setParameters(Code code) throws SQLException {
         //Get database connection
+        connection = new DBUtil().getConnection();
         statement = connection.prepareCall(procedureQuery);
 
         //Set parameters

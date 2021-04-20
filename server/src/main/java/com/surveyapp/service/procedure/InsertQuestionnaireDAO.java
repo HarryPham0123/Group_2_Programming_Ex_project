@@ -10,13 +10,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InsertQuestionnaireDAO {
-    private Connection connection = new DBUtil().getConnection();
+    private Connection connection = null;
     private String procedureQuery = "{CALL insert_questionnaire(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
     private CallableStatement statement = null;
     private ResultSet resultSet = null;
 
     public InsertQuestionnaireDAO setParameters(Questionnaire questionnaire) throws SQLException {
         //Get database connection
+        connection = new DBUtil().getConnection();
+
         statement = connection.prepareCall(procedureQuery);
 
         //Set lcode and ccode

@@ -12,8 +12,11 @@ $(function () {
         selectedArray.length = 1;
         selectedArray[0] = selectedAcademicYear;
 
+        //Remove all options in the next selects
         $(".academic-box")
-            .nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
+            .nextAll("div[class*='-box']")
+            .children("select")
+            .empty().append("<option value=null>--any--</option>");
 
         console.log(selectedArray);
         getCodes("Scode", ".sel-sem", ...selectedArray);
@@ -25,7 +28,10 @@ $(function () {
         selectedArray.length = 2;
         selectedArray[1] = ($(".sel-sem option:selected").val());
 
-        $(".semester-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
+        //Remove all options in the next selects
+        $(".semester-box").nextAll("div[class*='-box']")
+            .children("select")
+            .empty().append("<option value=null>--any--</option>");
         getCodes("Fcode", ".sel-faculty", ...selectedArray);
 
     })
@@ -34,8 +40,11 @@ $(function () {
     $(".sel-faculty").change(function() {
         selectedArray.length = 3;
         selectedArray[2] = $(".sel-faculty option:selected").val();
-
-        $(".faculty-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
+        //Remove all options in the next selects
+        $(".faculty-box")
+            .nextAll("div[class*='-box']")
+            .children("select")
+            .empty().append("<option value=null>--any--</option>");
         getCodes("Pcode", ".sel-pro", ...selectedArray);
     })
 
@@ -44,7 +53,12 @@ $(function () {
         selectedArray.length = 4;
         selectedArray[3] = $(".sel-pro option:selected").val();
 
-        $(".program-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
+        //Remove all options in the next selects
+        $(".program-box")
+            .nextAll("div[class*='-box']")
+            .children("select")
+            .empty().append("<option value=null>--any--</option>");
+
         getCodes("Mcode", ".sel-module", ...selectedArray);
     })
 
@@ -53,8 +67,11 @@ $(function () {
         selectedArray.length = 5;
         selectedArray[4] = $(".sel-module option:selected").val();
 
-        //Remove the next select
-        $(".module-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
+        //Remove all options in the next selects
+        $(".module-box")
+            .nextAll("div[class*='-box']")
+            .children("select")
+            .empty().append("<option value=null>--any--</option>");
         getCodes("Ccode", ".sel-class", ...selectedArray);
     })
 
@@ -88,45 +105,43 @@ $(function () {
 
     $(".visual").click(function (e) {
         e.preventDefault();
-        //Attendance question
-        makeRequestTo("gender_question", "gender_chart", )(...selectedArray);
-        makeRequestTo("attendance_question",'attendance_chart', )(...selectedArray);
-
+        fetchQuestionnaires("gender_question", ...selectedArray)("gender_chart");
+        fetchQuestionnaires("attendance_question", ...selectedArray)('attendance_chart');
         for (index = 1; index < 18; index++) {
-            makeRequestTo(`question_${index}`,`question_${index}_chart`)(...selectedArray);
+            fetchQuestionnaires(`question_${index}`, ...selectedArray)(`question_${index}_chart`);
         }
-
-
     });
 
-    //Pre-loading the chart
+    //Pre-loading all the charts
     preLoader();
 
 });
+/*Pre-loading all of the graph, title and description*/
 function preLoader() {
     //Render the chart
     renderChart("gender_chart");
     renderChart("attendance_chart");
+
+    //question_1_chart, question_2_chart, ...
     for (index = 1; index < 18; index++) {
         renderChart(`question_${index}_chart`);
     }
 
-    //Class size
+    //Render out the class size
     $(`<h3>Class size: ${classSize}</h3>`).insertAfter($("#question_17_chart"));
 }
+//Load the graph, title and description corresponding to chartName
 function renderChart(chartName) {
     //Create charts
-    createChart(chartName)([], [])
-
+    createChart(chartName);
     //Create title
     displayTitle(chartName);
-
     //Create description
-    displayDescription(chartName)([]);
+    displayDescription(chartName);
 }
 function updateChart(chart) {
     return (keys, values) => {
-        //Check if questions are not gender or attendance
+        //Check if the options exceed 5 (not include NOT APPLICABLE)
         if (values.length > 5) {
             values = values.slice(0, 5);
             keys = keys.slice(0, 5);
@@ -136,14 +151,19 @@ function updateChart(chart) {
         var percentageArray = calculatePercentage(values);
         let calculateValues = refinedValues(values);
 
+        //Calculate mean and standard deviation
         let mean = jStat.mean(calculateValues).toFixed(1);
         let standardDeviation = jStat.stdev(calculateValues).toFixed(1);
 
+        //Calculate the upper and lower bound
         let upperBound = parseFloat(mean) + parseFloat(standardDeviation);
-
         let lowerBound = parseFloat(mean) - standardDeviation;
-        lowerBound = (lowerBound < 0) ? 0 : lowerBound;
 
+        //Check if the lower and upper bound are exceed the x-Axis
+        lowerBound = (lowerBound < 0) ? 0 : lowerBound;
+        upperBound = (upperBound > 5) ? 5 : upperBound;
+
+        //Update the results
         chart.data.labels = keys;
         chart.data.datasets[0].data = percentageArray;
         chart.data.datasets[1].data[0] = {x: mean, xMin: lowerBound, xMax: upperBound, y: Math.max(...percentageArray)+10}
@@ -159,6 +179,7 @@ function updateDescription(forChart) {
         }
         //Refine the retrieved values
         let calculatedValues = refinedValues(values);
+        console.log("Values: " + calculatedValues);
 
         //Calculate mean and standard deviation
         let mean = jStat.mean(calculatedValues).toFixed(1);
@@ -173,15 +194,15 @@ function updateDescription(forChart) {
         $(`#${forChart}_mean`).text(`Mean: ${mean}`);
     }
 }
-function makeRequestTo(questionURL = "", chartName) {
-    return function addParameters(
-        academic_year = null,
-        semester = null,
-        faculty = null,
-        program = null,
-        module = null,
-        lecturer = null,
-        clazz = null) {
+function fetchQuestionnaires(questionURL = "",
+                             academic_year = null,
+                             semester = null,
+                             faculty = null,
+                             program = null,
+                             module = null,
+                             lecturer = null,
+                             clazz = null) {
+    return function (chartName) {
         $.ajax({
             type: "GET",
             contentType: "application/json",
@@ -202,7 +223,7 @@ function makeRequestTo(questionURL = "", chartName) {
                 //Update the chart's description
                 updateDescription(chartName)(values)
             }
-        })
+        });
     }
 }
 function refinedValues(calculateValues) {
@@ -220,13 +241,11 @@ function refinedValues(calculateValues) {
     return arrayValues;
 };
 function displayDescription(forChart) {
-    return (values) => {
-        //Display the calculation
-        $(`<p id=${forChart}_numResp>Number of responses:</p>`).insertAfter($(`#${forChart}`));
-        $(`<p id=${forChart}_respRate>Response rate:</p>`).insertAfter($(`#${forChart}`));
-        $(`<p id=${forChart}_staDev>Standard deviation: </p>`).insertAfter($(`#${forChart}`));
-        $(`<p id=${forChart}_mean>Mean: </p>`).insertAfter($(`#${forChart}`))
-    };
+    //Create the blank description
+    $(`<p id=${forChart}_numResp>Number of responses:</p>`).insertAfter($(`#${forChart}`));
+    $(`<p id=${forChart}_respRate>Response rate:</p>`).insertAfter($(`#${forChart}`));
+    $(`<p id=${forChart}_staDev>Standard deviation: </p>`).insertAfter($(`#${forChart}`));
+    $(`<p id=${forChart}_mean>Mean: </p>`).insertAfter($(`#${forChart}`))
 };
 
 function displayTitle(forChart) {
@@ -239,97 +258,95 @@ function displayTitle(forChart) {
 
 function createChart(chart) {
     var ctx = document.getElementById(chart).getContext('2d');
-    return (keys, values) => {
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Percentage',
-                    data: [],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                    }, {
-                         type: 'scatterWithErrorBars',
-                         label: 'Mean',
-                         xAxisID:  'mean_id',
-                         data: [],
-                         backgroundColor: 'rgb(255, 99, 132)',
-                }]
-            },
-            options: {
-                scales: {
-                xAxes: [{
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Percentage',
+                data: [],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+                }, {
+                     type: 'scatterWithErrorBars',
+                     label: 'Mean',
+                     xAxisID:  'mean_id',
+                     data: [],
+                     backgroundColor: 'rgb(255, 99, 132)',
+            }]
+        },
+        options: {
+            scales: {
+            xAxes: [{
+                    display: true,
+                    stacked: true,
+                    scaleLabel: {
                         display: true,
-                        stacked: true,
-                        scaleLabel: {
-                            display: true,
-                        },
-                        },{
-                        id: "mean_id",
-                        type: 'linear',
+                    },
+                    },{
+                    id: "mean_id",
+                    type: 'linear',
+                    display: false,
+                    stacked: false,
+                    scaleLabel: {
                         display: false,
-                        stacked: false,
-                        scaleLabel: {
-                            display: false,
-                            labelString: 'Days',
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            stepSize: 1,
-                            suggestedMin: 0,
-                            suggestedMax: 5
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            max: 100,
-                            min: 0,
-                            stepSize: 10,
-                            callback: function (value) {
-                                return value + "%"; // convert it to percentage
-                            },
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'PERCENTAGE',
-                        },
-                    }]
-
-                },
-                plugins: {
-                    datalabels: {
-                        formatter: (value, ctx) => {
-                                if(!isNaN(value)){
-                                    return parseInt(value)+"%";
-                                }else{
-                                    return ctx.chart.data.datasets[1].data[0].x;
-                                }
-                        },
-                        color: '#000000',
-                        anchor: 'end',
-                        align: 'end',
+                        labelString: 'Days',
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                        suggestedMin: 0,
+                        suggestedMax: 5
                     }
+                }],
+                yAxes: [{
+                    ticks: {
+                        max: 100,
+                        min: 0,
+                        stepSize: 10,
+                        callback: function (value) {
+                            return value + "%"; // convert it to percentage
+                        },
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'PERCENTAGE',
+                    },
+                }]
+
+            },
+            plugins: {
+                datalabels: {
+                    formatter: (value, ctx) => {
+                            if(!isNaN(value)){
+                                return parseInt(value)+"%";
+                            }else{
+                                return ctx.chart.data.datasets[1].data[0].x;
+                            }
+                    },
+                    color: '#000000',
+                    anchor: 'end',
+                    align: 'end',
                 }
             }
-        });
-        chartArray[chart] = myChart;
-    }
+        }
+    });
+    chartArray[chart] = myChart;
 }
 function calculatePercentage(values) {
     //Calculate the sum

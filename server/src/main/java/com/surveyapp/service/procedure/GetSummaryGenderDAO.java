@@ -11,12 +11,13 @@ import java.sql.SQLException;
 
 public class GetSummaryGenderDAO {
     private String procedureQuery = "{CALL summary_gender(?, ?, ?, ?, ?, ?, ?)}";
-    private Connection connection = new DBUtil().getConnection();
+    private Connection connection = null;
     private CallableStatement statement;
     private ResultSet resultSet = null;
 
     public GetSummaryGenderDAO setParameters(Code code) throws SQLException {
         // Get database connection
+        connection = new DBUtil().getConnection();
         statement = connection.prepareCall(procedureQuery);
 
         //Set parameters
