@@ -6,6 +6,7 @@
 {
     width: 100%;
 }
+/* import and set size of the cover*/
 .intro
 {
     background-image: url("management-cover.png");
@@ -13,6 +14,7 @@
     background-size: 300px;
     opacity: 0.85;
 }
+/*Set size of table that contain the input area*/
 .table-container table {
   margin: 25px 0;
   position: relative;
@@ -24,21 +26,25 @@ th{
 td{
   padding: 12px 30px;
 }
+/*Flexbox to align the input area to be in the center*/
 .container
 {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+/*Flexbox to align the buttons to be in the center*/
 .container1
 {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+/*set margin of page*/
 *{
   margin:15px 5px 15px 5px;
 }
+/*Set the logo and title to be in the center*/
 .logo,.title,#intro-title  
 {
   display: block;
@@ -47,6 +53,7 @@ td{
   text-align: center;
   font-size: 68px;
 }
+/*Set background of title and logo to lie on top of cover image*/
 #intro-title  
 {
     width: 90%;
@@ -54,6 +61,7 @@ td{
     opacity: 0.92;
     padding-bottom: 40px;
 }
+/*Size of the title*/
 #title1
 {
   text-align: center;
@@ -61,6 +69,7 @@ td{
   font-size: 30px;
   color: #fff;
 }
+/*Set the box size for each part*/
 .aca-year, .semester, .faculties, .program, .module, .class, .lecturer
 {
   width: 70%;
@@ -74,6 +83,7 @@ td{
   border: 2px solid rgb(145, 145, 145);
   box-shadow: 10px 10px 5px gray;
 }
+/* Add hover animation for button load data, show and hide*/
 @-webkit-keyframes button {
   50% {
     background-color: rgb(250, 134, 26);
@@ -117,6 +127,7 @@ td{
   background-color: rgb(250, 134, 26);
   color: white;
 }
+/*Add hover animation for button new*/
 #button1 {
   display: inline-block;
   vertical-align: middle;
@@ -136,10 +147,11 @@ td{
   background-color: rgb(250, 134, 26);
   color: white;
 }
+/*Background color of body*/
 body{
   background-color: rgb(250, 218, 169);
 }
-
+/*The size of teh input box*/
 input {
   width: 100%;
   height: 100%;
