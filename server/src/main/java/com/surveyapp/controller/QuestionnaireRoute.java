@@ -8,9 +8,19 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ *
+ * Create HTTP GET, POST method to get answers from questionnaire
+ * @author Phan Cong Huy, Nguyen Dang Khoa
+ * @return Response for the front-end
+ *
+ */
+
 @Path("/questionnaire")
 public class QuestionnaireRoute {
     private ProcedureService procedureService = new ProcedureService();
+
+    //GET method for getting questionnaire
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getQuestionnaire(
@@ -31,6 +41,8 @@ public class QuestionnaireRoute {
             return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
         }
     }
+
+    //POST method for inserting questionnaire to DB
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -52,6 +64,7 @@ public class QuestionnaireRoute {
         }
     }
 
+    //GET method for getting all attendance answers
     @GET
     @Path("/attendance_question")
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,6 +87,7 @@ public class QuestionnaireRoute {
         }
     }
 
+    //GET method for getting all gender answers
     @GET
     @Path("/gender_question")
     @Produces(MediaType.APPLICATION_JSON)
@@ -96,6 +110,7 @@ public class QuestionnaireRoute {
         }
     }
 
+    //GET method for getting all other answers
     @GET
     @Path("/{questionNumber}")
     @Produces(MediaType.APPLICATION_JSON)

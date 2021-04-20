@@ -9,6 +9,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+/**
+ *
+ * Create FacultyDAO to interact with table faculty in DB
+ * @author Tran Van Hung, Phan Cong Huy, Nguyen Dang Khoa
+ *
+ */
+
+
 public class FacultyDAO implements DAO<Faculty> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM faculty";
@@ -42,9 +50,10 @@ public class FacultyDAO implements DAO<Faculty> {
     @Override
     public List<Faculty> getAll() throws Exception {
         List<Faculty> facultyList = null;
-
+        //Get database connection
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(getAllScript);
+        //Convert to Object type
         facultyList = (List<Faculty>) ObjectConverter.toObject(Faculty.class, resultSet);
 
         if (connection != null) {
@@ -59,16 +68,21 @@ public class FacultyDAO implements DAO<Faculty> {
 
     @Override
     public Optional<Faculty> get(String code) throws Exception {
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        //Set parameters
         preparedStatement.setString(1, code);
         ResultSet resultSet = preparedStatement.executeQuery();
+        //Convert to Object type
         Faculty faculty = (Faculty) ObjectConverter.toObject(Faculty.class, resultSet);
         return Optional.ofNullable(faculty);
     }
 
     @Override
     public void save(Faculty faculty) throws Exception {
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        //Set parameters
         preparedStatement.setString(1, faculty.getCode());
         preparedStatement.setString(2, faculty.getName());
         preparedStatement.executeUpdate();
@@ -85,7 +99,9 @@ public class FacultyDAO implements DAO<Faculty> {
 
     @Override
     public void update(String code, Faculty faculty) throws Exception {
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+        //Set parameters
         preparedStatement.setString(1, faculty.getCode());
         preparedStatement.setString(2, faculty.getName());
         preparedStatement.setString(3, code);
@@ -102,8 +118,9 @@ public class FacultyDAO implements DAO<Faculty> {
 
     @Override
     public void delete(String code) throws Exception {
-
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        //Set parameters
         preparedStatement.setString(1, code);
         preparedStatement.executeUpdate();
 

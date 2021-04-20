@@ -11,9 +11,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ *
+ * Create HTTP GET, PUT, POST, DELETE method for Module
+ * @author Tran Van Hung, Nguyen Dang Khoa, Pham Minh Huy
+ *@return Response for the front-end
+ */
+
+
 @Path("/module")
 public class ModuleRoute {
     private ModuleService moduleService = new ModuleService();
+
+    // GET method for showing all tuples in Module table in DB and show in the front-end
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Module> getAll() {
@@ -27,6 +38,7 @@ public class ModuleRoute {
         return moduleList;
     }
 
+    //GET method for searching function (optional)
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -41,6 +53,7 @@ public class ModuleRoute {
         return module;
     }
 
+    //POST method for inserting new tuple into the Module table in DB and show in the front-end
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Module module) {
@@ -54,6 +67,7 @@ public class ModuleRoute {
         }
     }
 
+    //PUT method for modifying a tuple in the Module table in DB show in the front-end
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -68,6 +82,7 @@ public class ModuleRoute {
         }
     }
 
+    //DELETE method for deleting a tuple from the Module table in DB and show in the front-end
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {

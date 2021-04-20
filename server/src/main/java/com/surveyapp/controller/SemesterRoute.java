@@ -11,9 +11,18 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ *
+ * Create HTTP GET, PUT, POST, DELETE method for Module
+ * @author Tran Van Hung, Nguyen Dang Khoa, Phan Cong Huy
+ *@return Response for the front-end
+ */
+
 @Path("/semesters")
 public class SemesterRoute {
     private SemesterService semesterService = new SemesterService();
+
+    // GET method for showing all tuples in Semester table in DB and show in the front-end
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Semester> getAll() {
@@ -27,6 +36,7 @@ public class SemesterRoute {
         return semesterList;
     }
 
+    //GET method for searching function (optional)
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -41,6 +51,7 @@ public class SemesterRoute {
         return semester;
     }
 
+    //POST method for inserting new tuple into the Faculty table in DB and show in the front-end
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Semester semester){
@@ -54,6 +65,7 @@ public class SemesterRoute {
         }
     }
 
+    //PUT method for modifying a tuple in the Semester table in DB and show in the front-end
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -68,6 +80,7 @@ public class SemesterRoute {
         }
     }
 
+    //DELETE method for deleting a tuple from the Semester table in DB and show in the front-end
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {

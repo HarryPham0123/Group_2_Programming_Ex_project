@@ -14,9 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ *
+ * Create HTTP GET, POST, DELETE method for AcadamicYear
+ * @author Nguyen Dang Khoa, Pham Minh Huy, Phan Cong Huy, Tran Van Hung
+ * @return Response for the front-end
+ */
+
+
 @Path("/academic_year")
 public class AcademicYearRoute {
     private AcademicYearService academicYearService = new AcademicYearService();
+
+    // GET method for showing all tuples in AcademicYear table in DB show in the front-end
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<AcademicYear> getAll() {
@@ -30,6 +40,7 @@ public class AcademicYearRoute {
         return academicYearList;
     }
 
+    //GET method for searching function (optional)
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -46,6 +57,7 @@ public class AcademicYearRoute {
 
     //PUT not needed
 
+    //POST method for inserting new tuple into the AcademicYear table in DB show in the front-end
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(AcademicYear academicYear) {
@@ -59,6 +71,7 @@ public class AcademicYearRoute {
         }
     }
 
+    //DELETE method for deleting a tuple from the AcademicYear table in DB show in the front-end
     @Path("/{code}")
     @DELETE
     public Response delete(@PathParam("code") String code) {

@@ -9,6 +9,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ *
+ * Create HTTP GET method to get all general information using procedure from DB
+ * @author Nguyen Dang Khoa, Phan Cong Huy
+ * @return Response for the front-end
+ */
+
 @Path("/general")
 public class GeneralRoute {
     private ProcedureService procedureService = new ProcedureService();

@@ -10,6 +10,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+/**
+ *
+ * Create ProgramDAO to interact with table program in DB
+ * @author Tran Van Hung, Phan Cong Huy, Nguyen Dang Khoa
+ *
+ */
+
 public class ProgramDAO implements DAO<Program> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM program";
@@ -43,9 +50,10 @@ public class ProgramDAO implements DAO<Program> {
     @Override
     public List<Program> getAll() throws Exception {
         List<Program> programList = null;
-
+        //Get database connection
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(getAllScript);
+        //Convert to Object type
         programList = (List<Program>) ObjectConverter.toObject(Program.class, resultSet);
 
         if (connection != null) {
@@ -60,16 +68,21 @@ public class ProgramDAO implements DAO<Program> {
 
     @Override
     public Optional<Program> get(String id) throws Exception{
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        //Set parameters
         preparedStatement.setString(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        //Convert to Object type
         Program program = (Program) ObjectConverter.toObject(Program.class, resultSet);
         return Optional.ofNullable(program);
     }
 
     @Override
     public void save(Program program) throws Exception{
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        //Set parameters
         preparedStatement.setString(1, program.getCode());
         preparedStatement.setString(2, program.getName());
         preparedStatement.executeUpdate();
@@ -85,8 +98,9 @@ public class ProgramDAO implements DAO<Program> {
 
     @Override
     public void update(String code, Program program)throws Exception {
-
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+        //Set parameters
         preparedStatement.setString(1, program.getCode());
         preparedStatement.setString(2, program.getName());
         preparedStatement.setString(3, code);
@@ -104,7 +118,9 @@ public class ProgramDAO implements DAO<Program> {
 
     @Override
     public void delete(String code)throws Exception {
+        //Get database connection
         PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        //Set parameters
         preparedStatement.setString(1, code);
         preparedStatement.executeUpdate();
 

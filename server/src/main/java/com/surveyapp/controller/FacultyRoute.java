@@ -12,10 +12,19 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * Create HTTP GET, PUT, POST, DELETE method for Faculty
+ * @author Tran Van Hung, Nguyen Dang Khoa
+ *@return Response for the front-end
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Path("/faculties")
 public class FacultyRoute {
     private FacultyService facultyService = new FacultyService();
+
+    // GET method for showing all tuples in Faculty table in DB show in the front-end
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Faculty> getAll() {
@@ -29,6 +38,7 @@ public class FacultyRoute {
         return facultyList;
     }
 
+    //GET method for searching function (optional)
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -43,6 +53,7 @@ public class FacultyRoute {
         return faculty;
     }
 
+    //POST method for inserting new tuple into the Faculty table in DB and show in the front-end
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Faculty faculty) {
@@ -56,6 +67,7 @@ public class FacultyRoute {
         }
     }
 
+    //PUT method for modifying a tuple in the Faculty table in DB and show in the front-end
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -70,6 +82,7 @@ public class FacultyRoute {
         }
     }
 
+    //DELETE method for deleting a tuple from the Faculty table in DB and show in the front-end
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {

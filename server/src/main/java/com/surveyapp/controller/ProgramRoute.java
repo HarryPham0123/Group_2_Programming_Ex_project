@@ -12,9 +12,18 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ *
+ * Create HTTP GET, PUT, POST, DELETE method for Module
+ * @author Tran Van Hung, Nguyen Dang Khoa
+ *@return Response for the front-end
+ */
+
 @Path("/programs")
 public class ProgramRoute {
     private ProgramService programService = new ProgramService();
+
+    // GET method for showing all tuples in Program table in DB and show in the front-end
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Program> getAll(){
@@ -28,6 +37,7 @@ public class ProgramRoute {
         return programList;
     }
 
+    //GET method for searching function (optional)
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -42,6 +52,7 @@ public class ProgramRoute {
         return program;
     }
 
+    //POST method for inserting new tuple into the Faculty table in DB and show in the front-end
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Program program) {
@@ -55,6 +66,7 @@ public class ProgramRoute {
         }
     }
 
+    //PUT method for modifying a tuple in the Program table in DB and show in the front-end
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -69,6 +81,7 @@ public class ProgramRoute {
         }
     }
 
+    //DELETE method for deleting a tuple from the Program table in DB and show in the front-end
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code){
