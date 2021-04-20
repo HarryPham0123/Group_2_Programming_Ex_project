@@ -87,6 +87,7 @@ canvas {
 	height: 30px;
 	background-color: #cecece;;
 	border: none;
+	border-radius: 5px;
 	text-align-last: center;
 	
 }

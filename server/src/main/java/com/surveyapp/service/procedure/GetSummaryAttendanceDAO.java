@@ -11,12 +11,13 @@ import java.sql.SQLException;
 
 public class GetSummaryAttendanceDAO {
     private String procedureQuery = "{CALL summary_attendance(?, ?, ?, ?, ?, ?, ?)}";
-    private Connection connection = new DBUtil().getConnection();
+    private Connection connection = null;
     private CallableStatement statement;
     private ResultSet resultSet = null;
 
     public GetSummaryAttendanceDAO setParameters(Code code) throws SQLException {
         // Get database connection
+        connection = new DBUtil().getConnection();
         statement = connection.prepareCall(procedureQuery);
 
         //Set parameters

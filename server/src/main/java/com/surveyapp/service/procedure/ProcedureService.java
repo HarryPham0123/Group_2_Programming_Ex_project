@@ -5,20 +5,19 @@ import com.surveyapp.model.Questionnaire;
 
 public class ProcedureService {
     private GetGeneralDAO procedureDAO = new GetGeneralDAO();
-    private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO();
     private InsertQuestionnaireDAO insertQuestionnaireDAO = new InsertQuestionnaireDAO();
+    private GetQuestionnaireDAO getQuestionnaireDAO = new GetQuestionnaireDAO();
     private GetCodeDAO getCodeDAO = new GetCodeDAO();
     private GetSummaryAttendanceDAO getSummaryAttendanceDAO= new GetSummaryAttendanceDAO();
     private GetSummaryGenderDAO getSummaryGenderDAO = new GetSummaryGenderDAO();
     private GetSummaryQuestionDAO getSummaryQuestionDAO = new GetSummaryQuestionDAO();
-
     //Get all general information
     public String getAll(Code code) throws Exception {
         return procedureDAO.setParameters(code).executeProcedure();
     }
 
     //Insert new questionnaire
-    public String insertQuestionnaire(Questionnaire questionnaire) throws  Exception{
+    public String insertQuestionnaire(Questionnaire questionnaire) throws  Exception {
         return insertQuestionnaireDAO.setParameters(questionnaire).executeProcedure();
     }
 
