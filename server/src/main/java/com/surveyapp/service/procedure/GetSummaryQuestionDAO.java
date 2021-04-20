@@ -42,7 +42,7 @@ public class GetSummaryQuestionDAO {
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                    System.out.println("[LOGGER] Database resultset: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryQuestionDAO resultset: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -50,7 +50,7 @@ public class GetSummaryQuestionDAO {
             if (statement != null) {
                 try {
                     statement.close();
-                    System.out.println("[LOGGER] Database statement: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryQuestionDAO statement: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -58,7 +58,7 @@ public class GetSummaryQuestionDAO {
             if (connection != null) {
                 try {
                     connection.close();
-                    System.out.println("[LOGGER] Database connection: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryQuestionDAO connection: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }

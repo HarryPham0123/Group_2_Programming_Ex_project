@@ -9,9 +9,9 @@ IF NOT EXISTS(SELECT * FROM account WHERE login = input_login AND password = inp
 END IF;
 IF EXISTS(SELECT * FROM account WHERE login = input_login AND password = input_password)
 	THEN SET @valid = 1;
-	SELECT @valid as 'valid', IFNULL(lc.Lcode,'None') as 'lecturer', IFNULL(GROUP_CONCAT(DISTINCT lic.Ccode SEPARATOR ', '),'None') as 'class_code',
-		IFNULL(pc.PCcode,'None') as 'coordinator', IFNULL(GROUP_CONCAT(DISTINCT p.Pname SEPARATOR ', '),'None') as 'program',
-        IFNULL(d.Dcode,'None') as 'dean', IFNULL(GROUP_CONCAT(DISTINCT f.Fname SEPARATOR ', '),'None') as 'faculty'
+	SELECT @valid as 'valid', lc.Lcode as 'lecturer', GROUP_CONCAT(DISTINCT lic.Ccode SEPARATOR ', ') as 'class_code',
+		pc.PCcode as 'coordinator', GROUP_CONCAT(DISTINCT p.Pname SEPARATOR ', ') as 'program',
+        d.Dcode as 'dean', GROUP_CONCAT(DISTINCT f.Fname SEPARATOR ', ') as 'faculty'
 	FROM account a
 	NATURAL JOIN user u
 	LEFT JOIN lecturer lc ON u.user_id = lc.user_id LEFT JOIN lecturer_in_class lic on lc.Lcode = lic.Lcode
@@ -21,3 +21,4 @@ IF EXISTS(SELECT * FROM account WHERE login = input_login AND password = input_p
 ;
 END IF;
 END
+//

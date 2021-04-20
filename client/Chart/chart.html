@@ -12,7 +12,7 @@
   <!--<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
-  <script src="dist/js/chartjs-chart-error-bars.min.js" type="module"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-error-bars@1.2.1/build/Chart.ErrorBars.min.js"></script>
 
     <!--Google font-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,39 +22,63 @@
 </head>
 
 <body>
-    <img src="dist/img/vgu_logo.png" alt="">
-    <h1>VGU Data Visualization</h1>
-    <p>Academic Year</p>
-    <select class="sel-acad" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Semester</p>
-    <select class="sel-sem" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Faculty</p>
-    <select class="sel-faculty" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Program</p>
-    <select class="sel-pro" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Module</p>
-    <select class="sel-module" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Class</p>
-    <select class="sel-class" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <p>Lecturer</p>
-    <select class="sel-lec" name="" id="">
-        <option value="null">--any--</option>
-    </select>
-    <br>
-    <button class="visual">visualize</button>
-    
+    <div class="container-fluid">
+        <!-- Title, intro -->
+        <div class="intro">
+            <br><br>
+            <div id="intro-title">
+            <img src="vgu_logo.png" alt="VGU" class="logo"  style="transform: scale(0.55)">
+            <h1 class="logo" >VGU DATA VISUALIZATION</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="academic-box">
+            <p id="subtitle">Academic Year</p>
+            <select class="sel-acad" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="semester-box">
+            <p id="subtitle">Semester</p>
+            <select class="sel-sem" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="faculty-box">
+            <p id="subtitle">Faculty</p>
+            <select class="sel-faculty" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="program-box">
+            <p id="subtitle">Program</p>
+            <select class="sel-pro" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="module-box">
+            <p id="subtitle">Module</p>
+            <select class="sel-module" name="" id="select">
+            <option value="null">--any--</option>
+            </select>
+        </div>
+        <div class="class-box">
+            <p id="subtitle">Class</p>
+            <select class="sel-class" name="" id="select">
+            <option value="null">--any--</option>
+        </select>
+        </div>
+        <div class="lecturer-box">
+            <p id="subtitle">Lecturer</p>
+            <select class="sel-lec" name="" id="select">
+            <option value="null">--any--</option>
+        </select>
+        </div>
+        <br>
+    <button class="visual" id="button">Visualize</button>
+    </div>
+
     
     <div class="chart-container">
         <canvas width="400" height="400" id="gender_chart"></canvas>

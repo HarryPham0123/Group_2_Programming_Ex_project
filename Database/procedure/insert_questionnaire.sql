@@ -1,3 +1,6 @@
+USE pe2018;
+DROP PROCEDURE IF EXISTS insert_questionnaire;
+DELIMITER //
 CREATE PROCEDURE `insert_questionnaire`(input_Ccode VARCHAR(10), input_Lcode VARCHAR(10),  input_attendance VARCHAR(10), input_gender VARCHAR(10),
 					question_1_input Varchar(10), question_2_input Varchar(10), question_3_input Varchar(10),
 				       question_4_input Varchar(10), question_5_input Varchar(10), question_6_input Varchar(10), question_7_input Varchar(10), question_8_input Varchar(10), 
@@ -21,3 +24,4 @@ IF EXISTs (SELECT lc.Ccode, lc.Lcode
     question_13_input , question_14_input , question_15_input , question_16_input , question_17_input , question_18_input);
 END IF;
 END
+//

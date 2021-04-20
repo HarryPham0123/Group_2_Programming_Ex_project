@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GetSummaryAttendanceDAO{
+public class GetSummaryAttendanceDAO {
     private String procedureQuery = "{CALL summary_attendance(?, ?, ?, ?, ?, ?, ?)}";
     private Connection connection = new DBUtil().getConnection();
     private CallableStatement statement;
@@ -41,7 +41,7 @@ public class GetSummaryAttendanceDAO{
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                    System.out.println("[LOGGER] Database resultset: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryAttendanceDAO resultset: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -49,7 +49,7 @@ public class GetSummaryAttendanceDAO{
             if (statement != null) {
                 try {
                     statement.close();
-                    System.out.println("[LOGGER] Database statement: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryAttendanceDAO statement: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -57,7 +57,7 @@ public class GetSummaryAttendanceDAO{
             if (connection != null) {
                 try {
                     connection.close();
-                    System.out.println("[LOGGER] Database connection: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryAttendanceDAO connection: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
