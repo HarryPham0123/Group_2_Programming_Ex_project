@@ -9,6 +9,7 @@ $(function () {
     $(".sel-class").change(function (e) {
          const newVal=getVal();
          addInput(newVal)
+	 $(".sel-lec .starter").siblings().remove()
          changLec(newVal)
     });
 	//submit 
@@ -115,9 +116,15 @@ function getData(){
 		type: 'GET',
 		url: 'http://localhost:8080/survey/api/general',
 		success: function(data) {
-			data.map(val=>{
+			//filter out the repeated class code
+            const ccodeArr=new Set(data.map(val=>{
+                return val.Ccode
+            }))
+            const uniqueCcode=[...ccodeArr]
+            //render class code
+			uniqueCcode.map(val=>{
             $(`
-                <option value=${val.Ccode}>${val.Ccode}</option>
+                <option value=${val}>${val}</option>
             `).appendTo($(".sel-class"));
             })
 		},
