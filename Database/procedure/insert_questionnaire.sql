@@ -1,6 +1,5 @@
 USE pe2018;
 DROP PROCEDURE IF EXISTS insert_questionnaire;
-
 DELIMITER //
 CREATE PROCEDURE `insert_questionnaire`(input_Ccode VARCHAR(10), input_Lcode VARCHAR(10),  input_attendance VARCHAR(10), input_gender VARCHAR(10),
 					question_1_input Varchar(10), question_2_input Varchar(10), question_3_input Varchar(10),
@@ -28,3 +27,4 @@ ELSE SELECT 'failure' as 'message';
 END IF;
 END
 //
+

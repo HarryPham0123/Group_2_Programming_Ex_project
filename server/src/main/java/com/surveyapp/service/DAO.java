@@ -8,9 +8,9 @@ public interface DAO<T> {
 
     Optional<T> get(String id);
 
-    void save(T t);
+    boolean save(T t);
 
-    void update(String code, T t);
+    boolean update(String code, T t);
 
-    void delete(String code);
+    boolean delete(String code);
 }

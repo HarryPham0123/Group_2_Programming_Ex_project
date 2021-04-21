@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire form</title>
+    <link rel="stylesheet" href="questionnaire.styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Create the Title-->
+<div class="container-fluid">
+    <div class="intro">
+        <br><br>
+        <div id="intro-title">
+        <!-- Import the VGU Logo and scale it smaller-->
+        <img src="image/vgu_logo.png" alt="VGU" class="logo"  style="transform: scale(0.55)">
+        <h1 class="logo" >MODULE EVALUATION QUESTIONNAIRE</h1>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <!-- Opening-->
+    <div class="opening">
+        <p id="paragraph">
+            The information collected in this form is used to review the organization, relevance and
+            effectiveness of the module. It will help our lecturers and other faculty to improve on the courses taught at VGU. Your response
+            is anonymous, meaning your lecturers will not know who wrote what. Please answer the questions by filling the blanks or
+            checking the appropriate boxes.
+        </p>
+    </div>
+
+    <!-- First part -->
+    <form>
+    <div class="personal">
+        <div class="tag1">
+            <h2 id="subtitle"><center>CLASS INFORMATION</center></h2>
+        </div> <br>
+        <div class="sel-class1" >
+        <!-- Select Class-->
+        <label for="sel-class" style="float: left;">Class</label>
+        <!-- Display option to select class-->
+        <select class= "sel-class" name="" id="" style="float: right;">
+            <option value="starter">--Please select Class--</option>
+        </select>
+        </div>
+        <div class="clear"></div>
+
+        <div class="sel-class1">
+        <!-- Select Lecturer-->
+        <label for="sel-lec" style="float: left;">Lecturer</label>
+        <!--Display option to select lecturer-->
+        <select class="sel-lec" name="" id="" style="float: right;">
+            <option class="starter" value="starter">--Please select Lecturer--</option>
+        </select>
+        </div>
+
+        <div class="clear"></div>
+        <div class="box2">
+        <label for="acad-year" style="float: left;">Academic Year:</label>
+        <input readonly autocomplete="off" class="acad-year" type="text" required style="float: right;"><br>
+        </div>
+        <div class="clear"></div>
+
+        <div class="box2">
+        <label for="semester" style="float: left;">Semester:</label>
+        <input readonly autocomplete="off" class="semester" type="text" required style="float: right;"><br>
+        </div>
+        <div class="clear"></div>
+
+        <div class="box2">
+        <label for="faculty" style="float: left;">Faculty:</label>
+        <input readonly autocomplete="off" class="faculty" type="text" required style="float: right;"><br>
+        </div>
+        <div class="clear"></div>
+
+        <div class="box2">
+        <label for="program" style="float: left;">Program:</label>
+        <input readonly autocomplete="off" class="program"  type="text" required style="float: right;"><br>
+        </div>
+        <div class="clear"></div>
+
+        <div class="box2">
+        <label for="module" style="float: left;">Module:</label>
+        <input readonly autocomplete="off" class="module" type="text" required style="float: right;"><br>
+        </div>
+        <div class="clear"></div><br>
+
+        <!-- Checkbox for Attendance-->
+        <div class="box3">
+        <label for="attend" style="float: left;">How often did you attend class for this module?</label>
+        <label for="never" style="float: right;">Never</label>
+        <input autocomplete="off"  type="radio" name="attendance" value="never" style="float: right;">
+        <label for="rarely" style="float: right;">Rarely</label>
+        <input autocomplete="off"  type="radio" name="attendance" value="rarely" style="float: right;">
+        <label for="sometimes" style="float: right;">Sometimes</label>
+        <input autocomplete="off"  type="radio" name="attendance" value="sometimes" style="float: right;">
+        <label for="often" style="float: right;">Often</label>
+        <input autocomplete="off"  type="radio" name="attendance" value="often" style="float: right;">
+        <label for="always" style="float: right;">Always</label>
+        <input autocomplete="off"  type="radio" name="attendance" value="always" style="float: right;">
+        </div> 
+        <div class="clear"></div>
+
+        <!-- Checkbox for Gender-->
+        <div class="box3">
+        <label for="gender" style="float: left;;">What is your gender: </label>
+        <label for="other" style="float: right;">Other</label>
+        <input autocomplete="off"  type="radio" name="gender" value="other" style="float: right;">
+        <label for="female" style="float: right;">Female</label>
+        <input autocomplete="off"  type="radio" name="gender" value="female" style="float: right;">
+        <label for="male" style="float: right;">Male</label>
+        <input autocomplete="off"  type="radio" name="gender" value="male" style="float: right;">
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Second part -->
+    <div class="organization">
+        <div class="tag2">
+            <h3 id="subtitle1"><center>ORGANIZATION & PLANNING</center></h3>
+        </div>
+        <!-- Notice for user-->
+        <p id="notice1">*Notice: Strongly disagree = 1, Strongly agree = 5</p>
+        <div class="box2">
+        <!-- Checkbox for question 1-->
+        <label class="question" for="question1" style="float: left;">1. The module objectives have been clear to me.</label>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question1" value="1" style="float:right;">
+        <label for="5" style="float:right;">5</label>
+        <input autocomplete="off"  type="radio" name="question1" value="5" style="float:right;">
+        <label for="4" style="float:right;">4</label>
+        <input autocomplete="off"  type="radio" name="question1" value="4" style="float:right;">
+        <label for="3" style="float:right;">3</label>
+        <input autocomplete="off"  type="radio" name="question1" value="3" style="float:right;">
+        <label for="2" style="float:right;">2</label>
+        <input autocomplete="off"  type="radio" name="question1" value="2" style="float:right;">
+        <label for="1" style="float:right;">1</label>
+        <input autocomplete="off"  type="radio" name="question1" value="1" style="float:right;">
+        </div>
+        <div class="clear"></div>
+
+        <div class="box2">
+        <!-- Checkbox for question 2-->
+        <label class="question" for="question2" style="float:left;">2. The learning materials (e.g. course books, handouts, etc.)<br>have been sufficient and useful.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question2" value="not" style="float:right;">
+        <label for="5" style="float:right;">5</label>
+        <input autocomplete="off"  type="radio" name="question2" value="5" style="float:right;">
+        <label for="4" style="float:right;">4</label>
+        <input autocomplete="off"  type="radio" name="question2" value="4" style="float:right;">
+        <label for="3" style="float:right;">3</label>
+        <input autocomplete="off"  type="radio" name="question2" value="3" style="float:right;">
+        <label for="2" style="float:right;">2</label>
+        <input autocomplete="off"  type="radio" name="question2" value="2" style="float:right;">
+        <label for="1" style="float:right;">1</label>
+        <input autocomplete="off"  type="radio" name="question2" value="1" style="float:right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 3-->
+        <div class="box2">
+        <label class="question" for="question3" style="float:left;">3. The content of the module has always been relevant.</label><br>
+        <label for="1" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question3" value="not" style="float:right;">
+        <label for="5" style="float:right;">5</label>
+        <input autocomplete="off"  type="radio" name="question3" value="5" style="float:right;">
+        <label for="4" style="float:right;">4</label>
+        <input autocomplete="off"  type="radio" name="question3" value="4" style="float:right;">
+        <label for="3" style="float:right;">3</label>
+        <input autocomplete="off"  type="radio" name="question3" value="3" style="float:right;">
+        <label for="2" style="float:right;">2</label>
+        <input autocomplete="off"  type="radio" name="question3" value="2" style="float:right;">
+        <label for="1" style="float:right;">1</label>
+        <input autocomplete="off"  type="radio" name="question3" value="1" style="float:right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 4-->
+        <div class="box2">
+        <label class="question" for="question4" style="float:left;">4. The lessons have been interesting.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question4" value="not" style="float:right;">
+        <label for="5" style="float:right;">5</label>
+        <input autocomplete="off"  type="radio" name="question4" value="5" style="float:right;">
+        <label for="4" style="float:right;">4</label>
+        <input autocomplete="off"  type="radio" name="question4" value="4" style="float:right;">
+        <label for="3" style="float:right;">3</label>
+        <input autocomplete="off"  type="radio" name="question4" value="3" style="float:right;">
+        <label for="2" style="float:right;">2</label>
+        <input autocomplete="off"  type="radio" name="question4" value="2" style="float:right;">
+        <label for="1" style="float:right;">1</label>
+        <input autocomplete="off"  type="radio" name="question4" value="1" style="float:right;">
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Third part -->
+    <div class="workload">
+        <div class="tag3">
+            <h4 id="subtitle2"><center>MODULE WORKLOAD AND DIFFICULTY</center></h4>
+        </div>
+        <div class="box4">
+        <!-- Checkbox for question 5-->
+        <label class="question" for="question5" style="float: left;">5. The module workload outside classroom such as <br> homework, assignments, exercises, exams preparation, etc. has been</label><br>
+        <label for="5" style="float: right;"> > 5 hours</label>
+        <input autocomplete="off"  type="radio" name="question5" value="5" style="float: right;">
+        <label for="4" style="float: right;">3-4</label>
+        <input autocomplete="off"  type="radio" name="question5" value="4" style="float: right;">
+        <label for="3" style="float: right;">2-3</label>
+        <input autocomplete="off"  type="radio" name="question5" value="3" style="float: right;">
+        <label for="2" style="float: right;">1-2</label>
+        <input autocomplete="off"  type="radio" name="question5" value="2" style="float: right;">
+        <label for="1" style="float: right;"> < 1 hour</label>
+        <input autocomplete="off" type="radio" name="question5" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 6-->
+        <div class="box4">
+        <label class="question" for="question6" style="float: left;">6. The overall module workload has been</label>
+        <label for="5" style="float: right;">Too much=5   </label>
+        <input autocomplete="off"  type="radio" name="question6" value="5" style="float: right;">
+        <label for="4" style="float: right;">4  </label>
+        <input autocomplete="off"  type="radio" name="question6" value="4" style="float: right;">
+        <label for="3" style="float: right;">3  </label>
+        <input autocomplete="off"  type="radio" name="question6" value="3" style="float: right;">
+        <label for="2" style="float: right;">2  </label>
+        <input autocomplete="off"  type="radio" name="question6" value="2" style="float: right;">
+        <label for="1" style="float: right;">  Too little=1</label>
+        <input autocomplete="off"  type="radio"  name="question6" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 7-->
+        <div class="box4">
+        <label class="question" for="question7" style="float: left;">7. The level of difficulty of the module has been</label>
+        <label for="5" style="float: right;">Too high = 5</label>
+        <input autocomplete="off"  type="radio" name="question7" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off"  type="radio"  name="question7" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off"  type="radio" name="question7" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question7" value="2" style="float: right;">
+        <label for="1" style="float: right;">Too little=1</label>
+        <input autocomplete="off" type="radio" name="question7" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Fourth part -->
+    <div class="teaching">
+        <div class="tag4">
+            <h5 id="subtitle3"><center>TEACHING & LEARNING</center></h5>
+        </div>
+        <!-- Notice for user-->
+        <p id="notice2">*Notice: Strongly disagree = 1, Strongly agree = 5</p>
+        <!-- Checkbox for question 8-->
+        <div class="box2">
+        <label class="question" for="question8" style="float: left;">8. Module contents have been presented understandably.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question8" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question8" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question8" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question8" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question8" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question8" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 9-->
+        <div class="box2">
+        <label class="question" for="question9" style="float: left;">9. Various learning activities have been used to teach the content.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question9" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question9" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question9" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question9" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question9" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question9" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 10-->
+        <div class="box2">
+        <label class="question" for="question10" style="float: left;">10. The learning activities have supported the intended <br> learning outcomes.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question10" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question10" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question10" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question10" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question10" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question10" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checbox for question 11-->
+        <div class="box2">
+        <label class="question" for="question11" style="float: left;">11. The assessment methods (tests, assignment, <br> groupwork, etc.) are appropriate.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question11" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question11" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question11" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question11" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question11" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question11" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 12-->
+        <div class="box2">
+        <label class="question" for="question12" style="float: left;">12. Students have been encouraged to apply critical thinking <br> and logics to better understand the course material.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question12" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question12" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question12" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question12" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question12" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question12" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 13-->
+        <div class="box2">
+        <label class="question" for="question13" style="float: left;">13. The lecturer has given feedback (about your answers or <br> performance in assignments, reports, presentations, etc.) <br> and it was helpful.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question13" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question13" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question13" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question13" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question13" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question13" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 14-->
+        <div class="box2">
+        <label class="question" for="question14" style="float: left;">14. The language skills (English / German) <br>  of the lecturer were excellent.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question14" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question14" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question14" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question14" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question14" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question14" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 15-->
+        <div class="box2">
+        <label class="question" for="question15" style="float: left;">15. The lecturer has listened to students’ ideas and contributions</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question15" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question15" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question15" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question15" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question15" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question15" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 16-->
+        <div class="box2">
+        <label class="question" for="question16" style="float: left;">16. The lecturer has encouraged discussion and questions in class.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question16" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question16" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question16" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question16" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question16" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question16" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div>
+
+        <!-- Checkbox for question 17-->
+        <div class="box2">
+        <label class="question" for="question17" style="float: left;">17. The lecturer has offered consultation to individuals <br> for academic support.</label><br>
+        <label for="not_applicable" style="float:right;">Not applicable</label>
+        <input autocomplete="off"  type="radio" name="question17" value="not" style="float:right;">
+        <label for="5" style="float: right;">5</label>
+        <input autocomplete="off" type="radio" name="question17" value="5" style="float: right;">
+        <label for="4" style="float: right;">4</label>
+        <input autocomplete="off" type="radio" name="question17" value="4" style="float: right;">
+        <label for="3" style="float: right;">3</label>
+        <input autocomplete="off" type="radio" name="question17" value="3" style="float: right;">
+        <label for="2" style="float: right;">2</label>
+        <input autocomplete="off" type="radio" name="question17" value="2" style="float: right;">
+        <label for="1" style="float: right;">1</label>
+        <input autocomplete="off" type="radio" name="question17" value="1" style="float: right;">
+        </div>
+        <div class="clear"></div> <br>
+
+        <!-- Comment Area-->
+        <textarea id="comment" placeholder="Please enter your comment here (Optional)" name="question18"></textarea><br>
+    </div>
+
+    <!-- Submit button-->
+    <button class="submit-btn">Submit</button>
+        </form>
+</body>
+<script src="questionnaire.script.js"></script>
+</html>

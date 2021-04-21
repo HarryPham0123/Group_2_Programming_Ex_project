@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.surveyapp.model.Faculty;
 import com.surveyapp.service.faculty.FacultyService;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,23 +33,35 @@ public class FacultyRoute {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Faculty faculty) {
-        facultyService.save(faculty);
-        return Response.ok().entity("New faculty successfully inserted").build();
+        if(!facultyService.save(faculty)) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
+        }
+        return Response.status(Response.Status.OK).build();
+
     }
 
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response update(@PathParam("code") String code, Faculty faculty) {
-        facultyService.update(code, faculty);
-        return Response.ok().entity("Successfully updated").build();
+        if(!facultyService.update(code, faculty)) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
+        }
+        return Response.status(Response.Status.OK).build();
+
     }
 
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
-        facultyService.delete(code);
-        return Response.ok().entity("Successfully deleted").build();
+        if(!facultyService.delete(code)) {
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(jsonObjectBuilder.build()).build();
+        }
+        return Response.status(Response.Status.OK).build();
+
     }
 
 }

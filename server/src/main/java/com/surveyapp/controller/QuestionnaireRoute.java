@@ -111,7 +111,7 @@ public class QuestionnaireRoute {
     ) {
         try {
             Code code = new Code(academic_year, semester, faculty, program, module, lecturer, clazz);
-            return Response.status(Response.Status.OK).entity(procedureService.getSummaryQuestion(code, questionNumber)).build();
+            return Response.status(Response.Status.OK).entity(procedureService.getSummaryQuestion(code, questionNumber  )).build();
         } catch (Exception exception) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
             jsonObjectBuilder.add("message", exception.getMessage());

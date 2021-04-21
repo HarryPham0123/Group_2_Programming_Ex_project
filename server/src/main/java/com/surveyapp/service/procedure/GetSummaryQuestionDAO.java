@@ -11,12 +11,13 @@ import java.sql.SQLException;
 
 public class GetSummaryQuestionDAO {
     private String procedureQuery = "{CALL summary_question(?, ?, ?, ?, ?, ?, ?, ?)}";
-    private Connection connection = new DBUtil().getConnection();
+    private Connection connection = null;
     private CallableStatement statement;
     private ResultSet resultSet = null;
 
     public GetSummaryQuestionDAO setParameters(Code code, String questionNumber) throws SQLException {
         // Get database connection
+        connection = new DBUtil().getConnection();
         statement = connection.prepareCall(procedureQuery);
 
         //Set parameters
@@ -42,7 +43,7 @@ public class GetSummaryQuestionDAO {
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                    System.out.println("[LOGGER] Database resultset: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryQuestionDAO resultset: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -50,7 +51,7 @@ public class GetSummaryQuestionDAO {
             if (statement != null) {
                 try {
                     statement.close();
-                    System.out.println("[LOGGER] Database statement: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryQuestionDAO statement: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
@@ -58,7 +59,7 @@ public class GetSummaryQuestionDAO {
             if (connection != null) {
                 try {
                     connection.close();
-                    System.out.println("[LOGGER] Database connection: CLOSE");
+                    System.out.println("[LOGGER] GetSummaryQuestionDAO connection: CLOSE");
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }

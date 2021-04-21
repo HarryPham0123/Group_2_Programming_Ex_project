@@ -9,6 +9,9 @@ public class Lecturer {
     @Column(name = "Lname")
     private String name;
 
+    @Column(name = "user_id")
+    private String userID;
+
     public Lecturer(String code, String name) {
         this.code = code;
         this.name = name;
@@ -32,5 +35,13 @@ public class Lecturer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

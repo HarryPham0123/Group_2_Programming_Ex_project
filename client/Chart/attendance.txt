@@ -1,7 +1,0 @@
-{
-    "never":"0",
-    "rarely":"0",
-    "sometimes":"2",
-    "often":"5",
-    "always":"10"
-}

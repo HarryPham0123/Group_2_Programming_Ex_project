@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mas.styles.css">
+    <title>Management Academic System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+</head>
+
+
+<body>
+<!-- Title-->
+<div class="container-fluid">
+    <div class="intro">
+        <br><br>
+        <div id="intro-title">
+            <!-- Import VGU Logo and scale it-->
+            <img src= "./image/vgu_logo.png" alt="VGU" class="logo"  style="transform: scale(0.55)">
+            <h1 class="title" >MAS: Management Academic System</h1>
+        </div>
+    </div>
+</div>
+
+<!--Academic Year-->
+<div class="aca-year">
+    <h3 id="title1">Academic Years</h3>
+    <div class="container1">
+    <!-- Display button-->
+    <button class="update1" type="button" id="button">Load data</button>
+    <button class="show-btn1" type="button" id="button">Show</button>
+    <button class="hide-btn1" type="button" id="button">Hide</button>
+    </div>
+    <div class="container">
+    <div class="table-container1" >
+        <!-- Display the input area-->
+        <table style=" display:none; margin:0 auto; text-align: center;" class="table-list1" id="table-list1">
+        <tr>
+            <th id="subtitle">Code</th>
+        </tr>
+        <tfoot>
+        <tr>
+            <!-- Input academic year code-->
+            <td><input type="text" id="create-AYCode"></td>
+            <!-- Button new-->
+            <td><button class="create1" type="button" id="button1">New</button></td>
+        </tr>
+        </tfoot>
+    </table>
+    </div>
+    </div>
+</div>
+
+<!-- Semester-->
+<div class="semester">
+    <h3 id="title1">Semester</h3>
+    <div class="container1">
+    <!-- Display button-->
+    <button class="update2" type="button" id="button">Load data</button>
+    <button class="show-btn2" type="button" id="button">Show</button>
+    <button class="hide-btn2" type="button" id="button">Hide</button>
+    </div>
+    <div class="container">
+    <div class="table-container2">
+        <!-- Display the input area-->
+        <table style="display:none; margin:0 auto; text-align: center;" class="table-list2" id="table-list2">
+        <tr>
+            <th>Code</th>
+            <th>Academic Year Code</th>
+        </tr>
+        <tfoot>
+        <tr>
+            <!-- Input semester code and semester academic year code-->
+            <td><input type="text" id="create-semCode"></td>
+            <td><input type ="text" id="create-semAyCode"></td>
+            <!-- Button new-->
+            <td><button class="create2" type="button" id="button1">New</button></td>
+        </tr>
+        </tfoot>
+    </table>
+    </div>
+    </div>
+</div>
+
+<!-- Faculties-->
+<div class="faculties">
+<h3 id="title1">Faculties</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update3" type="button" id="button">Load data</button>
+<button class="show-btn3" type="button" id="button">Show</button>
+<button class="hide-btn3" type="button" id="button">Hide</button>
+</div>
+<div class="container">
+<div class="table-container3">
+    <!-- Display input area-->
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list3" id="table-list3">
+        <tr>
+            <th>Code</th>
+            <th>Faculties</th>
+        </tr>
+        <tfoot>
+        <tr>
+            <!-- Input Faculty code and faculty-->
+            <td><input type="text" id="create-fcode"></td>
+            <td><input type ="text" id="create-faculty"></td>
+            <!-- Button new-->
+            <td><button class="create3" type="button" id="button1">New</button></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</div>
+</div>
+
+<!-- Program-->
+<div class="program">
+<h3 id="title1">Programs</h3>
+<div class="container1">
+<button class="update4" type="button" id="button">Load data</button>
+<button class="show-btn4" type="button" id="button">Show</button>
+<button class="hide-btn4" type="button" id="button">Hide</button>
+</div>
+<div class="container">
+<div class="table-container4">
+    <!-- Display input area-->
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list4" id="table-list4">
+        <tr>
+            <th>Code</th>
+            <th>Program Name</th>
+        </tr>
+        <tfoot>
+        <tr>
+            <!-- Input Program code and Program name-->
+            <td><input type="text" id="create-programCode"></td>
+            <td><input type ="text" id="create-programName"></td>
+            <!-- Button new-->
+            <td><button class="create4" type="button" id="button1">New</button></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</div>
+</div>
+
+<!-- Module-->
+<div class="module">
+<h3 id="title1">Modules</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update5" type="button" id="button">Load data</button>
+<button class="show-btn5" type="button" id="button">Show</button>
+<button class="hide-btn5" type="button" id="button">Hide</button>
+</div>
+<div class="container">
+<div class="table-container5">
+    <!-- Display input area-->
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list5" id="table-list5">
+        <tr>
+            <th>Code</th>
+            <th>Module Name</th>
+        </tr>
+        <tfoot>
+        <tr>
+            <!-- Input Module code and Module name-->
+            <td><input type="text" id="create-moduleCode"></td>
+            <td><input type ="text" id="create-moduleName"></td>
+            <!-- Button new-->
+            <td><button class="create5" type="button" id="button1">New</button></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</div>
+</div>
+
+<!-- Class-->
+<div class="class">
+<h3 id="title1">Classes</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update6" type="button" id="button">Load data</button>
+<button class="show-btn6" type="button" id="button">Show</button>
+<button class="hide-btn6" type="button" id="button">Hide</button>
+</div>
+<div class="container">
+<div class="table-container6">
+    <!-- Display input area-->
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list6" id="table-list6">  
+        <tr>
+            <th>Code</th>
+            <th>Size</th>
+            <th>Semester Code</th>
+            <th>Module Code</th>
+        </tr>
+        <tfoot>
+        <tr>
+            <!-- Input Class code, Class size, Semester code, Module code-->
+            <td><input type="text" id="create-classCode"></td>
+            <td><input type ="text" id="create-size"></td>
+            <td><input type ="text" id="create-semesterCode"></td>
+            <td><input type ="text" id="create-modCode"></td>
+            <!-- Button new-->
+            <td><button class="create6" type="button" id="button1">New</button></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</div>
+</div>
+
+<!--Lecturer-->
+<div class="lecturer">
+<h3 id="title1">Lecturers</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update7" type="button" id="button">Load data</button>
+<button class="show-btn7" type="button" id="button">Show</button>
+<button class="hide-btn7" type="button" id="button">Hide</button>
+</div>
+<div class="container">
+<div class="table-container7">
+    <!-- Display input area-->
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list7" id="table-list7">
+        <tr>
+            <th>Code</th>
+            <th>Lecturer Name</th>
+        </tr>
+        <tfoot>
+        <tr>
+            <!-- Input Lecturer code and Lecturer name-->
+            <td><input type="text" id="create-lecturerCode"></td>
+            <td><input type ="text" id="create-lecturerName"></td>
+            <!-- Button new-->
+            <td><button class="create7" type="button" id="button1">New</button></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</div>
+</div>
+
+
+</body>
+<script src="mas.script.js"></script>
+</html>

@@ -2,7 +2,7 @@
 DROP DATABASE IF EXISTS PE2018;
 CREATE DATABASE IF NOT EXISTS PE2018;
 USE PE2018;
-
+DELIMITER //
 -- -----------------------------------------------------
 -- Table Academic_year
 -- -----------------------------------------------------
@@ -267,3 +267,4 @@ CREATE TABLE IF NOT EXISTS lecturer_in_class (
   FOREIGN KEY (Lcode) REFERENCES lecturer (Lcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
+//
