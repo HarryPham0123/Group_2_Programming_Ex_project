@@ -1,8 +1,8 @@
 USE pe2018;
 DROP PROCEDURE IF EXISTS summary_question;
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `summary_question`(
-	input_academic_year VARCHAR(10), 
+CREATE PROCEDURE `summary_question`(
+	input_academic_year VARCHAR(9), 
 	input_semester VARCHAR(10), 
 	input_faculty VARCHAR(10), 
 	input_program VARCHAR(10), 
@@ -12,47 +12,48 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `summary_question`(
     input_question VARCHAR(10))
 sp: BEGIN
 -- Check invalid parameter (Para NOT null but not in database)
+-- If invalid, stop the procedure and output the error message
 CASE
 	WHEN (input_academic_year not in (Select AYcode from academic_year)) AND (input_academic_year is not NULL) THEN
-		SELECT 'Invalid academic year' as 'Error_message';
+		SELECT 'invalid academic year' as 'message';
         LEAVE sp;
         
 	WHEN (input_semester not in (Select Scode from semester)) AND (input_semester is not NULL) THEN
-		SELECT 'Invalid semester' as 'Error_message';
+		SELECT 'invalid semester' as 'message';
         LEAVE sp;
 
 	WHEN (input_faculty not in (Select Fcode from faculty)) AND (input_faculty is not NULL) THEN
-		SELECT 'Invalid faculty' as 'Error_message';
+		SELECT 'invalid faculty' as 'message';
         LEAVE sp;
 
 	WHEN (input_program not in (Select Pcode from program)) AND (input_program is not NULL) THEN
-		SELECT 'Invalid program' as 'Error_message';
+		SELECT 'invalid program' as 'message';
         LEAVE sp;
 
 	WHEN (input_module not in (Select Mcode from module)) AND (input_module is not NULL) THEN
-		SELECT 'Invalid module' as 'Error_message';
+		SELECT 'invalid module' as 'message';
         LEAVE sp;
 
 	WHEN (input_lecturer not in (Select Lcode from lecturer)) AND (input_lecturer is not NULL) THEN
-		SELECT 'Invalid lecturer' as 'Error_message';
+		SELECT 'invalid lecturer' as 'message';
         LEAVE sp;
         
 	WHEN (input_class not in (Select Ccode from class)) AND (input_class is not NULL) THEN
-		SELECT 'Invalid class' as 'Error_message';
+		SELECT 'invalid class' as 'message';
         LEAVE sp;
+	-- In the case of all parameters are valid
 	ELSE
     -- Query for summary appropriate requirements
+    -- Prepared statement to make the query dynamic based on the question number
     SET @test = CONCAT("SELECT qs.answer_key, IFNULL(count(q.answer_id),0) AS TOTAL
 						FROM questionnaire q
                         NATURAL JOIN class c
                         NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
                         NATURAL JOIN semester s
                         NATURAL JOIN academic_year ay
-                        NATURAL JOIN module m
-                        NATURAL JOIN program_module 
-                        NATURAL JOIN program p
-                        NATURAL JOIN ay_faculty_pm 
-                        NATURAL JOIN faculty f
+                        NATURAL JOIN ay_fac NATURAL JOIN faculty f
+                        NATURAL JOIN ay_fac_p NATURAL JOIN program p
+                        NATURAL JOIN ay_fac_pm NATURAL JOIN module m
                         RIGHT JOIN question_support_number qs on q.",input_question," = qs.answer_key
                         AND 
 							('",IFNULL(input_academic_year, ''),"' = ''
