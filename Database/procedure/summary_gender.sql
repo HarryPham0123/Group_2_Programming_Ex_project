@@ -1,44 +1,45 @@
 USE pe2018;
 DROP PROCEDURE IF EXISTS summary_gender;
 DELIMITER //
-CREATE PROCEDURE `summary_gender`(
-	input_academic_year VARCHAR(50), 
-	input_semester VARCHAR(50), 
-	input_faculty VARCHAR(50), 
-	input_program VARCHAR(50), 
-	input_module VARCHAR(50), 
-	input_lecturer VARCHAR(50), 
-	input_class VARCHAR(50))
-BEGIN
-		-- Check invalid parameter (Para NOT null but not in database)
-IF (input_class not in (Select Ccode from class)) AND (input_class is not NULL) THEN
-	SET input_class := NULL;
-END IF;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `summary_gender`(
+	input_academic_year VARCHAR(10), 
+	input_semester VARCHAR(10), 
+	input_faculty VARCHAR(10), 
+	input_program VARCHAR(10), 
+	input_module VARCHAR(10), 
+	input_lecturer VARCHAR(10), 
+	input_class VARCHAR(10))
+sp: BEGIN
+-- Check invalid parameter (Para NOT null but not in database)
+CASE
+	WHEN (input_academic_year not in (Select AYcode from academic_year)) AND (input_academic_year is not NULL) THEN
+		SELECT 'Invalid academic year' as 'Error_message';
+        LEAVE sp;
+        
+	WHEN (input_semester not in (Select Scode from semester)) AND (input_semester is not NULL) THEN
+		SELECT 'Invalid semester' as 'Error_message';
+        LEAVE sp;
 
-IF (input_lecturer not in (Select Lcode from lecturer)) AND (input_lecturer is not NULL) THEN
-	SET input_lecturer := NULL;
-END IF;
+	WHEN (input_faculty not in (Select Fcode from faculty)) AND (input_faculty is not NULL) THEN
+		SELECT 'Invalid faculty' as 'Error_message';
+        LEAVE sp;
 
-IF (input_module not in (Select Mcode from module)) AND (input_module is not NULL) THEN
-	SET input_module := NULL;
-END IF;
+	WHEN (input_program not in (Select Pcode from program)) AND (input_program is not NULL) THEN
+		SELECT 'Invalid program' as 'Error_message';
+        LEAVE sp;
 
-IF (input_program not in (Select Pcode from program)) AND (input_program is not NULL) THEN
-	SET input_program := NULL;
-END IF;
+	WHEN (input_module not in (Select Mcode from module)) AND (input_module is not NULL) THEN
+		SELECT 'Invalid module' as 'Error_message';
+        LEAVE sp;
 
-IF (input_faculty not in (Select Fcode from faculty)) AND (input_faculty is not NULL) THEN
-	SET input_faculty := NULL;
-END IF;
-
-IF (input_semester not in (Select Scode from semester)) AND (input_semester is not NULL) THEN
-	SET input_semester := NULL;
-END IF;
-
-IF (input_academic_year not in (Select AYcode from academic_year)) AND (input_academic_year is not NULL) THEN
-	SET input_academic_year := NULL;
-END IF;
-
+	WHEN (input_lecturer not in (Select Lcode from lecturer)) AND (input_lecturer is not NULL) THEN
+		SELECT 'Invalid lecturer' as 'Error_message';
+        LEAVE sp;
+        
+	WHEN (input_class not in (Select Ccode from class)) AND (input_class is not NULL) THEN
+		SELECT 'Invalid class' as 'Error_message';
+        LEAVE sp;
+	ELSE
 -- Query to result the table
 SELECT qsg.gender, 
 	IFNULL(count(q.answer_id), 0) AS total
@@ -83,5 +84,6 @@ AND
 		or c.Ccode = input_class
 	)
 GROUP BY 1;
+END CASE;
 END
 //
