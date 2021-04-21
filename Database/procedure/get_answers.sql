@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS get_answers;
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_answers`(
-	input_academic_year VARCHAR(10), 
+CREATE PROCEDURE `get_answers`(
+	input_academic_year VARCHAR(9), 
 	input_semester VARCHAR(10), 
 	input_faculty VARCHAR(10), 
 	input_program VARCHAR(10), 
@@ -10,34 +10,36 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_answers`(
 	input_class VARCHAR(10))
 sp: BEGIN
 -- Check invalid parameter (Para NOT null but not in database)
+-- If invalid, stop the procedure and output the error message
 CASE
 	WHEN (input_academic_year not in (Select AYcode from academic_year)) AND (input_academic_year is not NULL) THEN
-		SELECT 'Invalid academic year' as 'Error_message';
+		SELECT 'invalid academic year' as 'message';
         LEAVE sp;
         
 	WHEN (input_semester not in (Select Scode from semester)) AND (input_semester is not NULL) THEN
-		SELECT 'Invalid semester' as 'Error_message';
+		SELECT 'invalid semester' as 'message';
         LEAVE sp;
 
 	WHEN (input_faculty not in (Select Fcode from faculty)) AND (input_faculty is not NULL) THEN
-		SELECT 'Invalid faculty' as 'Error_message';
+		SELECT 'invalid faculty' as 'message';
         LEAVE sp;
 
 	WHEN (input_program not in (Select Pcode from program)) AND (input_program is not NULL) THEN
-		SELECT 'Invalid program' as 'Error_message';
+		SELECT 'invalid program' as 'message';
         LEAVE sp;
 
 	WHEN (input_module not in (Select Mcode from module)) AND (input_module is not NULL) THEN
-		SELECT 'Invalid module' as 'Error_message';
+		SELECT 'invalid module' as 'message';
         LEAVE sp;
 
 	WHEN (input_lecturer not in (Select Lcode from lecturer)) AND (input_lecturer is not NULL) THEN
-		SELECT 'Invalid lecturer' as 'Error_message';
+		SELECT 'invalid lecturer' as 'message';
         LEAVE sp;
         
 	WHEN (input_class not in (Select Ccode from class)) AND (input_class is not NULL) THEN
-		SELECT 'Invalid class' as 'Error_message';
+		SELECT 'invalid class' as 'message';
         LEAVE sp;
+	-- In the case of all parameters are valid
 	ELSE
 	-- Query for getting the questionnaire's answer
 	SELECT q.answer_id AS Answer_id,
@@ -63,14 +65,13 @@ CASE
         q.question_18 AS question_18
     FROM questionnaire q
 		NATURAL JOIN class c
-		NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
-		NATURAL JOIN semester s
-		NATURAL JOIN academic_year ay
-		NATURAL JOIN module m
-		NATURAL JOIN program_module 
-		NATURAL JOIN program p
-		NATURAL JOIN ay_faculty_pm 
-		NATURAL JOIN faculty f
+        NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
+        NATURAL JOIN semester s
+        NATURAL JOIN academic_year ay
+        NATURAL JOIN ay_fac NATURAL JOIN faculty f
+        NATURAL JOIN ay_fac_p NATURAL JOIN program p
+        NATURAL JOIN ay_fac_pm NATURAL JOIN module m
+	-- Check if parameter NULL or NOT, if yes, query based on the other parameters (filter)
     WHERE
 	( input_academic_year is null
 		or ay.AYcode = input_academic_year
