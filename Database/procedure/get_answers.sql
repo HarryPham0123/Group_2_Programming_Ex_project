@@ -1,43 +1,44 @@
 DROP PROCEDURE IF EXISTS get_answers;
 DELIMITER //
-CREATE PROCEDURE `get_answers`(
-	academic_year VARCHAR(10), 
-	semester VARCHAR(10), 
-	faculty VARCHAR(10), 
-	program VARCHAR(10), 
-	module VARCHAR(10), 
-	lecturer VARCHAR(10), 
-	class VARCHAR(10))
-BEGIN
-	-- Check invalid parameter (Para NOT null but not in database)
-	IF (class not in (Select Ccode from class)) AND (class is not NULL) THEN
-		SET class := NULL;
-	END IF;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_answers`(
+	input_academic_year VARCHAR(10), 
+	input_semester VARCHAR(10), 
+	input_faculty VARCHAR(10), 
+	input_program VARCHAR(10), 
+	input_module VARCHAR(10), 
+	input_lecturer VARCHAR(10), 
+	input_class VARCHAR(10))
+sp: BEGIN
+-- Check invalid parameter (Para NOT null but not in database)
+CASE
+	WHEN (input_academic_year not in (Select AYcode from academic_year)) AND (input_academic_year is not NULL) THEN
+		SELECT 'Invalid academic year' as 'Error_message';
+        LEAVE sp;
+        
+	WHEN (input_semester not in (Select Scode from semester)) AND (input_semester is not NULL) THEN
+		SELECT 'Invalid semester' as 'Error_message';
+        LEAVE sp;
 
-	IF (lecturer not in (Select Lcode from lecturer)) AND (lecturer is not NULL) THEN
-		SET lecturer := NULL;
-	END IF;
+	WHEN (input_faculty not in (Select Fcode from faculty)) AND (input_faculty is not NULL) THEN
+		SELECT 'Invalid faculty' as 'Error_message';
+        LEAVE sp;
 
-	IF (module not in (Select Mcode from module)) AND (module is not NULL) THEN
-		SET module := NULL;
-	END IF;
+	WHEN (input_program not in (Select Pcode from program)) AND (input_program is not NULL) THEN
+		SELECT 'Invalid program' as 'Error_message';
+        LEAVE sp;
 
-	IF (program not in (Select Pcode from program)) AND (program is not NULL) THEN
-		SET program := NULL;
-	END IF;
+	WHEN (input_module not in (Select Mcode from module)) AND (input_module is not NULL) THEN
+		SELECT 'Invalid module' as 'Error_message';
+        LEAVE sp;
 
-	IF (faculty not in (Select Fcode from faculty)) AND (faculty is not NULL) THEN
-		SET faculty := NULL;
-	END IF;
-
-	IF (semester not in (Select Scode from semester)) AND (semester is not NULL) THEN
-		SET semester := NULL;
-	END IF;
-
-	IF (academic_year not in (Select AYcode from academic_year)) AND (academic_year is not NULL) THEN
-		SET academic_year := NULL;
-	END IF;
-
+	WHEN (input_lecturer not in (Select Lcode from lecturer)) AND (input_lecturer is not NULL) THEN
+		SELECT 'Invalid lecturer' as 'Error_message';
+        LEAVE sp;
+        
+	WHEN (input_class not in (Select Ccode from class)) AND (input_class is not NULL) THEN
+		SELECT 'Invalid class' as 'Error_message';
+        LEAVE sp;
+	ELSE
 	-- Query for getting the questionnaire's answer
 	SELECT q.answer_id AS Answer_id,
 		q.attendance AS attendance,
@@ -71,32 +72,33 @@ BEGIN
 		NATURAL JOIN ay_faculty_pm 
 		NATURAL JOIN faculty f
     WHERE
-		( lecturer is null
-		or q.Lcode = lecturer
-		)
+	( input_academic_year is null
+		or ay.AYcode = input_academic_year
+	)
 	AND
-		( class is null
-		or q.Ccode = class
-		)
+	( input_semester is null
+		or s.Scode = input_semester
+	)
 	AND
-    	( academic_year is null
-		or ay.AYcode = academic_year
-		)
+	( input_faculty is null
+		or f.Fcode = input_faculty
+	)
 	AND
-		( semester is null
-		or s.Scode = semester
-		)
+	( input_program is null
+		or p.Pcode = input_program
+	)
 	AND
-		( faculty is null
-		or f.Fcode = faculty
-		)
+	( input_module is null
+		or m.Mcode = input_module
+	)
 	AND
-		( program is null
-		or p.Pcode = program
-		)
+	( input_lecturer is null
+		or lec.Lcode = input_lecturer
+	)
 	AND
-		( module is null
-		or m.Mcode = module
-		);
+	( input_class is null
+		or c.Ccode = input_class
+	);
+END CASE;
 END
 //
