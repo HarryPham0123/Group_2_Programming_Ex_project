@@ -77,7 +77,10 @@ CREATE TABLE IF NOT EXISTS class (
 )
 ENGINE = InnoDB;
 
--- Table for user
+-- -----------------------------------------------------
+-- Table user
+-- -----------------------------------------------------
+
 Create table if not exists employee_user (
 	user_id Varchar(10),
     full_name Varchar(50),
@@ -100,7 +103,10 @@ CREATE TABLE IF NOT EXISTS lecturer (
   FOREIGN KEY (user_id) REFERENCES employee_user (user_id) ON UPDATE CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
 -- Table account
+-- -----------------------------------------------------
+
 Create table if not exists employee_account (
 	account_id INT AUTO_INCREMENT,
     login Varchar(50) NOT NULL,
@@ -111,27 +117,31 @@ Create table if not exists employee_account (
     Foreign key (user_id) references employee_user (user_id) On update CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
--- Table program_coordinator
+-- -----------------------------------------------------
+-- Table program coordinator
+-- -----------------------------------------------------
+
 Create table if not exists program_coordinator (
 	PCcode INT AUTO_INCREMENT,
     start_date Date,
     end_date Date,
     user_id Varchar(10) NOT NULL,
     Pcode varchar(10) NOT NULL,
-    -- constraint for end_date > start_date?
     Primary key (PCcode),
     Foreign key (user_id) references employee_user (user_id) On update CASCADE ON DELETE RESTRICT,
     Foreign key (Pcode) references program (Pcode) On update CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
--- Table dean
+-- -----------------------------------------------------
+-- Table dean of faculty
+-- -----------------------------------------------------
+
 Create table if not exists dean (
 	Dcode INT AUTO_INCREMENT,
     start_date Date,
     end_date Date,
     user_id Varchar(10) NOT NULL,
     Fcode varchar(10) NOT NULL,
-	-- constraint for end_date > start_date?
     Primary key (Dcode),
     Foreign key (user_id) references employee_user (user_id) On update CASCADE ON DELETE RESTRICT,
     Foreign key (Fcode) references faculty (Fcode) On update CASCADE ON DELETE RESTRICT)
@@ -201,7 +211,7 @@ Create table if not exists question_support_number(
 );
 
 -- -----------------------------------------------------
--- Table ay_faculty
+-- Table relationship between AY and Faculty
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS ay_fac (
@@ -216,7 +226,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table ay_Faculty and program
+-- Table relationship between ay_Faculty and program
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS ay_fac_p (
@@ -231,7 +241,7 @@ ENGINE = InnoDB;
 
 	       
 -- -----------------------------------------------------
--- Table ay_faculty_program and module
+-- Table relationship between ay_faculty_program and module
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS ay_fac_pm (
