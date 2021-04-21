@@ -45,9 +45,7 @@ INSERT INTO module (Mcode, Mname) VALUES
     	('M015I', 'IT Security'),
     	('M016P', 'Programming Exercises')
 ;
-
--- There are only 4 semesters in each aca year	 
--- A semester belongs to exactly one academic year.    
+ 
 INSERT INTO semester (Scode, AYcode) VALUES 
 	('S001o', '2020-2021'),
 	('S002q', '2020-2021'),
@@ -57,12 +55,7 @@ INSERT INTO semester (Scode, AYcode) VALUES
 	('S005z', '2019-2020')
 ;
 
-	       
--- Students in each semester only learn 4 modules  	
--- A class belongs to exactly one module (Data constrain)
--- -> A class can NOT associate to 2 or more modules
--- A class is offered in exactly one semester (Data constrain)
--- -> A class can NOT associate to 2 or more diff semesters
+
 INSERT INTO class (Ccode, size, Scode, Mcode) VALUES 
 	('C001t', '35', 'S001o', 'M001A'),
 	('C002h', '40', 'S001o', 'M002F'),
@@ -212,9 +205,6 @@ INSERT INTO lecturer (Lcode, Lname, user_id) VALUES
 	('L015m', 'Theresa Buhmann','U007r')
 ;
 
-	       
--- A questionnaire is filled for exactly one class and exactly one lecturer. (Constrain)
--- -> Questionaire is relationship between class and lecturer    
 Insert into questionnaire 
 	(Ccode, Lcode, attendance, gender, question_1, question_2, question_3, question_4,
 	 question_5, question_6, question_7, question_8, question_9, question_10, question_11,
@@ -268,7 +258,6 @@ INSERT INTO question_support_gender(gender) VALUES
 	('female'),
 	('other')
 ;
-	       
 
 INSERT INTO question_support_attendance(attendance) VALUES
 	('never'),
@@ -282,16 +271,11 @@ INSERT INTO question_support_number(answer_key) VALUES
 	('1'),
 	('2'),
 	('3'),
-    	('4'),
-    	('5'),
+	('4'),
+	('5'),
 	('not')
 ;
-				    
-				    
--- A class has any number of lecturers. (Data constrain)
--- This case, we asume a class can have 1, 2 or 3 lecturers
--- -> Lecturers in each class must be unique     
--- A lecturer can teach any number of classes? -> Yes
+
 INSERT INTO lecturer_in_class (Ccode, Lcode) VALUES 
 	('C001t', 'L015m'),
 	('C001t', 'L002o'),
@@ -333,6 +317,7 @@ INSERT INTO lecturer_in_class (Ccode, Lcode) VALUES
     
     ('C018t', 'L009f')
 ;
+
 INSERT INTO ay_fac(AYcode,Fcode) VALUES
  ('2019-2020','F002E'),
  ('2020-2021','F001I'),
