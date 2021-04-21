@@ -21,6 +21,10 @@ public class AuthorisationDAO {
     private String secretString = "Ih9Zh7BBGpyIkIZmK/5qdBQmfyw+EEsBUy+M6/n3Woux9y1Do7ql1mhayBL01+FKG5FpoJCnXSzivk5WY/egTg==";
     private SecretKey key = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
 
+    /**
+     * Decide if given login credentials is valid
+     * If valid then return detailed information of authorised user. Otherwise, return null
+     */
     private AuthorisedUser verifyLogin(LoginCredential loginCredential) throws Exception{
         // Create new connection to DB
         Connection connection = new DBUtil().getConnection();
@@ -60,6 +64,7 @@ public class AuthorisationDAO {
         }
     }
 
+    // Build JWT by using detailed information of authorised user as detailed information
     private String issueToken(AuthorisedUser authUser) throws NamingException {
         /*
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
@@ -79,12 +84,17 @@ public class AuthorisationDAO {
         return authToken;
     }
 
+    // Created JWT is put into a cookie
     private NewCookie issueCookie(String authToken) throws Exception{
         NewCookie cookie = new NewCookie("sqmvsa", authToken, "/", "", "auth_token", NewCookie.DEFAULT_MAX_AGE, false);
 
         return cookie;
     }
 
+    /**
+     * Decide if given login credentials is valid
+     * If valid then return a cookie containing a JWT . Otherwise, return null
+     */
     public NewCookie authoriseLoginCredential(LoginCredential loginCredential) throws Exception{
         AuthorisedUser authUser = verifyLogin(loginCredential);
         if(authUser.equals(null)) {

@@ -13,6 +13,8 @@ import javax.ws.rs.core.Response;
 @Path("/lecturers")
 public class LecturerRoute {
     private LecturerService lecturerService = new LecturerService();
+
+    // GET method for showing all tuples in Lecturer table in DB show in the front-end
     @GET
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Lecturer> getAll() {
@@ -26,6 +28,7 @@ public class LecturerRoute {
         }
     }
 
+    //GET method for searching function (optional)
     @GET
     @Path("/{code}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -34,6 +37,7 @@ public class LecturerRoute {
         return lecturer;
     }
 
+    //POST method for inserting new tuple into the Lecturer table in DB show in the front-end
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response insert(Lecturer lecturer) {
@@ -45,6 +49,7 @@ public class LecturerRoute {
 
     }
 
+    //PUT method for modifying a tuple in the Lecturer table in DB show in the front-end
     @PUT
     @Path("/{code}")
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -57,6 +62,7 @@ public class LecturerRoute {
 
     }
 
+    //DELETE method for deleting a tuple from the Lecturer table in DB and show in the front-end
     @DELETE
     @Path("/{code}")
     public Response delete(@PathParam("code") String code) {
