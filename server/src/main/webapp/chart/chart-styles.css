@@ -8,7 +8,7 @@ p {
 /* Import cover into title and set size*/
 .intro
 {
-    background-image: url("questionnaire_cover.jpg");
+    background-image: url("image/questionnaire_cover.jpg");
     height: 320px;
     background-size: 500px; 
 	opacity: 0.85;  
