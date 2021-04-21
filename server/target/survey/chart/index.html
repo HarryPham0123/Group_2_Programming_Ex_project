@@ -21,9 +21,10 @@
  <title>Document</title>
 </head>
 
+
 <body>
+    <!-- Create title-->
     <div class="container-fluid">
-        <!-- Title, intro -->
         <div class="intro">
             <br><br>
             <div id="intro-title">
@@ -32,43 +33,57 @@
             </div>
         </div>
     </div>
+
     <div class="container">
+        <!-- Select academic year-->
         <div class="academic-box">
             <p id="subtitle">Academic Year</p>
             <select class="sel-acad" name="" id="select">
             <option value="null">--any--</option>
             </select>
         </div>
+
+        <!-- Select semester-->
         <div class="semester-box">
             <p id="subtitle">Semester</p>
             <select class="sel-sem" name="" id="select">
             <option value="null">--any--</option>
             </select>
         </div>
+
+        <!-- Select faculty-->
         <div class="faculty-box">
             <p id="subtitle">Faculty</p>
             <select class="sel-faculty" name="" id="select">
             <option value="null">--any--</option>
             </select>
         </div>
+
+        <!-- Select Program-->
         <div class="program-box">
             <p id="subtitle">Program</p>
             <select class="sel-pro" name="" id="select">
             <option value="null">--any--</option>
             </select>
         </div>
+
+        <!-- Select module-->
         <div class="module-box">
             <p id="subtitle">Module</p>
             <select class="sel-module" name="" id="select">
             <option value="null">--any--</option>
             </select>
         </div>
+
+        <!-- Select class-->
         <div class="class-box">
             <p id="subtitle">Class</p>
             <select class="sel-class" name="" id="select">
             <option value="null">--any--</option>
         </select>
         </div>
+
+        <!-- Select lecturer-->
         <div class="lecturer-box">
             <p id="subtitle">Lecturer</p>
             <select class="sel-lec" name="" id="select">
@@ -76,10 +91,12 @@
         </select>
         </div>
         <br>
+
+    <!-- Button visualize-->
     <button class="visual" id="button">Visualize</button>
     </div>
 
-    
+    <!-- Canvas to contain chart-->
     <div class="chart-container">
         <canvas width="400" height="400" id="gender_chart"></canvas>
         <canvas width="400" height="400" id="attendance_chart"></canvas>

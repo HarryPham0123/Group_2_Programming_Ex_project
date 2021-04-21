@@ -28,6 +28,7 @@ $(function () {
         selectedArray.length = 2;
         selectedArray[1] = ($(".sel-sem option:selected").val());
 
+        console.log(selectedArray);
         //Remove all options in the next selects
         $(".semester-box").nextAll("div[class*='-box']")
             .children("select")
@@ -40,6 +41,8 @@ $(function () {
     $(".sel-faculty").change(function() {
         selectedArray.length = 3;
         selectedArray[2] = $(".sel-faculty option:selected").val();
+
+        console.log(selectedArray);
         //Remove all options in the next selects
         $(".faculty-box")
             .nextAll("div[class*='-box']")
@@ -53,6 +56,7 @@ $(function () {
         selectedArray.length = 4;
         selectedArray[3] = $(".sel-pro option:selected").val();
 
+        console.log(selectedArray);
         //Remove all options in the next selects
         $(".program-box")
             .nextAll("div[class*='-box']")
@@ -67,6 +71,7 @@ $(function () {
         selectedArray.length = 5;
         selectedArray[4] = $(".sel-module option:selected").val();
 
+        console.log(selectedArray);
         //Remove all options in the next selects
         $(".module-box")
             .nextAll("div[class*='-box']")
@@ -80,6 +85,7 @@ $(function () {
         selectedArray.length = 6;
         var selectedClass = selectedArray[5] = $(".sel-class option:selected").val();
 
+        console.log(selectedArray);
         //Remove the next siblings select
         $(".class-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
         //Append to lecturer select
@@ -179,7 +185,6 @@ function updateDescription(forChart) {
         }
         //Refine the retrieved values
         let calculatedValues = refinedValues(values);
-        console.log("Values: " + calculatedValues);
 
         //Calculate mean and standard deviation
         let mean = jStat.mean(calculatedValues).toFixed(1);
@@ -231,11 +236,11 @@ function refinedValues(calculateValues) {
         calculateValues = calculateValues.slice(0, 5);
     }
     //Copy the current array
-    var arrayValues = [...calculateValues];
+    var arrayValues = []
     //Loop through current array
     for (let index = 0; index < calculateValues.length; index++)
-        for (let times = 1; times <= (index + 1); times++) {
-            arrayValues.push(calculateValues[index]);
+        for (let times = 1; times <= calculateValues[index]; times++) {
+            arrayValues.push(index + 1);
         }
 
     return arrayValues;
@@ -282,23 +287,23 @@ function createChart(chart) {
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1
-                }, {
-                     type: 'scatterWithErrorBars',
-                     label: 'Mean',
-                     xAxisID:  'mean_id',
-                     data: [],
-                     backgroundColor: 'rgb(255, 99, 132)',
+            }, {
+                type: 'scatterWithErrorBars',
+                label: 'Mean',
+                xAxisID:  'mean_id',
+                data: [],
+                backgroundColor: 'rgb(255, 99, 132)',
             }]
         },
         options: {
             scales: {
-            xAxes: [{
+                xAxes: [{
                     display: true,
                     stacked: true,
                     scaleLabel: {
                         display: true,
                     },
-                    },{
+                },{
                     id: "mean_id",
                     type: 'linear',
                     display: false,
@@ -333,11 +338,11 @@ function createChart(chart) {
             plugins: {
                 datalabels: {
                     formatter: (value, ctx) => {
-                            if(!isNaN(value)){
-                                return parseInt(value)+"%";
-                            }else{
-                                return ctx.chart.data.datasets[1].data[0].x;
-                            }
+                        if(!isNaN(value)){
+                            return parseInt(value)+"%";
+                        }else{
+                            return ctx.chart.data.datasets[1].data[0].x;
+                        }
                     },
                     color: '#000000',
                     anchor: 'end',
