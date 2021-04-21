@@ -9,7 +9,7 @@
 /* import and set size of the cover*/
 .intro
 {
-    background-image: url("management-cover.png");
+    background-image: url("image/management-cover.png");
     height: 350px;
     background-size: 300px;
     opacity: 0.85;

@@ -157,8 +157,6 @@ function updateChart(chart) {
         var percentageArray = calculatePercentage(values);
         let calculateValues = refinedValues(values);
 
-        console.log("Values: " + calculateValues);
-
         //Calculate mean and standard deviation
         let mean = jStat.mean(calculateValues).toFixed(1);
         let standardDeviation = jStat.stdev(calculateValues).toFixed(1);
@@ -187,7 +185,6 @@ function updateDescription(forChart) {
         }
         //Refine the retrieved values
         let calculatedValues = refinedValues(values);
-        console.log("Values: " + calculatedValues);
 
         //Calculate mean and standard deviation
         let mean = jStat.mean(calculatedValues).toFixed(1);
