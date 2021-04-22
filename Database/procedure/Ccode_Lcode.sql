@@ -8,6 +8,15 @@ CREATE PROCEDURE `Ccode_Lcode`(
     status_case Varchar(50))
 sp: BEGIN
 	CASE 
+	-- Check invalid parameter (Para NOT null but not in database)
+		WHEN (Lcode_input not in (Select Lcode from lecturer)) AND (Lcode_input is not NULL) THEN
+			SELECT 'Invalid lecturer' as 'Error_message';
+			LEAVE sp;
+        
+		WHEN (Ccode_input not in (Select Ccode from class)) AND (Ccode_input is not NULL) THEN
+			SELECT 'Invalid class' as 'Error_message';
+			LEAVE sp;
+			
 	-- Check relationship exist in database or not
 		WHEN NOT EXISTS (SELECT Ccode, Lcode FROM lecturer_in_class
 						WHERE Ccode = input_Ccode AND Lcode = input_Lcode) AND (status_case = 'delete')
