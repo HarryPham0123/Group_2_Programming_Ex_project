@@ -2,22 +2,22 @@ USE pe2018;
 DROP PROCEDURE IF EXISTS AYcode_Fcode;
 
 DELIMITER //
-CREATE PROCEDURE `AYcode_Fcode`(
-	AYcode_input Varchar(9),
-    Fcode_input Varchar(10),
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AYcode_Fcode`(
+	input_AYcode Varchar(9),
+    input_Fcode Varchar(10),
     status_case Varchar(50))
 sp: BEGIN
 	CASE 
 		-- Check relationship exist in database or not
 		WHEN NOT EXISTS (SELECT AYcode, Fcode FROM ay_fac
-						WHERE AYcode = AYcode_input AND Fcode = Fcode_input) AND (status_case = 'delete')
-			THEN SELECT 'No' as 'Valid', 'The relationship between AYcode, Fcode do not exist in database' as 'Error message';
+						WHERE AYcode = input_AYcode AND Fcode = input_Fcode) AND (status_case = 'delete')
+			THEN SELECT 'no' as 'valid', 'The relationship between AYcode, Fcode do not exist in database' as 'message';
 			LEAVE sp;
         
 		-- Case when Delete 
 		WHEN (status_case = 'delete') THEN
 			SET @test = CONCAT("DELETE FROM ay_fac 
-								WHERE AYcode = '", AYcode_input,"' AND Fcode = '", Fcode_input,"';");
+								WHERE AYcode = '", input_AYcode,"' AND Fcode = '", input_Fcode,"';");
                             
 		PREPARE stmt FROM @test;
         EXECUTE stmt;
@@ -26,15 +26,15 @@ sp: BEGIN
     
     -- Check the already in database relationship added to database
 		 WHEN EXISTS (SELECT AYcode, Fcode FROM ay_fac
-							WHERE AYcode = AYcode_input AND Fcode = Fcode_input) 
+							WHERE AYcode = input_AYcode AND Fcode = input_Fcode) 
 								AND (status_case = 'insert')
-	 	THEN SELECT 'No' as 'Valid', 'The relationship is already contained in database' as 'Error message';
+	 	THEN SELECT 'no' as 'valid', 'The relationship is already contained in database' as 'message';
 			LEAVE sp;
     
     -- Case when Insert
 		WHEN (status_case = 'insert') THEN
 			SET @test = CONCAT("INSERT INTO ay_fac (AYcode, Fcode)
-								VALUES ('", AYcode_input,"', '", Fcode_input,"');");
+								VALUES ('", input_AYcode,"', '", input_Fcode,"');");
                             
 			PREPARE stmt FROM @test;
 			EXECUTE stmt;
