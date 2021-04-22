@@ -9,11 +9,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `AYcode_Fcode`(
 sp: BEGIN
 	CASE 
 		-- Check invalid parameter (Para NOT null but not in database)
-		WHEN (AYcode_input not in (Select AYcode from academic_year)) AND (AYcode_input is not NULL) THEN
+		WHEN (input_AYcode not in (Select AYcode from academic_year)) AND (input_AYcode is not NULL) THEN
 			SELECT 'invalid academic year' as 'message';
 			LEAVE sp;
 
-		WHEN (Fcode_input not in (Select Fcode from faculty)) AND (Fcode_input is not NULL) THEN
+		WHEN (input_Fcode not in (Select Fcode from faculty)) AND (input_Fcode is not NULL) THEN
 			SELECT 'invalid faculty' as 'message';
 			LEAVE sp;
 			
