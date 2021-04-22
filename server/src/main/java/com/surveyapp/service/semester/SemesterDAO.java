@@ -9,6 +9,13 @@ import java.sql.*;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ *
+ * Create SemesterDAO to interact with table semester in DB
+ * @author Tran Van Hung, Phan Cong Huy, Nguyen Dang Khoa
+ *
+ */
+
 public class SemesterDAO implements DAO<Semester> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM semester";
@@ -39,116 +46,87 @@ public class SemesterDAO implements DAO<Semester> {
     }
 
     @Override
-    public List<Semester> getAll() {
+    public List<Semester> getAll()throws Exception  {
         List<Semester> semesterList = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getAllScript);
-            semesterList = (List<Semester>) ObjectConverter.toObject(Semester.class, resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        //Get database connection
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getAllScript);
+        //Convert to Object type
+        semesterList = (List<Semester>) ObjectConverter.toObject(Semester.class, resultSet);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
         return semesterList;
     }
 
     @Override
-    public Optional<Semester> get(String code) {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
-            preparedStatement.setString(1, code);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Semester semester = (Semester) ObjectConverter.toObject(Semester.class, resultSet);
-            return Optional.ofNullable(semester);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+    public Optional<Semester> get(String code) throws Exception {
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        //Set parameters
+        preparedStatement.setString(1, code);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        //Convert to Object type
+        Semester semester = (Semester) ObjectConverter.toObject(Semester.class, resultSet);
+        return Optional.ofNullable(semester);
+    }
+
+    @Override
+    public void save(Semester semester) throws Exception {
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        //Set parameters
+        preparedStatement.setString(1, semester.getCode());
+        preparedStatement.setString(2, semester.getAYCode());
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
 
     @Override
-    public boolean save(Semester semester) {
-        boolean isSaved = true;
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, semester.getCode());
-            preparedStatement.setString(2, semester.getAYCode());
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isSaved = false;
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+    public void update(String code, Semester semester) throws Exception {
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+        //Set parameters
+        preparedStatement.setString(1, semester.getCode());
+        preparedStatement.setString(2, semester.getAYCode());
+        preparedStatement.setString(3, code);
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
-        return isSaved;
     }
 
     @Override
-    public boolean update(String code, Semester semester) {
-        boolean isUpdated = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, semester.getCode());
-            preparedStatement.setString(2, semester.getAYCode());
-            preparedStatement.setString(3, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isUpdated = false;
-        } finally  {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+    public void delete(String code) throws Exception {
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        //Set parameters
+        preparedStatement.setString(1, code);
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch(Exception exception) {
+                exception.printStackTrace();
             }
         }
-        return isUpdated;
     }
-
-    @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-            preparedStatement.setString(1, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isDeleted = false;
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch(Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }
-        return isDeleted;
-    }
-
 }

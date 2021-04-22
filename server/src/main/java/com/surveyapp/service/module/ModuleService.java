@@ -8,23 +8,23 @@ import java.util.Optional;
 
 public class ModuleService {
     private ModuleDAO DAO = new ModuleDAO();
-    public List<Module> getAll() {
+    public List<Module> getAll()throws Exception {
         return DAO.getAll();
     }
-    public Module get(String code) {
+    public Module get(String code)throws Exception {
         Optional<Module> module = new ModuleDAO().get(code);
         return module.orElseGet(() -> new Module());
     }
 
-    public boolean save(Module module) {
-        return DAO.save(module);
+    public void save(Module module)throws Exception {
+        DAO.save(module);
     }
 
-    public boolean update(String code, Module module) {
-        return DAO.update(code, module);
+    public void update(String code, Module module)throws Exception {
+        DAO.update(code, module);
     }
 
-    public boolean delete(String code) {
-        return DAO.delete(code);
+    public void delete(String code)throws Exception {
+        DAO.delete(code);
     }
 }

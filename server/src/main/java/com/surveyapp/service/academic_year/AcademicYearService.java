@@ -9,23 +9,23 @@ import java.util.Optional;
 
 public class AcademicYearService {
     private AcademicYearDAO academicYearDAO = new AcademicYearDAO();
-    public List<AcademicYear> getAll() {
+    public List<AcademicYear> getAll()throws Exception {
         return academicYearDAO.getAll();
     }
-    public AcademicYear get(String code) {
+    public AcademicYear get(String code) throws Exception {
         Optional<AcademicYear> academicYear = new AcademicYearDAO().get(code);
         return academicYear.orElseGet(() -> new AcademicYear());
     }
 
-    public boolean save(AcademicYear academicYear) {
-        return academicYearDAO.save(academicYear);
+    public void save(AcademicYear academicYear) throws Exception{
+        academicYearDAO.save(academicYear);
     }
 
-    public boolean update(String code, AcademicYear academicYear) {
-        return academicYearDAO.update(code, academicYear);
+    public void update(String code, AcademicYear academicYear)throws Exception {
+        academicYearDAO.update(code, academicYear);
     }
 
-    public boolean delete(String code) {
-        return academicYearDAO.delete(code);
+    public void delete(String code) throws Exception {
+        academicYearDAO.delete(code);
     }
 }
