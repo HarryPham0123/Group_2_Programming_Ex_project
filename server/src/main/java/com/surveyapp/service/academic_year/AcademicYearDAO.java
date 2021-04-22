@@ -9,6 +9,13 @@ import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * Create AcademicYearDAO to interact with table academic_year in DB
+ * @author Tran Van Hung, Phan Cong Huy, Nguyen Dang Khoa
+ *
+ */
+
 public class AcademicYearDAO implements DAO<AcademicYear> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM academic_year";
@@ -16,70 +23,56 @@ public class AcademicYearDAO implements DAO<AcademicYear> {
     private String saveScript = "INSERT INTO  academic_year(AYcode) VALUES (?)";
     private String deleteScript = "DELETE FROM academic_year WHERE AYcode = ? ";
     @Override
-    public List<AcademicYear> getAll() {
+    public List<AcademicYear> getAll() throws Exception {
         List<AcademicYear> academicYearList = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getAllScript);
-            academicYearList = (List<AcademicYear>) ObjectConverter.toObject(AcademicYear.class, resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
-                }
+        //Get database connection
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getAllScript);
+        //Convert to Object type
+        academicYearList = (List<AcademicYear>) ObjectConverter.toObject(AcademicYear.class, resultSet);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
             }
         }
         return academicYearList;
     }
 
     @Override
-    public Optional<AcademicYear> get(String code) { //code inputted by FE
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
-            preparedStatement.setString(1, code);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            AcademicYear academicYear = (AcademicYear) ObjectConverter.toObject(AcademicYear.class, resultSet);
-            return Optional.ofNullable(academicYear);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        }
+    public Optional<AcademicYear> get(String code) throws Exception { //code inputted by FE
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        //Set parameters
+        preparedStatement.setString(1, code);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        //Convert to Object type
+        AcademicYear academicYear = (AcademicYear) ObjectConverter.toObject(AcademicYear.class, resultSet);
+        return Optional.ofNullable(academicYear);
     }
 
     @Override
-    public boolean save(AcademicYear academicYear) {
-        boolean isSaved = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, academicYear.getCode());
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isSaved = false;
-        }
-        return isSaved;
+    public void save(AcademicYear academicYear) throws Exception {
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        //Set parameters
+        preparedStatement.setString(1, academicYear.getCode());
+        preparedStatement.executeUpdate();
     }
 
     @Override
-    public boolean update(String code, AcademicYear academicYear) {
-        return true;
+    public void update(String code, AcademicYear academicYear) throws Exception {
+
     }
 
     @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-            preparedStatement.setString(1, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isDeleted = false;
-        }
-        return isDeleted;
+    public void delete(String code) throws Exception{
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        //Set parameters
+        preparedStatement.setString(1, code);
+        preparedStatement.executeUpdate();
     }
 }

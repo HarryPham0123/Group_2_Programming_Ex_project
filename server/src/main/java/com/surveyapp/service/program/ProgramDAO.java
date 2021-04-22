@@ -10,6 +10,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+/**
+ *
+ * Create ProgramDAO to interact with table program in DB
+ * @author Tran Van Hung, Phan Cong Huy, Nguyen Dang Khoa
+ *
+ */
+
 public class ProgramDAO implements DAO<Program> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM program";
@@ -18,7 +25,7 @@ public class ProgramDAO implements DAO<Program> {
     private String updateScript = "UPDATE program SET Pcode = ?, Pname = ? WHERE Pcode = ?";
     private String deleteScript = "DELETE FROM program WHERE  Pcode = ?";
 
-    private void executeInTransaction(Consumer<Connection> action) {
+    private void executeInTransaction(Consumer<Connection> action) throws Exception {
         try {
             connection.setAutoCommit(false);
             action.accept(connection);
@@ -41,107 +48,88 @@ public class ProgramDAO implements DAO<Program> {
 
 
     @Override
-    public List<Program> getAll() {
-
+    public List<Program> getAll() throws Exception {
         List<Program> programList = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getAllScript);
-            programList = (List<Program>) ObjectConverter.toObject(Program.class, resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
-                }
+        //Get database connection
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getAllScript);
+        //Convert to Object type
+        programList = (List<Program>) ObjectConverter.toObject(Program.class, resultSet);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
             }
         }
         return programList;
     }
 
     @Override
-    public Optional<Program> get(String id) {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
-            preparedStatement.setString(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Program program = (Program) ObjectConverter.toObject(Program.class, resultSet);
-            return Optional.ofNullable(program);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        }
+    public Optional<Program> get(String id) throws Exception{
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        //Set parameters
+        preparedStatement.setString(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        //Convert to Object type
+        Program program = (Program) ObjectConverter.toObject(Program.class, resultSet);
+        return Optional.ofNullable(program);
     }
 
     @Override
-    public boolean save(Program program) {
-        boolean isSaved = true;
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, program.getCode());
-            preparedStatement.setString(2, program.getName());
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isSaved = false;
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+    public void save(Program program) throws Exception{
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        //Set parameters
+        preparedStatement.setString(1, program.getCode());
+        preparedStatement.setString(2, program.getName());
+        preparedStatement.executeUpdate();
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
-        return isSaved;
+
     }
 
     @Override
-    public boolean update(String code, Program program) {
-        boolean isUpdated = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, program.getCode());
-            preparedStatement.setString(2, program.getName());
-            preparedStatement.setString(3, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isUpdated = false;
-        } finally  {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+    public void update(String code, Program program)throws Exception {
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+        //Set parameters
+        preparedStatement.setString(1, program.getCode());
+        preparedStatement.setString(2, program.getName());
+        preparedStatement.setString(3, code);
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
-        return isUpdated;
+
     }
 
     @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-            preparedStatement.setString(1, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isDeleted = false;
-        } finally {
-            if(connection != null) {
-                try {
-                    connection.close();
-                } catch(Exception exception) {
-                    exception.printStackTrace();
-                }
+    public void delete(String code)throws Exception {
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        //Set parameters
+        preparedStatement.setString(1, code);
+        preparedStatement.executeUpdate();
+
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch(Exception exception) {
+                exception.printStackTrace();
             }
         }
-        return isDeleted;
     }
 }

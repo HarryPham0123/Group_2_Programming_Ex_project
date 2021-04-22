@@ -8,24 +8,24 @@ import java.util.Optional;
 
 public class ProgramService {
     private ProgramDAO programDAO = new ProgramDAO();
-    public List<Program> getAll() {
+    public List<Program> getAll()throws Exception {
         return programDAO.getAll();
     }
-    public Program get(String code) {
+    public Program get(String code) throws Exception {
         Optional<Program> program = new ProgramDAO().get(code);
         return program.orElseGet(() -> new Program());
     }
 
-    public boolean save(Program program) {
-        return programDAO.save(program);
+    public void save(Program program)throws Exception {
+        programDAO.save(program);
     }
 
-    public boolean update(String code, Program program) {
-        return programDAO.update(code, program);
+    public void update(String code, Program program)throws Exception {
+        programDAO.update(code, program);
     }
 
-    public boolean delete(String code) {
-        return programDAO.delete(code);
+    public void delete(String code)throws Exception {
+        programDAO.delete(code);
     }
 
 }

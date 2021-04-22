@@ -9,6 +9,13 @@ import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * Create ModuleDAO to interact with table module in DB
+ * @author Tran Van Hung, Phan Cong Huy, Nguyen Dang Khoa
+ *
+ */
+
 public class ModuleDAO implements DAO<Module> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM module";
@@ -17,83 +24,84 @@ public class ModuleDAO implements DAO<Module> {
     private String updateScript = "UPDATE module SET Mcode = ? , Mname = ? WHERE Mcode = ?";
     private String deleteScript = "DELETE FROM module WHERE Mcode = ? ";
     @Override
-    public List<Module> getAll() {
+    public List<Module> getAll() throws Exception {
         List<Module> modulelist = null;
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getAllScript);
-            modulelist = (List<Module>) ObjectConverter.toObject(Module.class, resultSet);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
-                }
+        //Get database connection
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getAllScript);
+        //Convert to Object type
+        modulelist = (List<Module>) ObjectConverter.toObject(Module.class, resultSet);
+
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
             }
         }
         return modulelist;
     }
 
     @Override
-    public Optional<Module> get(String code) {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
-            preparedStatement.setString(1, code);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Module module = (Module) ObjectConverter.toObject(Module.class, resultSet);
-            return Optional.ofNullable(module);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
+    public Optional<Module> get(String code) throws Exception{
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
+        //Set parameters
+        preparedStatement.setString(1, code);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        //Convert to Object type
+        Module module = (Module) ObjectConverter.toObject(Module.class, resultSet);
+        return Optional.ofNullable(module);
+    }
+
+    @Override
+    public void save(Module module) throws Exception{
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
+        //Set parameters
+        preparedStatement.setString(1, module.getCode());
+        preparedStatement.setString(2, module.getName());
+        preparedStatement.executeUpdate();
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
 
     @Override
-    public boolean save(Module module) {
-        boolean isSaved = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-            preparedStatement.setString(1, module.getCode());
-            preparedStatement.setString(2, module.getName());
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isSaved = false;
+    public void update(String code, Module module) throws Exception{
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
+        //Set parameters
+        preparedStatement.setString(1, module.getCode());
+        preparedStatement.setString(2, module.getName());
+        preparedStatement.setString(3, code);
+        preparedStatement.executeUpdate();
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
-        return isSaved;
     }
 
     @Override
-    public boolean update(String code, Module module) {
-        boolean isUpdated = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateScript);
-            preparedStatement.setString(1, module.getCode());
-            preparedStatement.setString(2, module.getName());
-            preparedStatement.setString(3, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isUpdated = false;
+    public void delete(String code) throws Exception{
+        //Get database connection
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
+        //Set parameters
+        preparedStatement.setString(1, code);
+        preparedStatement.executeUpdate();
+        if(connection != null) {
+            try {
+                connection.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
-        return isUpdated;
     }
-
-    @Override
-    public boolean delete(String code) {
-        boolean isDeleted = true;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-            preparedStatement.setString(1, code);
-            preparedStatement.executeUpdate();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            isDeleted = false;
-        }
-        return isDeleted;
-    }
-
 }
