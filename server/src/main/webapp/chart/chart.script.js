@@ -39,6 +39,12 @@ $(function () {
     });
 
     //Attach listener to the selects
+    addSelectListener();
+
+    //Pre-loading all the charts
+    preLoader();
+});
+function addSelectListener() {
     $(".sel-acad").change(function() {
         watchSelect(0);
     })
@@ -60,10 +66,7 @@ $(function () {
     $(".sel-lec").change(function() {
         watchSelect(6);
     })
-
-    //Pre-loading all the charts
-    preLoader();
-});
+}
 
 /*Pre-loading all of the graph, title and description*/
 function preLoader() {
@@ -144,8 +147,6 @@ function updateDescription(forChart) {
         if (values.length > 5) {
             values = values.slice(0, 5);
         }
-        //Refine the retrieved values
-        let calculatedValues = refinedValues(values);
 
         //Calculate the mean and standard deviation
         let [mean, standardDeviation] = calculateStats(values);
