@@ -8,6 +8,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `AYcode_Fcode`(
     status_case Varchar(50))
 sp: BEGIN
 	CASE 
+		-- Check invalid parameter (Para NOT null but not in database)
+		WHEN (AYcode_input not in (Select AYcode from academic_year)) AND (AYcode_input is not NULL) THEN
+			SELECT 'invalid academic year' as 'message';
+			LEAVE sp;
+
+		WHEN (Fcode_input not in (Select Fcode from faculty)) AND (Fcode_input is not NULL) THEN
+			SELECT 'invalid faculty' as 'message';
+			LEAVE sp;
+			
 		-- Check relationship exist in database or not
 		WHEN NOT EXISTS (SELECT AYcode, Fcode FROM ay_fac
 						WHERE AYcode = input_AYcode AND Fcode = input_Fcode) AND (status_case = 'delete')
