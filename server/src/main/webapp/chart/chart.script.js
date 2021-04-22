@@ -354,6 +354,7 @@ function getCodes(
         contentType: "application/json",
         url,
         success: function (data) {
+            console.log(data);
             var codeArray = [];
             //Add to the available array
             for (index = 0; index < data.length; index++) {

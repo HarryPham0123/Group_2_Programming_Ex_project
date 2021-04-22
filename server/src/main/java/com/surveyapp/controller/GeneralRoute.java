@@ -31,6 +31,7 @@ public class GeneralRoute {
                     .build();
         } catch (Exception exception) {
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            exception.printStackTrace();
             jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
         }
