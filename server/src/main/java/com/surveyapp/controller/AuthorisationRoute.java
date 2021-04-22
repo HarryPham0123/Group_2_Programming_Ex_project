@@ -23,7 +23,7 @@ public class AuthorisationRoute {
             NewCookie cookie = authorisationService.authoriseLoginCredential(loginCredential);
 
             // If login credentials is invalid, return STATUS CODE 500 - INTERNAL SERVER ERROR
-            if(cookie.equals(null)){
+            if(cookie == null){
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             // If login credentials is valid, return STATUS CODE 200 - OK

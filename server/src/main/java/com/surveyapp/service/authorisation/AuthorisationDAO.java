@@ -97,7 +97,7 @@ public class AuthorisationDAO {
      */
     public NewCookie authoriseLoginCredential(LoginCredential loginCredential) throws Exception{
         AuthorisedUser authUser = verifyLogin(loginCredential);
-        if(authUser.equals(null)) {
+        if(authUser == null) {
             return null;
         } else {
             String authToken =  issueToken(authUser);
