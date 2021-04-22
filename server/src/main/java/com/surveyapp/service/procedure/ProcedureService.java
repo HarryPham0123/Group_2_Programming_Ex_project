@@ -11,6 +11,8 @@ public class ProcedureService {
     private GetSummaryAttendanceDAO getSummaryAttendanceDAO= new GetSummaryAttendanceDAO();
     private GetSummaryGenderDAO getSummaryGenderDAO = new GetSummaryGenderDAO();
     private GetSummaryQuestionDAO getSummaryQuestionDAO = new GetSummaryQuestionDAO();
+    private GetSummaryCommentDAO getSummaryCommentDAO = new GetSummaryCommentDAO();
+    private GetTotalClassesSizeDAO getTotalClassesSizeDAO = new GetTotalClassesSizeDAO();
     //Get all general information
     public String getAll(Code code) throws Exception {
         return procedureDAO.setParameters(code).executeProcedure();
@@ -45,4 +47,15 @@ public class ProcedureService {
     public String getSummaryQuestion(Code code, String questionNumber) throws Exception {
         return getSummaryQuestionDAO.setParameters(code, questionNumber).executeProcedure();
     }
+
+    //Retrieve Summary comments
+    public String getSummaryComment(Code code) throws Exception {
+        return getSummaryCommentDAO.setParameters(code).executeProcedure();
+    }
+
+    //Retrieves class's size
+    public String getTotalClassesSize(Code code) throws  Exception {
+        return getTotalClassesSizeDAO.setParameters(code).executeProcedure();
+    }
+
 }

@@ -92,9 +92,8 @@ public class ObjectConverter {
                 int columnType = metaData.getColumnType(i);
                 String fieldStringValue = "";
                 int fieldNumericValue = 0;
-
                 // Column contains integer values
-                if (columnType == 4) {
+                if (columnType == 4 || columnType == 3) {
                     fieldNumericValue = resultSet.getInt(i);
                     entryModel.add(fieldName, fieldNumericValue);
                 }

@@ -8,7 +8,7 @@ $(function () {
     //Hides the comment when not using it
     $(".comment-table").hide();
 
-    $(".visual").click(function (e) {
+    $(".visual").click(function visualize(e) {
         //Hides the comment when not using it
         $(".comment-table").hide();
         e.preventDefault();
@@ -39,6 +39,12 @@ $(function () {
     });
 
     //Attach listener to the selects
+    addSelectListeners();
+
+    //Pre-loading all the charts
+    preLoader();
+});
+function addSelectListeners() {
     $(".sel-acad").change(function() {
         watchSelect(0);
     })
@@ -60,10 +66,7 @@ $(function () {
     $(".sel-lec").change(function() {
         watchSelect(6);
     })
-
-    //Pre-loading all the charts
-    preLoader();
-});
+}
 
 /*Pre-loading all of the graph, title and description*/
 function preLoader() {
@@ -128,7 +131,6 @@ function updateChart(chart) {
 }
 function calculateStats(values) {
     //Calculate the percentages
-    var percentageArray = calculatePercentage(values);
     let calculateValues = refinedValues(values);
 
     //Calculate mean and standard deviation
@@ -144,8 +146,6 @@ function updateDescription(forChart) {
         if (values.length > 5) {
             values = values.slice(0, 5);
         }
-        //Refine the retrieved values
-        let calculatedValues = refinedValues(values);
 
         //Calculate the mean and standard deviation
         let [mean, standardDeviation] = calculateStats(values);
@@ -375,6 +375,7 @@ function watchSelect(selectIndex) {
     if (selectedArray.includes(selectIndex)) {
         //Check lower-bound index
         let startIndex = (selectedArray.length - selectIndex) < 2 ? 1 : (selectedArray.length - selectIndex);
+        //Identify which ones to delete
         var toDeleteSelects = selectedArray.splice(startIndex, selectIndex);
         //Deletes the selects base on indexes
         toDeleteSelects.forEach(deleteIndex => {

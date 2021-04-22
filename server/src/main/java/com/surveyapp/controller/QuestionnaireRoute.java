@@ -111,8 +111,12 @@ public class QuestionnaireRoute {
     ) {
         try {
             Code code = new Code(academic_year, semester, faculty, program, module, lecturer, clazz);
-            return Response.status(Response.Status.OK).entity(procedureService.getSummaryQuestion(code, questionNumber  )).build();
+            if (questionNumber.equals("question_18")) {
+                return Response.status(Response.Status.OK).entity(procedureService.getSummaryComment(code)).build();
+            }
+                return Response.status(Response.Status.OK).entity(procedureService.getSummaryQuestion(code, questionNumber)).build();
         } catch (Exception exception) {
+            exception.printStackTrace();
             JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
             jsonObjectBuilder.add("message", exception.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();

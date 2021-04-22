@@ -1,6 +1,9 @@
 package com.surveyapp.controller;
 import com.surveyapp.model.Class;
+import com.surveyapp.model.Code;
 import com.surveyapp.service.clazz.ClassService;
+import com.surveyapp.service.procedure.GetSummaryCommentDAO;
+import com.surveyapp.service.procedure.ProcedureService;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import javax.ws.rs.core.Response;
 @Path("/classes")
 public class ClassRoute {
     private ClassService classService = new ClassService();
+    private ProcedureService procedureService = new ProcedureService();
 
     // GET method for showing all tuples in Class table in DB show in the front-end
     @GET
@@ -50,6 +54,30 @@ public class ClassRoute {
             System.out.println(exception);
         }
         return aClass;
+    }
+
+    //Get class's size base on academic codes
+    @GET
+    @Path("/size")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSummaryQuestion(
+            @QueryParam("academic_year") String academic_year,
+            @QueryParam("semester") String semester,
+            @QueryParam("faculty") String faculty,
+            @QueryParam("program") String program,
+            @QueryParam("module") String module,
+            @QueryParam("class") String clazz,
+            @QueryParam("lecturer") String lecturer
+    ) {
+        try {
+            Code code = new Code(academic_year, semester, faculty, program, module, lecturer, clazz);
+            return Response.status(Response.Status.OK).entity(procedureService.getTotalClassesSize(code)).build();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+            jsonObjectBuilder.add("message", exception.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonObjectBuilder.build()).build();
+        }
     }
 
     //POST method for inserting new tuple into the Class table in DB show in the front-end
