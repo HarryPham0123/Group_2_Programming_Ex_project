@@ -8,7 +8,7 @@ $(function () {
     //Hides the comment when not using it
     $(".comment-table").hide();
 
-    $(".visual").click(function (e) {
+    $(".visual").click(function visualize(e) {
         //Hides the comment when not using it
         $(".comment-table").hide();
         e.preventDefault();
@@ -131,7 +131,6 @@ function updateChart(chart) {
 }
 function calculateStats(values) {
     //Calculate the percentages
-    var percentageArray = calculatePercentage(values);
     let calculateValues = refinedValues(values);
 
     //Calculate mean and standard deviation
@@ -376,6 +375,7 @@ function watchSelect(selectIndex) {
     if (selectedArray.includes(selectIndex)) {
         //Check lower-bound index
         let startIndex = (selectedArray.length - selectIndex) < 2 ? 1 : (selectedArray.length - selectIndex);
+        //Identify which ones to delete
         var toDeleteSelects = selectedArray.splice(startIndex, selectIndex);
         //Deletes the selects base on indexes
         toDeleteSelects.forEach(deleteIndex => {
