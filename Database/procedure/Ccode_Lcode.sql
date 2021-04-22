@@ -9,11 +9,11 @@ CREATE PROCEDURE `Ccode_Lcode`(
 sp: BEGIN
 	CASE 
 	-- Check invalid parameter (Para NOT null but not in database)
-		WHEN (Lcode_input not in (Select Lcode from lecturer)) AND (Lcode_input is not NULL) THEN
+		WHEN (input_Lcode not in (Select Lcode from lecturer)) AND (input_Lcode is not NULL) THEN
 			SELECT 'Invalid lecturer' as 'Error_message';
 			LEAVE sp;
         
-		WHEN (Ccode_input not in (Select Ccode from class)) AND (Ccode_input is not NULL) THEN
+		WHEN (input_Ccode not in (Select Ccode from class)) AND (input_Ccode is not NULL) THEN
 			SELECT 'Invalid class' as 'Error_message';
 			LEAVE sp;
 			
