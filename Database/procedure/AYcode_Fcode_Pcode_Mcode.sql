@@ -12,6 +12,23 @@ sp: BEGIN
 
 -- Check DATA EXIST when DELETE case
 	CASE
+		-- Check invalid parameter (Para NOT null but not in database)
+		WHEN (AYcode_input not in (Select AYcode from academic_year)) AND (AYcode_input is not NULL) THEN
+			SELECT 'invalid academic year' as 'message';
+			LEAVE sp;
+
+		WHEN (Fcode_input not in (Select Fcode from faculty)) AND (Fcode_input is not NULL) THEN
+			SELECT 'invalid faculty' as 'message';
+			LEAVE sp;
+
+		WHEN (Pcode_input not in (Select Pcode from program)) AND (Pcode_input is not NULL) THEN
+			SELECT 'invalid program' as 'message';
+			LEAVE sp;
+
+		WHEN (Mcode_input not in (Select Mcode from module)) AND (Mcode_input is not NULL) THEN
+			SELECT 'invalid module' as 'message';
+			LEAVE sp;	
+		
 		-- Check relationship exist in database or not
 		WHEN (NOT EXISTS (SELECT AYcode, Fcode, Pcode, Mcode FROM ay_fac NATURAL JOIN ay_fac_p NATURAL JOIN ay_fac_pm 
 							WHERE AYcode = input_AYcode AND Pcode = input_Pcode
