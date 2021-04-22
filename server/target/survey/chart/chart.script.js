@@ -5,8 +5,12 @@ var lookupTable = ["AYcode", "Scode", "Fcode", "Pcode", "Mcode", "Ccode", "Lcode
 
 $(function () {
     Chart.defaults.global.tooltips.enabled = false;
+    //Hides the comment when not using it
+    $(".comment-table").hide();
 
     $(".visual").click(function (e) {
+        //Hides the comment when not using it
+        $(".comment-table").hide();
         e.preventDefault();
 
         let academic_year = $(".sel-acad :selected").val();
@@ -19,7 +23,9 @@ $(function () {
 
         //Checks if both class and lecturer are selected
         if ((lecturer !== "null") && (clazz !== "null")) {
+            $(".comment-table").show();
             displayComments();
+
         }
 
         //Encapsulates the filter, to send to back-end
@@ -208,7 +214,7 @@ function displayDescription(forChart) {
 };
 
 function displayTitle(forChart) {
-    $.getJSON( "image/questions.json", function(questions) {
+    $.getJSON( "questions.json", function(questions) {
         let chartTitle = questions[forChart];
         //Set title for current chart
         $(`<h1 class="chart-title">${chartTitle}</h1>`).insertBefore($(`#${forChart}`));
