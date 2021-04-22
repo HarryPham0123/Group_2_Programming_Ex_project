@@ -2,7 +2,7 @@ USE pe2018;
 DROP PROCEDURE IF EXISTS AYcode_Fcode;
 
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AYcode_Fcode`(
+CREATE PROCEDURE `AYcode_Fcode`(
 	input_AYcode Varchar(9),
     input_Fcode Varchar(10),
     status_case Varchar(50))
