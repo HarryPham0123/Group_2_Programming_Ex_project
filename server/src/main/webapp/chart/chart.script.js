@@ -39,12 +39,12 @@ $(function () {
     });
 
     //Attach listener to the selects
-    addSelectListener();
+    addSelectListeners();
 
     //Pre-loading all the charts
     preLoader();
 });
-function addSelectListener() {
+function addSelectListeners() {
     $(".sel-acad").change(function() {
         watchSelect(0);
     })
