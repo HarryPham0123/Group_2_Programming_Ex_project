@@ -1,127 +1,64 @@
 var selectedArray = [];
-var chartArray = {};
+var chartArray = [];
 var classSize = 10;
+var lookupTable = ["AYcode", "Scode", "Fcode", "Pcode", "Mcode", "Ccode", "Lcode"];
+
 $(function () {
     Chart.defaults.global.tooltips.enabled = false;
 
-    //Load Academic year first
-    getCodes("AYcode", ".sel-acad");
-    //Academic year listener
-    $(".sel-acad").change(function() {
-        var selectedAcademicYear = $(".sel-acad option:selected").val();
-        selectedArray.length = 1;
-        selectedArray[0] = selectedAcademicYear;
-
-        //Remove all options in the next selects
-        $(".academic-box")
-            .nextAll("div[class*='-box']")
-            .children("select")
-            .empty().append("<option value=null>--any--</option>");
-
-        console.log(selectedArray);
-        getCodes("Scode", ".sel-sem", ...selectedArray);
-
-    });
-
-    //Semester listener
-    $(".sel-sem").change(function() {
-        selectedArray.length = 2;
-        selectedArray[1] = ($(".sel-sem option:selected").val());
-
-        console.log(selectedArray);
-        //Remove all options in the next selects
-        $(".semester-box").nextAll("div[class*='-box']")
-            .children("select")
-            .empty().append("<option value=null>--any--</option>");
-        getCodes("Fcode", ".sel-faculty", ...selectedArray);
-
-    })
-
-    //Faculty listener
-    $(".sel-faculty").change(function() {
-        selectedArray.length = 3;
-        selectedArray[2] = $(".sel-faculty option:selected").val();
-
-        console.log(selectedArray);
-        //Remove all options in the next selects
-        $(".faculty-box")
-            .nextAll("div[class*='-box']")
-            .children("select")
-            .empty().append("<option value=null>--any--</option>");
-        getCodes("Pcode", ".sel-pro", ...selectedArray);
-    })
-
-    //Program listener
-    $(".sel-pro").change(function() {
-        selectedArray.length = 4;
-        selectedArray[3] = $(".sel-pro option:selected").val();
-
-        console.log(selectedArray);
-        //Remove all options in the next selects
-        $(".program-box")
-            .nextAll("div[class*='-box']")
-            .children("select")
-            .empty().append("<option value=null>--any--</option>");
-
-        getCodes("Mcode", ".sel-module", ...selectedArray);
-    })
-
-    //Module listener
-    $(".sel-module").change(function() {
-        selectedArray.length = 5;
-        selectedArray[4] = $(".sel-module option:selected").val();
-
-        console.log(selectedArray);
-        //Remove all options in the next selects
-        $(".module-box")
-            .nextAll("div[class*='-box']")
-            .children("select")
-            .empty().append("<option value=null>--any--</option>");
-        getCodes("Ccode", ".sel-class", ...selectedArray);
-    })
-
-    //Class listener
-    $(".sel-class").change(function() {
-        selectedArray.length = 6;
-        var selectedClass = selectedArray[5] = $(".sel-class option:selected").val();
-
-        console.log(selectedArray);
-        //Remove the next siblings select
-        $(".class-box").nextAll("div[class*='-box']").children("select").empty().append("<option value=null>--any--</option>");
-        //Append to lecturer select
-        getCodes("Lcode", ".sel-lec", ...selectedArray);
-
-        $.ajax({
-            type: "GET",
-            contentType: "application/json",
-            url: `http://localhost:8080/survey/api/classes/${encodeURI(selectedClass)}`,
-            success: function(data) {
-                classSize = data.size;
-            }
-        })
-    })
-
-    //Lecturer listener
-    $(".sel-lec").change(function() {
-        selectedArray.length = 7;
-        selectedArray[6] = $(".sel-lec option:selected").val();
-
-        console.log(selectedArray);
-    })
-
     $(".visual").click(function (e) {
         e.preventDefault();
-        fetchQuestionnaires("gender_question", ...selectedArray)("gender_chart");
-        fetchQuestionnaires("attendance_question", ...selectedArray)('attendance_chart');
+
+        let academic_year = $(".sel-acad :selected").val();
+        let semester = $(".sel-sem :selected").val();
+        let faculty = $(".sel-faculty :selected").val();
+        let program = $(".sel-pro :selected").val();
+        let module = $(".sel-module :selected").val();
+        let lecturer = $(".sel-lec :selected").val();
+        let clazz = $(".sel-class :selected").val();
+
+        //Checks if both class and lecturer are selected
+        if ((lecturer !== "null") && (clazz !== "null")) {
+            displayComments();
+        }
+
+        //Encapsulates the filter, to send to back-end
+        var arrayOfValues = [academic_year, semester, faculty, program, module, lecturer, clazz];
+        console.log(arrayOfValues);
+        fetchQuestionnaires("gender_question", ...arrayOfValues)("gender_chart");
+        fetchQuestionnaires("attendance_question", ...arrayOfValues)('attendance_chart');
         for (index = 1; index < 18; index++) {
-            fetchQuestionnaires(`question_${index}`, ...selectedArray)(`question_${index}_chart`);
+            fetchQuestionnaires(`question_${index}`, ...arrayOfValues)(`question_${index}_chart`);
         }
     });
 
+    //Attach listener to the selects
+    $(".sel-acad").change(function() {
+        watchSelect(0);
+    })
+    $(".sel-sem").change(function() {
+        watchSelect(1);
+    })
+    $(".sel-faculty").change(function() {
+        watchSelect(2);
+    })
+    $(".sel-pro").change(function() {
+        watchSelect(3);
+    })
+    $(".sel-module").change(function() {
+        watchSelect(4);
+    })
+    $(".sel-class").change(function() {
+        watchSelect(5);
+    })
+    $(".sel-lec").change(function() {
+        watchSelect(6);
+    })
+
     //Pre-loading all the charts
     preLoader();
-
 });
+
 /*Pre-loading all of the graph, title and description*/
 function preLoader() {
     //Render the chart
@@ -132,6 +69,15 @@ function preLoader() {
     for (index = 1; index < 18; index++) {
         renderChart(`question_${index}_chart`);
     }
+
+    //Loads all of the select
+    getCodes("AYcode", ".sel-acad");
+    getCodes("Scode", ".sel-sem");
+    getCodes("Fcode", ".sel-faculty");
+    getCodes("Pcode", ".sel-pro");
+    getCodes("Mcode", ".sel-module");
+    getCodes("Ccode", ".sel-class");
+    getCodes("Lcode", ".sel-lec");
 
     //Render out the class size
     $(`<h3>Class size: ${classSize}</h3>`).insertAfter($("#question_17_chart"));
@@ -155,11 +101,9 @@ function updateChart(chart) {
 
         //Calculate the percentages
         var percentageArray = calculatePercentage(values);
-        let calculateValues = refinedValues(values);
 
-        //Calculate mean and standard deviation
-        let mean = jStat.mean(calculateValues).toFixed(1);
-        let standardDeviation = jStat.stdev(calculateValues).toFixed(1);
+        //Calculate the mean and standard deviation
+        let [mean, standardDeviation] = calculateStats(values);
 
         //Calculate the upper and lower bound
         let upperBound = parseFloat(mean) + parseFloat(standardDeviation);
@@ -176,7 +120,18 @@ function updateChart(chart) {
         chart.update();
     }
 }
+function calculateStats(values) {
+    //Calculate the percentages
+    var percentageArray = calculatePercentage(values);
+    let calculateValues = refinedValues(values);
 
+    //Calculate mean and standard deviation
+    let mean = jStat.mean(calculateValues).toFixed(1);
+    let standardDeviation = jStat.stdev(calculateValues).toFixed(1);
+
+    //Return a pair of mean and SD
+    return [mean, standardDeviation];
+}
 function updateDescription(forChart) {
     return (values) => {
         //Check redundant response
@@ -186,9 +141,8 @@ function updateDescription(forChart) {
         //Refine the retrieved values
         let calculatedValues = refinedValues(values);
 
-        //Calculate mean and standard deviation
-        let mean = jStat.mean(calculatedValues).toFixed(1);
-        let standardDeviation = jStat.stdev(calculatedValues).toFixed(1);
+        //Calculate the mean and standard deviation
+        let [mean, standardDeviation] = calculateStats(values);
         let numberOfResponds = jStat.sum(values);
         let respondRate = ((numberOfResponds/classSize) * 100).toFixed(1) + "%";
 
@@ -260,7 +214,22 @@ function displayTitle(forChart) {
         $(`<h1 class="chart-title">${chartTitle}</h1>`).insertBefore($(`#${forChart}`));
     });
 };
-
+function displayComments() {
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "http://localhost:8080/survey/api/questionnaire/question_18",
+        success: function(comments) {
+            //Insert comments to table's DOM
+            comments.map((comment, index) => {
+                $(`<tr>
+                <td>${index + 1}</td>
+                <td>${comment}</td>
+                </tr>`).appendTo(".comment-table");
+            })
+        }
+    })
+}
 function createChart(chart) {
     var ctx = document.getElementById(chart).getContext('2d');
     var myChart = new Chart(ctx, {
@@ -393,4 +362,57 @@ function getCodes(
             });
         },
     });
+}
+function watchSelect(selectIndex) {
+    var selects = $("select[class^='sel-']");
+    //Check the changed index
+    if (selectedArray.includes(selectIndex)) {
+        //Check lower-bound index
+        let startIndex = (selectedArray.length - selectIndex) < 2 ? 1 : (selectedArray.length - selectIndex);
+        var toDeleteSelects = selectedArray.splice(startIndex, selectIndex);
+        //Deletes the selects base on indexes
+        toDeleteSelects.forEach(deleteIndex => {
+            $(selects.get(deleteIndex)).empty().append("<option value=null>--any--<option/>");
+        })
+
+    } else {
+        //Add to the selected array -> prevents update on that specific select
+        selectedArray.push(selectIndex);
+    }
+
+    //Get code from selects
+    var academic_year = $(".sel-acad :selected").val();
+    var semester = $(".sel-sem :selected").val();
+    var faculty = $(".sel-faculty :selected").val();
+    var program = $(".sel-pro :selected").val();
+    var module = $(".sel-module :selected").val();
+    var lecturer = $(".sel-lec :selected").val();
+    var clazz = $(".sel-class :selected").val();
+
+    //Call APIs
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url : `http://localhost:8080/survey/api/general?academic_year=${encodeURI(academic_year)}&semester=${encodeURI(semester)}&faculty=${encodeURI(faculty)}&program=${encodeURI(program)}&module=${encodeURI(module)}&lecturer=${encodeURI(lecturer)}&class=${encodeURI(clazz)}`,
+        success: function(data) {
+            for (index = 0; index < selects.length; index++) {
+                if (!selectedArray.includes(index)) {
+                    var indexToCode = lookupTable[index];
+
+                    //Clear the select
+                    $(selects[index]).children().remove().end().append("<option value=null>--any--</option>")
+
+                    //Update the select
+                    var uniqueCodes = new Set(data.map(entity => entity[indexToCode]));
+                    var codesArray = Array.from(uniqueCodes);
+
+                    //Add new options to that select
+                    codesArray.map(code => {
+                        $(selects.get(index)).append(`<option value=${code}>${code}</option>`);
+                    })
+                }
+            }
+            console.log("Filter state: " + selectedArray);
+        }
+    })
 }
