@@ -2,91 +2,93 @@ USE pe2018;
 DROP PROCEDURE IF EXISTS general_information;
 DELIMITER //
 CREATE PROCEDURE `general_information`(
-	academic_year VARCHAR(50), 
-	semester VARCHAR(50), 
-	faculty VARCHAR(50), 
-	program VARCHAR(50), 
-	module VARCHAR(50), 
-	lecturer VARCHAR(50), 
-	class VARCHAR(50))
-BEGIN
+	input_academic_year VARCHAR(9), 
+	input_semester VARCHAR(10), 
+	input_faculty VARCHAR(10), 
+	input_program VARCHAR(10), 
+	input_module VARCHAR(10), 
+	input_lecturer VARCHAR(10), 
+	input_class VARCHAR(10))
+sp: BEGIN
 -- Check invalid parameter (Para NOT null but not in database)
-IF (class not in (Select Ccode from class)) AND (class is not NULL) THEN
-	SET class := NULL;
-END IF;
+-- If invalid, stop the procedure and output the error message
+CASE
+	WHEN (input_academic_year not in (Select AYcode from academic_year)) AND (input_academic_year is not NULL) THEN
+		SELECT 'invalid academic year' as 'message';
+        LEAVE sp;
+        
+	WHEN (input_semester not in (Select Scode from semester)) AND (input_semester is not NULL) THEN
+		SELECT 'invalid semester' as 'message';
+        LEAVE sp;
 
-IF (lecturer not in (Select Lcode from lecturer)) AND (lecturer is not NULL) THEN
-	SET lecturer := NULL;
-END IF;
+	WHEN (input_faculty not in (Select Fcode from faculty)) AND (input_faculty is not NULL) THEN
+		SELECT 'invalid faculty' as 'message';
+        LEAVE sp;
 
-IF (module not in (Select Mcode from module)) AND (module is not NULL) THEN
-	SET module := NULL;
-END IF;
+	WHEN (input_program not in (Select Pcode from program)) AND (input_program is not NULL) THEN
+		SELECT 'invalid program' as 'message';
+        LEAVE sp;
 
-IF (program not in (Select Pcode from program)) AND (program is not NULL) THEN
-	SET program := NULL;
-END IF;
+	WHEN (input_module not in (Select Mcode from module)) AND (input_module is not NULL) THEN
+		SELECT 'invalid module' as 'message';
+        LEAVE sp;
 
-IF (faculty not in (Select Fcode from faculty)) AND (faculty is not NULL) THEN
-	SET faculty := NULL;
-END IF;
-
-IF (semester not in (Select Scode from semester)) AND (semester is not NULL) THEN
-	SET semester := NULL;
-END IF;
-
-IF (academic_year not in (Select AYcode from academic_year)) AND (academic_year is not NULL) THEN
-	SET academic_year := NULL;
-END IF;
-
--- Query for getting the general information
-SELECT ay.AYcode as 'Academic Year code',
+	WHEN (input_lecturer not in (Select Lcode from lecturer)) AND (input_lecturer is not NULL) THEN
+		SELECT 'invalid lecturer' as 'message';
+        LEAVE sp;
+        
+	WHEN (input_class not in (Select Ccode from class)) AND (input_class is not NULL) THEN
+		SELECT 'invalid class' as 'message';
+        LEAVE sp;
+	-- In the case of all parameters are valid
+	ELSE
+-- Query to get the general information
+SELECT ay.AYcode as 'Academic_Year_code',
 	s.Scode as 'Semester',
 	f.Fcode as 'Faculty',
 	p.Pcode as 'Program',
 	m.Mcode as 'Module',
-	c.Ccode as 'Class code',
-    lec.Lcode as 'Lecturer code',
-	c.size as 'Class size'
+	c.Ccode as 'Class_code',
+    lec.Lcode as 'Lecturer_code',
+	c.size as 'Class_size'
 FROM class c
    NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
    NATURAL JOIN semester s
    NATURAL JOIN academic_year ay
-   NATURAL JOIN module m
-   NATURAL JOIN program_module 
-   NATURAL JOIN program p
-   NATURAL JOIN ay_faculty_pm 
-   NATURAL JOIN faculty f
+   NATURAL JOIN ay_fac NATURAL JOIN faculty f
+   NATURAL JOIN ay_fac_p NATURAL JOIN program p
+   NATURAL JOIN ay_fac_pm NATURAL JOIN module m
 
 WHERE 
--- Check if parameter NULL or NOT, if yes, query based on the other parameters
-	( academic_year is null
-      or ay.AYcode = academic_year
+-- Check if parameter NULL or NOT, if yes, query based on the other parameters (filter)
+	( input_academic_year is null
+		or ay.AYcode = input_academic_year
 	)
-AND
-	( semester is null
-      or s.Scode = semester
+	AND
+	( input_semester is null
+		or s.Scode = input_semester
 	)
-AND
-	( faculty is null
-      or f.Fcode = faculty
+	AND
+	( input_faculty is null
+		or f.Fcode = input_faculty
 	)
-AND
-	( program is null
-      or p.Pcode = program
+	AND
+	( input_program is null
+		or p.Pcode = input_program
 	)
-AND
-	( module is null
-      or m.Mcode = module
+	AND
+	( input_module is null
+		or m.Mcode = input_module
 	)
-AND
-	( lecturer is null
-      or lec.Lcode = lecturer
+	AND
+	( input_lecturer is null
+		or lec.Lcode = input_lecturer
 	)
-AND
-	( class is null
-      or c.Ccode = class
+	AND
+	( input_class is null
+		or c.Ccode = input_class
 	);
+END CASE;
 End
 //
 DELIMITER ;

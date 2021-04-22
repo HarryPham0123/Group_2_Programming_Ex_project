@@ -7,8 +7,9 @@ DELIMITER //
 -- Table Academic_year
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Academic_year (
-  AYcode VARCHAR(10) NOT NULL,
+CREATE TABLE IF NOT EXISTS academic_year (
+  AYcode VARCHAR(9),
+  Check (AYcode REGEXP '[0-9]{4}-[0-9]{4}'),
   PRIMARY KEY (AYcode))
 ENGINE = InnoDB;
 
@@ -16,11 +17,12 @@ ENGINE = InnoDB;
 -- Table Semester
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Semester (
-  Scode VARCHAR(10) NOT NULL,
-  AYcode VARCHAR(10) NULL,
+CREATE TABLE IF NOT EXISTS semester (
+  Scode VARCHAR(10),
+  AYcode VARCHAR(9) NOT NULL,
+  Check (Scode REGEXP 'S[0-9]{3}[a-z]'),
   PRIMARY KEY (Scode),
-  FOREIGN KEY (AYcode) REFERENCES Academic_year (AYcode) ON UPDATE CASCADE ON DELETE RESTRICT) 
+  FOREIGN KEY (AYcode) REFERENCES academic_year (AYcode) ON UPDATE CASCADE ON DELETE RESTRICT) 
 ENGINE = InnoDB;
 
 
@@ -28,9 +30,10 @@ ENGINE = InnoDB;
 -- Table Faculty
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Faculty (
-  Fcode VARCHAR(10) NOT NULL,
-  Fname VARCHAR(50) NULL,
+CREATE TABLE IF NOT EXISTS faculty (
+  Fcode VARCHAR(10),
+  Fname VARCHAR(50) NOT NULL,
+  Check (Fcode REGEXP 'F[0-9]{3}[A-Z]'),
   PRIMARY KEY (Fcode))
 ENGINE = InnoDB;
 
@@ -38,11 +41,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table Program
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Program (
-  Pcode VARCHAR(10) NOT NULL,
+CREATE TABLE IF NOT EXISTS program (
+  Pcode VARCHAR(10),
   Pname VARCHAR(50) NOT NULL,
-  PRIMARY KEY (Pcode)
-)
+  Check (Pcode REGEXP 'P[0-9]{3}[A-Z]'),
+  PRIMARY KEY (Pcode))
 ENGINE = InnoDB;
 
 
@@ -50,12 +53,11 @@ ENGINE = InnoDB;
 -- Table Module
 -- -----------------------------------------------------
 
-
-CREATE TABLE IF NOT EXISTS Module (
-  Mcode VARCHAR(10) NOT NULL,
-  Mname VARCHAR(50) NOT NULL, 
-  PRIMARY KEY (Mcode)
-)
+CREATE TABLE IF NOT EXISTS module (
+  Mcode VARCHAR(10),
+  Mname VARCHAR(50) NOT NULL,
+  Check (Mcode REGEXP 'M[0-9]{3}[A-Z]'),
+  PRIMARY KEY (Mcode))
 ENGINE = InnoDB;
 
 
@@ -63,20 +65,24 @@ ENGINE = InnoDB;
 -- Table Class
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Class (
-  Ccode VARCHAR(10) NOT NULL,
-  size INT NULL,
-  Scode VARCHAR(10) NULL,
-  Mcode VARCHAR(10) NULL,
+CREATE TABLE IF NOT EXISTS class (
+  Ccode VARCHAR(10),
+  size INT NOT NULL,
+  Scode VARCHAR(10) NOT NULL,
+  Mcode VARCHAR(10) NOT NULL,
+  Check (Ccode REGEXP 'C[0-9]{3}[a-z]'),
   PRIMARY KEY (Ccode),
-  FOREIGN KEY (Scode) REFERENCES Semester (Scode) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (Mcode) REFERENCES Module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (Scode) REFERENCES semester (Scode) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (Mcode) REFERENCES module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ENGINE = InnoDB;
 
--- Table for user
-Create table if not exists user (
-	user_id Varchar(10) NOT NULL,
+-- -----------------------------------------------------
+-- Table user
+-- -----------------------------------------------------
+
+Create table if not exists employee_user (
+	user_id Varchar(10),
     full_name Varchar(50),
     gender Varchar(50),
     email Varchar(50),
@@ -87,50 +93,58 @@ ENGINE = InnoDB;
 -- Table Lecturer
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Lecturer (
-  Lcode VARCHAR(10) NOT NULL,
-  Lname VARCHAR(50) NULL,
+CREATE TABLE IF NOT EXISTS lecturer (
+  Lcode VARCHAR(10),
+  Lname VARCHAR(50) NOT NULL,
   user_id Varchar(10) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user (user_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-  PRIMARY KEY (Lcode))
+  Check (Lcode REGEXP 'L[0-9]{3}[a-z]'),
+  UNIQUE (user_id),
+  PRIMARY KEY (Lcode),
+  FOREIGN KEY (user_id) REFERENCES employee_user (user_id) ON UPDATE CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
 -- Table account
-Create table if not exists account (
-	account_id INT NOT NULL AUTO_INCREMENT,
+-- -----------------------------------------------------
+
+Create table if not exists employee_account (
+	account_id INT AUTO_INCREMENT,
     login Varchar(50) NOT NULL,
-    password Varchar(50) NOT NULL,
+    employee_password Varchar(50) NOT NULL,
     user_id Varchar(10) NOT NULL,
-    UNIQUE (login, password),
+    UNIQUE (login, employee_password),
     Primary key (account_id),
-    Foreign key (user_id) references user (user_id) On update CASCADE ON DELETE RESTRICT
-)
+    Foreign key (user_id) references employee_user (user_id) On update CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
--- Table program_coordinator
+-- -----------------------------------------------------
+-- Table program coordinator
+-- -----------------------------------------------------
+
 Create table if not exists program_coordinator (
-	PCcode INT NOT NULL AUTO_INCREMENT,
+	PCcode INT AUTO_INCREMENT,
     start_date Date,
     end_date Date,
-    user_id Varchar(10),
-    Pcode varchar(10),
+    user_id Varchar(10) NOT NULL,
+    Pcode varchar(10) NOT NULL,
     Primary key (PCcode),
-    Foreign key (user_id) references user (user_id) On update CASCADE ON DELETE RESTRICT,
-    Foreign key (Pcode) references program (Pcode) On update CASCADE ON DELETE RESTRICT
-)
+    Foreign key (user_id) references employee_user (user_id) On update CASCADE ON DELETE RESTRICT,
+    Foreign key (Pcode) references program (Pcode) On update CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
--- Table dean
+-- -----------------------------------------------------
+-- Table dean of faculty
+-- -----------------------------------------------------
+
 Create table if not exists dean (
-	Dcode INT NOT NULL AUTO_INCREMENT,
+	Dcode INT AUTO_INCREMENT,
     start_date Date,
     end_date Date,
-    user_id Varchar(10),
-    Fcode varchar(10),
+    user_id Varchar(10) NOT NULL,
+    Fcode varchar(10) NOT NULL,
     Primary key (Dcode),
-    Foreign key (user_id) references user (user_id) On update CASCADE ON DELETE RESTRICT,
-    Foreign key (Fcode) references faculty (Fcode) On update CASCADE ON DELETE RESTRICT
-)
+    Foreign key (user_id) references employee_user (user_id) On update CASCADE ON DELETE RESTRICT,
+    Foreign key (Fcode) references faculty (Fcode) On update CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -139,12 +153,12 @@ ENGINE = InnoDB;
 	       
 Create table If not exists questionnaire 
 (
-    answer_id INT NOT NULL AUTO_INCREMENT,
-    Ccode Varchar(10),
-    Lcode Varchar(10),
+    answer_id INT AUTO_INCREMENT,
+    Ccode Varchar(10) NOT NULL,
+    Lcode Varchar(10) NOT NULL,
     PRIMARY KEY (answer_id),
-    Foreign key (Ccode) References Class (Ccode) ON UPDATE CASCADE ON DELETE RESTRICT,
-    Foreign key (Lcode) References Lecturer (Lcode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    Foreign key (Ccode) References class (Ccode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    Foreign key (Lcode) References lecturer (Lcode) ON UPDATE CASCADE ON DELETE RESTRICT,
 	
     gender Varchar(10), CHECK (gender IN ('male', 'female', 'other')),
     attendance Varchar(10), CHECK (attendance IN ('never', 'rarely', 'sometimes', 'often', 'always')),
@@ -169,21 +183,19 @@ Create table If not exists questionnaire
 )
 ENGINE = InnoDB;
 				    
-
 -- -----------------------------------------------------
 -- Table question_support_gender
 -- -----------------------------------------------------
-				    
+
 Create table if not exists question_support_gender(
      gender Varchar(10),
 	PRIMARY KEY (gender)
 );
-				    
 
 -- -----------------------------------------------------
 -- Table question_support_attendance
 -- -----------------------------------------------------
-				    
+
 Create table if not exists question_support_attendance(
      attendance Varchar(10),
 	PRIMARY KEY (attendance)
@@ -192,42 +204,54 @@ Create table if not exists question_support_attendance(
 -- -----------------------------------------------------
 -- Table question_support_number
 -- -----------------------------------------------------
-				    
+
 Create table if not exists question_support_number(
      answer_key Varchar(10),
 	PRIMARY KEY (answer_key)
 );
 
+-- -----------------------------------------------------
+-- Table relationship between AY and Faculty
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS ay_fac (
+	AYFcode INT AUTO_INCREMENT,
+	AYcode VARCHAR(9) NOT NULL,
+	Fcode VARCHAR(10) NOT NULL,
+    UNIQUE (AYcode, Fcode),
+	PRIMARY KEY (AYFcode),
+    FOREIGN KEY (AYCode) REFERENCES academic_year (AYCode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (Fcode) REFERENCES faculty (Fcode) ON UPDATE CASCADE ON DELETE RESTRICT)
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
--- Table Program_Module relationship
+-- Table relationship between ay_Faculty and program
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS Program_Module (
-  PMcode VARCHAR(10) NOT NULL,
-  Pcode VARCHAR(10) NOT NULL,
-  Mcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (PMcode),
-	FOREIGN KEY (Mcode) REFERENCES Module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY (Pcode) REFERENCES Program (Pcode) ON UPDATE CASCADE ON DELETE RESTRICT
-)
+CREATE TABLE IF NOT EXISTS ay_fac_p (
+	AYFPcode INT AUTO_INCREMENT,
+	AYFcode INT NOT NULL,
+	Pcode VARCHAR(10) NOT NULL,
+    UNIQUE(AYFcode, Pcode),
+	PRIMARY KEY (AYFPcode),	
+    FOREIGN KEY (AYFCode) REFERENCES ay_fac (AYFCode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (Pcode) REFERENCES program (Pcode) ON UPDATE CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 
 	       
 -- -----------------------------------------------------
--- Table AY_Faculty and program_module
+-- Table relationship between ay_faculty_program and module
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS AY_Faculty_PM (
-  FAYcode VARCHAR(10) NOT NULL,
-  AYcode VARCHAR(10) NOT NULL,
-  Fcode VARCHAR(10) NOT NULL,
-  PMcode VARCHAR(10) NOT NULL,
-  PRIMARY KEY (FAYcode),	
-    FOREIGN KEY (AYCode) REFERENCES Academic_year (AYCode) ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY (Fcode) REFERENCES Faculty (Fcode) ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY (PMcode) REFERENCES Program_Module (PMcode) ON UPDATE CASCADE ON DELETE RESTRICT
-)
+CREATE TABLE IF NOT EXISTS ay_fac_pm (
+	AYFPMcode INT AUTO_INCREMENT,
+	AYFPcode INT NOT NULL,
+	Mcode VARCHAR(10) NOT NULL,
+    UNIQUE(AYFPcode, Mcode),
+	PRIMARY KEY (AYFPMcode),	
+    FOREIGN KEY (AYFPCode) REFERENCES ay_fac_p (AYFPCode) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (Mcode) REFERENCES module (Mcode) ON UPDATE CASCADE ON DELETE RESTRICT)
 ENGINE = InnoDB;
 	      
 	       

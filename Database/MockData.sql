@@ -2,22 +2,22 @@ DELIMITER //
 -- -----------------------------------------------------
 -- Mock data session
 -- -----------------------------------------------------
-INSERT INTO Academic_year (AYcode) VALUES
-('A2016C'),
-('A2017B'),
-('A2018R'),
-('A2019C'),
-('A2020Y')
+INSERT INTO academic_year (AYcode) VALUES
+('2016-2017'),
+('2017-2018'),
+('2018-2019'),
+('2019-2020'),
+('2020-2021')
 ;
 
 	       
-INSERT INTO Faculty (Fcode, Fname) VALUES 
+INSERT INTO faculty (Fcode, Fname) VALUES 
 	('F001I', 'Faculty of Engineering'),
 	('F002E', 'Faculty of Economics and Mangement')
 ;
 	       
 	       
-INSERT INTO Program (Pcode, Pname) VALUES
+INSERT INTO program (Pcode, Pname) VALUES
 	('P001C', 'Computer Science'),
 	('P002B', 'Business Administration'),
 	('P003F', 'Finance and Accounting'),
@@ -28,7 +28,7 @@ INSERT INTO Program (Pcode, Pname) VALUES
 ;
 	       
 	       
-INSERT INTO Module (Mcode, Mname) VALUES 
+INSERT INTO module (Mcode, Mname) VALUES 
     	('M001A', 'Introductory Accounting'),
     	('M002F', 'Introductory Finance'),
     	('M003F', 'Investment Finance'),
@@ -46,69 +46,18 @@ INSERT INTO Module (Mcode, Mname) VALUES
     	('M015I', 'IT Security'),
     	('M016P', 'Programming Exercises')
 ;
-INSERT INTO Program_Module (PMcode, Pcode, Mcode) VALUES
-		('P001M', 'P001C', 'M010B'),
-    	('P002M', 'P001C', 'M011N'),
-    	('P003M', 'P001C', 'M012B'),
-    	('P004M', 'P001C', 'M013R'),
-    	('P005M', 'P001C', 'M014O'),
-    	('P006M', 'P001C', 'M015I'),
-    	('P007M', 'P001C', 'M016P'),
-        
-        ('P008M', 'P002B', 'M001A'),
-        ('P009M', 'P002B', 'M004M'),
-        ('P010M', 'P002B', 'M005E'),
-        
-    	('P011M', 'P003F', 'M002F'),
-    	('P012M', 'P003F', 'M003F'),
-    	('P013M', 'P003F', 'M006E'),
-        
-    	('P014M', 'P004E', 'M007A'),
-    	('P015M', 'P004E', 'M008C'),
-    	('P016M', 'P004E', 'M009D')
-;     
-	       
-
-	       
-INSERT INTO AY_Faculty_PM (FAYcode, AYcode, Fcode, PMcode) VALUES
-    ('A014M', 'A2019C', 'F001I', 'P001M'),
-    ('A015M', 'A2019C', 'F001I', 'P002M'),
-	('A016M', 'A2019C', 'F002E', 'P008M'),
-
-	('A001M', 'A2020Y', 'F001I', 'P001M'),
-    ('A002M', 'A2020Y', 'F001I', 'P002M'),
-    ('A003M', 'A2020Y', 'F001I', 'P003M'),
-    ('A004M', 'A2020Y', 'F001I', 'P004M'),
-    ('A005M', 'A2020Y', 'F001I', 'P014M'),
-    ('A006M', 'A2020Y', 'F001I', 'P015M'),
-    ('A007M', 'A2020Y', 'F001I', 'P016M'),
-	('A008M', 'A2020Y', 'F002E', 'P008M'),
-    ('A009M', 'A2020Y', 'F002E', 'P009M'),
-    ('A010M', 'A2020Y', 'F002E', 'P010M'),
-    ('A011M', 'A2020Y', 'F002E', 'P011M'),
-    ('A012M', 'A2020Y', 'F002E', 'P012M'),
-    ('A013M', 'A2020Y', 'F002E', 'P013M')
-;
-	       
-
--- There are only 4 semesters in each aca year	 
--- A semester belongs to exactly one academic year.    
-INSERT INTO Semester (Scode, AYcode) VALUES 
-	('S001o', 'A2020Y'),
-	('S002q', 'A2020Y'),
-	('S003g', 'A2020Y'),
-	('S004x', 'A2020Y'),
+ 
+INSERT INTO semester (Scode, AYcode) VALUES 
+	('S001o', '2020-2021'),
+	('S002q', '2020-2021'),
+	('S003g', '2020-2021'),
+	('S004x', '2020-2021'),
     
-	('S005z', 'A2019C')
+	('S005z', '2019-2020')
 ;
 
-	       
--- Students in each semester only learn 4 modules  	
--- A class belongs to exactly one module (Data constrain)
--- -> A class can NOT associate to 2 or more modules
--- A class is offered in exactly one semester (Data constrain)
--- -> A class can NOT associate to 2 or more diff semesters
-INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES 
+
+INSERT INTO class (Ccode, size, Scode, Mcode) VALUES 
 	('C001t', '35', 'S001o', 'M001A'),
 	('C002h', '40', 'S001o', 'M002F'),
 	('C003a', '32', 'S001o', 'M003F'),
@@ -133,7 +82,7 @@ INSERT INTO Class (Ccode, size, Scode, Mcode) VALUES
     ('C018t', '31', 'S005z', 'M001A')
 ;
 
-INSERT INTO user (user_id, full_name, gender, email) VALUES
+INSERT INTO employee_user (user_id, full_name, gender, email) VALUES
 	('U001r','Lona Perrigan','female','LonaPerrigan@gmail.com'),
 	('U002r','Lou Hinds','female','LouHinds@gmail.com'),
 	('U003r','Floy Blanco','male','FloyBlanco@gmail.com'),
@@ -186,7 +135,7 @@ INSERT INTO user (user_id, full_name, gender, email) VALUES
 	('U050r','Gwendolyn Edwards','male','GwendolynEdwards@gmail.com')
 ;
 
-INSERT INTO account (login, password, user_id) VALUES
+INSERT INTO employee_account (login, employee_password, user_id) VALUES
 	('Lona', 'Perrigan', 'U001r'),
 	('Lou',	'Hinds', 'U002r'),
 	('Floy', 'Blanco', 'U003r'),
@@ -239,7 +188,7 @@ INSERT INTO account (login, password, user_id) VALUES
 	('Gwendolyn', 'Edwards', 'U050r')
 ;
 
-INSERT INTO Lecturer (Lcode, Lname, user_id) VALUES 
+INSERT INTO lecturer (Lcode, Lname, user_id) VALUES 
 	('L001v', 'Lona Perrigan','U001r'),
 	('L002o', 'Marian Sirois','U012r'),
 	('L003r', 'Izora Dickerson','U023r'),
@@ -257,11 +206,7 @@ INSERT INTO Lecturer (Lcode, Lname, user_id) VALUES
 	('L015m', 'Theresa Buhmann','U007r')
 ;
 
-
-	       
--- A questionnaire is filled for exactly one class and exactly one lecturer. (Constrain)
--- -> Questionaire is relationship between class and lecturer    
-Insert into Questionnaire 
+Insert into questionnaire 
 	(Ccode, Lcode, attendance, gender, question_1, question_2, question_3, question_4,
 	 question_5, question_6, question_7, question_8, question_9, question_10, question_11,
 	 question_12, question_13, question_14, question_15, question_16, question_17, question_18)
@@ -314,7 +259,6 @@ INSERT INTO question_support_gender(gender) VALUES
 	('female'),
 	('other')
 ;
-	       
 
 INSERT INTO question_support_attendance(attendance) VALUES
 	('never'),
@@ -328,16 +272,11 @@ INSERT INTO question_support_number(answer_key) VALUES
 	('1'),
 	('2'),
 	('3'),
-    	('4'),
-    	('5'),
+	('4'),
+	('5'),
 	('not')
 ;
-				    
-				    
--- A class has any number of lecturers. (Data constrain)
--- This case, we asume a class can have 1, 2 or 3 lecturers
--- -> Lecturers in each class must be unique     
--- A lecturer can teach any number of classes? -> Yes
+
 INSERT INTO lecturer_in_class (Ccode, Lcode) VALUES 
 	('C001t', 'L015m'),
 	('C001t', 'L002o'),
@@ -379,4 +318,40 @@ INSERT INTO lecturer_in_class (Ccode, Lcode) VALUES
     
     ('C018t', 'L009f')
 ;
+
+INSERT INTO ay_fac(AYcode,Fcode) VALUES
+ ('2019-2020','F002E'),
+ ('2020-2021','F001I'),
+ ('2020-2021','F002E'),
+ ('2019-2020','F001I');
+ 
+ INSERT INTO ay_fac_p(Pcode,AYFcode) VALUES 
+ ('P001C',1),
+ ('P001C',2),
+ ('P001C',4),
+ ('P001C',3),
+ ('P002B',4),
+ ('P002B',2),
+ ('P002B',1),
+ ('P003F',4),
+ ('P003F',3),
+ ('P004E',4),
+ ('P004E',2),
+ ('P005M',4);
+ 
+ INSERT INTO ay_fac_pm(Mcode,AYFPcode) VALUES
+ ('M010B',9),
+ ('M012B',5),
+ ('M013R',12),
+ ('M014O',11),
+ ('M015I',10),
+ ('M016P',5),
+ ('M001A',4),
+ ('M004M',9),
+ ('M005E',4),
+ ('M002F',9),
+ ('M003F',6),
+ ('M007A',2),
+ ('M010B',11);
 //
+
