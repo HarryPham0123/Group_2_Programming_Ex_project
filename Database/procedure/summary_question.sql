@@ -9,7 +9,7 @@ CREATE PROCEDURE `summary_question`(
 	input_module VARCHAR(10), 
 	input_lecturer VARCHAR(10), 
 	input_class VARCHAR(10),
-    input_question VARCHAR(10))
+    input_question VARCHAR(50))
 sp: BEGIN
 -- Check invalid parameter (Para NOT null but not in database)
 -- If invalid, stop the procedure and output the error message
