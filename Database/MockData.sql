@@ -327,10 +327,8 @@ INSERT INTO ay_fac(AYcode,Fcode) VALUES
  
  INSERT INTO ay_fac_p(Pcode,AYFcode) VALUES 
  ('P001C',1),
- ('P001C',2),
  ('P001C',4),
  ('P001C',3),
- ('P002B',4),
  ('P002B',2),
  ('P002B',1),
  ('P003F',4),
@@ -351,7 +349,6 @@ INSERT INTO ay_fac(AYcode,Fcode) VALUES
  ('M005E',4),
  ('M002F',9),
  ('M003F',6),
- ('M007A',2),
- ('M010B',11);
+ ('M007A',2);
 //
 
