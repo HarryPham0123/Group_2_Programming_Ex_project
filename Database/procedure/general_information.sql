@@ -93,6 +93,6 @@ WHERE
 		or c.Ccode = input_class
 	);
 END CASE;
-End
+END
 //
 DELIMITER ;
