@@ -229,8 +229,10 @@ function displayComments(lecturer, clazz) {
         contentType: "application/json",
         url: `http://localhost:8080/survey/api/questionnaire/question_18?lecturer=${lecturer}&class=${clazz}`,
         success: function(comments) {
+            //Clear comments table
+            $(".comment-table tr").children().empty();
+
             //Insert comments to table's DOM
-            console.log(comments);
             comments.map((comment, index) => {
                 $(`<tr>
                 <td>${index + 1}</td>
