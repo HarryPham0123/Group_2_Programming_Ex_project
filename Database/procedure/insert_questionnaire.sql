@@ -5,7 +5,7 @@ CREATE PROCEDURE `insert_questionnaire`(input_Ccode VARCHAR(10), input_Lcode VAR
 					question_1_input Varchar(10), question_2_input Varchar(10), question_3_input Varchar(10),
 				       question_4_input Varchar(10), question_5_input Varchar(10), question_6_input Varchar(10), question_7_input Varchar(10), question_8_input Varchar(10), 
 					question_9_input Varchar(10), question_10_input Varchar(10), question_11_input Varchar(10), question_12_input Varchar(10), question_13_input Varchar(10),
-					question_14_input Varchar(10), question_15_input Varchar(10), question_16_input Varchar(10), question_17_input Varchar(10), question_18_input Varchar(10))
+					question_14_input Varchar(10), question_15_input Varchar(10), question_16_input Varchar(10), question_17_input Varchar(10), question_18_input Varchar(100))
 BEGIN
 IF EXISTs (SELECT lc.Ccode, lc.Lcode
 			FROM lecturer_in_class lc
