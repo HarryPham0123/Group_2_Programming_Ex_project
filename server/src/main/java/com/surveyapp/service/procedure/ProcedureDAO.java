@@ -20,7 +20,7 @@ public class ProcedureDAO extends ProcedureBaseDAO {
         statement = connection.prepareCall(procedureQuery);
 
         //Set parameters
-        statement.setString(1, code.getAcademic_year());
+        statement.setObject(1, code.getAcademic_year());
         statement.setString(2, code.getSemester());
         statement.setString(3, code.getFaculty());
         statement.setString(4, code.getProgram());

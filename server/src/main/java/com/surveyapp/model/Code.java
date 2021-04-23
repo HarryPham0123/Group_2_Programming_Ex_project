@@ -24,7 +24,7 @@ public class Code {
     }
 
     public String getAcademic_year() {
-        return academic_year.equals("null") ? null : academic_year;
+        return academic_year;
     }
 
     public void setAcademic_year(String academic_year) {
@@ -32,7 +32,7 @@ public class Code {
     }
 
     public String getSemester() {
-        return semester.equals("null") ? null : semester;
+        return semester;
     }
 
     public void setSemester(String semester) {
@@ -40,7 +40,7 @@ public class Code {
     }
 
     public String getFaculty() {
-        return faculty.equals("null") ? null : faculty;
+        return faculty;
     }
 
     public void setFaculty(String faculty) {
@@ -48,7 +48,7 @@ public class Code {
     }
 
     public String getProgram() {
-        return program.equals("null") ? null : program;
+        return program;
     }
 
     public void setProgram(String program) {
@@ -56,7 +56,7 @@ public class Code {
     }
 
     public String getModule() {
-        return module.equals("null") ? null : module;
+        return module;
     }
 
     public void setModule(String module) {
@@ -64,7 +64,7 @@ public class Code {
     }
 
     public String getLecturer() {
-        return lecturer.equals("null") ? null : lecturer;
+        return lecturer;
     }
 
     public void setLecturer(String lecturer) {
@@ -72,7 +72,7 @@ public class Code {
     }
 
     public String getClazz() {
-        return clazz.equals("null") ? null : clazz;
+        return clazz;
     }
 
     public void setClazz(String clazz) {

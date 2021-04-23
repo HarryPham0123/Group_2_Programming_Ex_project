@@ -15,15 +15,16 @@ public class GeneralRoute {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllGeneral(
-            @QueryParam("academic_year") String academic_year,
-            @QueryParam("semester") String semester,
-            @QueryParam("faculty") String faculty,
-            @QueryParam("program") String program,
-            @QueryParam("module") String module,
-            @QueryParam("class") String clazz,
-            @QueryParam("lecturer") String lecturer
+            @DefaultValue("null") @QueryParam("academic_year") String academic_year,
+            @DefaultValue("null") @QueryParam("semester") String semester,
+            @DefaultValue("null") @QueryParam("faculty") String faculty,
+            @DefaultValue("null") @QueryParam("program") String program,
+            @DefaultValue("null") @QueryParam("module") String module,
+            @DefaultValue("null") @QueryParam("class") String clazz,
+            @DefaultValue("null") @QueryParam("lecturer") String lecturer
     ) {
         try {
+            System.out.println("Academic year from route layer is null ? " + (academic_year == null));
             Code code = new Code(academic_year, semester, faculty, program, module, clazz, lecturer);
             return Response
                     .status(Response.Status.OK)

@@ -21,8 +21,8 @@ public class GetSummaryCommentDAO {
         statement = connection.prepareCall(procedureQuery);
 
         //Set parameters
-        statement.setString(1, code.getClazz());
-        statement.setString(2, code.getLecturer());
+        statement.setString(1, code.getClazz().equals("null") ? null : code.getClazz());
+        statement.setString(2, code.getLecturer().equals("null") ? null : code.getLecturer());
 
         return this;
     }

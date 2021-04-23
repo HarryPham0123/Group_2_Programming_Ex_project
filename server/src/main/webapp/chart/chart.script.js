@@ -20,6 +20,11 @@ $(function () {
         let module = $(".sel-module :selected").val();
         let lecturer = $(".sel-lec :selected").val();
         let clazz = $(".sel-class :selected").val();
+        //Encapsulates the filter, to send to back-end
+        var arrayOfValues = [academic_year, semester, faculty, program, module, lecturer, clazz];
+
+        //Fetch class's size
+        //fetchClassSize();
 
         //Checks if both class and lecturer are selected
         if ((lecturer !== "null") && (clazz !== "null")) {
@@ -27,10 +32,8 @@ $(function () {
             displayComments();
 
         }
-
-        //Encapsulates the filter, to send to back-end
-        var arrayOfValues = [academic_year, semester, faculty, program, module, lecturer, clazz];
         console.log(arrayOfValues);
+        //Fetch questionnaires -> update the chart and description
         fetchQuestionnaires("gender_question", ...arrayOfValues)("gender_chart");
         fetchQuestionnaires("attendance_question", ...arrayOfValues)('attendance_chart');
         for (index = 1; index < 18; index++) {
@@ -421,6 +424,26 @@ function watchSelect(selectIndex) {
                 }
             }
             console.log("Filter state: " + selectedArray);
+        }
+    })
+}
+function fetchClassSize(
+    academic_year = null,
+    semester = null,
+    faculty = null,
+    program = null,
+    module = null,
+    lecturer = null,
+    clazz = null
+) {
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: `http://localhost:8080/survey/api/classes/size?academic_year=${encodeURI(academic_year)}&semester=${encodeURI(semester)}&faculty=${encodeURI(faculty)}&program=${encodeURI(program)}&module=${encodeURI(module)}&lecturer=${encodeURI(lecturer)}&class=${encodeURI(clazz)}` ``,
+        success: function(data) {
+            console.log(data);
+            //Update classSize state
+            classSize = data.sum;
         }
     })
 }

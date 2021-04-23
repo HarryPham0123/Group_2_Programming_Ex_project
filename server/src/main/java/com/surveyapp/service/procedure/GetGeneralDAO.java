@@ -21,13 +21,13 @@ public class GetGeneralDAO {
         statement = connection.prepareCall(procedureQuery);
 
         //Set parameters
-        statement.setObject(1, code.getAcademic_year());
-        statement.setObject(2, code.getSemester());
-        statement.setObject(3, code.getFaculty());
-        statement.setObject(4, code.getProgram());
-        statement.setObject(5, code.getModule());
-        statement.setObject(6, code.getClazz());
-        statement.setObject(7, code.getLecturer());
+        statement.setString(1, code.getAcademic_year().equals("null") ? null : code.getAcademic_year());
+        statement.setString(2, code.getSemester().equals("null") ? null : code.getSemester());
+        statement.setString(3, code.getFaculty().equals("null") ? null : code.getFaculty());
+        statement.setString(4, code.getProgram().equals("null") ? null : code.getProgram());
+        statement.setString(5, code.getModule().equals("null") ? null : code.getModule());
+        statement.setString(6, code.getLecturer().equals("null") ? null : code.getLecturer());
+        statement.setString(7, code.getClazz().equals("null") ? null : code.getClazz());
 
         return this;
     }
