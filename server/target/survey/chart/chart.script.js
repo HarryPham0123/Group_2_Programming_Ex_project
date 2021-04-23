@@ -23,9 +23,6 @@ $(function () {
         //Encapsulates the filter, to send to back-end
         var arrayOfValues = [academic_year, semester, faculty, program, module, lecturer, clazz];
 
-        //Fetch class's size
-        fetchClassSize();
-
         //Checks if both class and lecturer are selected
         if ((lecturer !== "null") && (clazz !== "null")) {
             $(".comment-table").show();
@@ -39,6 +36,9 @@ $(function () {
         for (index = 1; index < 18; index++) {
             fetchQuestionnaires(`question_${index}`, ...arrayOfValues)(`question_${index}_chart`);
         }
+
+        //Fetch class's size
+        fetchClassSize(...arrayOfValues);
     });
 
     //Attach listener to the selects
@@ -90,9 +90,6 @@ function preLoader() {
     getCodes("Mcode", ".sel-module");
     getCodes("Ccode", ".sel-class");
     getCodes("Lcode", ".sel-lec");
-
-    //Render out the class size
-    $(`<h3>Class size: ${classSize}</h3>`).insertAfter($("#question_17_chart"));
 }
 //Load the graph, title and description corresponding to chartName
 function renderChart(chartName) {
@@ -102,6 +99,8 @@ function renderChart(chartName) {
     displayTitle(chartName);
     //Create description
     displayDescription(chartName);
+    //Render out the class size
+    $(`<h3 id="class_size">Class size: </h3>`).insertAfter($("#question_17_chart_numResp"));
 }
 function updateChart(chart) {
     return (keys, values) => {
@@ -160,6 +159,7 @@ function updateDescription(forChart) {
         $(`#${forChart}_respRate`).text(`Response rate: ${respondRate}`);
         $(`#${forChart}_staDev`).text(`Standard Deviation: ${standardDeviation}`);
         $(`#${forChart}_mean`).text(`Mean: ${mean}`);
+
     }
 }
 function fetchQuestionnaires(questionURL = "",
@@ -442,9 +442,9 @@ function fetchClassSize(
         contentType: "application/json",
         url: `http://localhost:8080/survey/api/classes/size?academic_year=${encodeURI(academic_year)}&semester=${encodeURI(semester)}&faculty=${encodeURI(faculty)}&program=${encodeURI(program)}&module=${encodeURI(module)}&lecturer=${encodeURI(lecturer)}&class=${encodeURI(clazz)}`,
         success: function(data) {
-            console.log();
-            classSize = data["SUM(c.size)"];
-            console.log(classSize);
+            classSize = data[0]["SUM(c.size)"];
+            //Update class size
+            $("#class_size").text(`Class size: ${classSize}`);
         }
     })
 }
