@@ -14,11 +14,11 @@ public class LecturerDAO implements DAO<Lecturer> {
     private Connection connection = new DBUtil().getConnection();
     private String getAllScript = "SELECT * FROM lecturer";
     private String getByCodeScript = "SELECT * FROM lecturer WHERE Lcode = ?";
-    private String saveScript = "INSERT INTO lecturer (Lcode, Lname) VALUES(?, ?)";
+    private String saveScript = "INSERT INTO lecturer (Lcode, Lname, user_id) VALUES(?, ?, ?)";
     private String updateScript = "UPDATE lecturer SET Lcode = ?, Lname = ? WHERE Lcode = ?";
     private String deleteScript = "DELETE FROM lecturer WHERE  Lcode = ?";
 
-    private void executeInTransaction(Consumer<Connection> action) throws Exception{
+    private void executeInTransaction(Consumer<Connection> action) throws Exception {
         try {
             connection.setAutoCommit(false);
             action.accept(connection);
@@ -40,13 +40,13 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public List<Lecturer> getAll()throws Exception {
+    public List<Lecturer> getAll() throws Exception {
         List<Lecturer> lecturerList = null;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(getAllScript);
         lecturerList = (List<Lecturer>) ObjectConverter.toObject(Lecturer.class, resultSet);
 
-        if (connection != null)  {
+        if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException sqlException) {
@@ -57,7 +57,7 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public Optional<Lecturer> get(String code)throws Exception {
+    public Optional<Lecturer> get(String code) throws Exception {
         PreparedStatement preparedStatement = connection.prepareStatement(getByCodeScript);
         preparedStatement.setString(1, code);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -66,17 +66,66 @@ public class LecturerDAO implements DAO<Lecturer> {
     }
 
     @Override
-    public void save(Lecturer lecturer) throws Exception{
-        PreparedStatement preparedStatement = connection.prepareStatement(saveScript);
-        preparedStatement.setString(1, lecturer.getCode());
-        preparedStatement.setString(2, lecturer.getName());
-        preparedStatement.executeUpdate();
+    public void save(Lecturer lecturer) throws Exception {
+        try {
+            // Select last row from table user in database
+            String getLastUserRowQuery = "SELECT * FROM employee_user ORDER BY user_id DESC LIMIT 1";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(getLastUserRowQuery);
 
-        if(connection != null) {
-            try {
-                connection.close();
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            // Enter first row of resultSet
+            resultSet.next();
+
+            /*
+             * Get number in user_id of last row in table user
+             * For example: user_id is U050r
+             * Then the number in user_id is 50
+             */
+            String lastRowUserID = resultSet.getString("user_id");
+            String numberLastRowUserIDStr = lastRowUserID.substring(1, 4);
+            int numberLastRowUserID = Integer.parseInt(numberLastRowUserIDStr);
+
+            // Create user_id for new lecturer
+            int newNumberUserID = numberLastRowUserID + 1;
+            String newNumberUserIDStr = Integer.toString(newNumberUserID);
+            if (newNumberUserID < 10) {
+                newNumberUserIDStr = "00" + newNumberUserIDStr;
+            } else if (newNumberUserID < 100) {
+                newNumberUserIDStr = "0" + newNumberUserIDStr;
+            }
+            String newUserID = "U" + newNumberUserIDStr + "r";
+            lecturer.setUserID(newUserID);
+
+            // Name of lecturer without whitespace
+            String lecturerName = lecturer.getName().replace(" ", "");
+
+            //Create Email for new lecturer
+            String email = lecturerName + "@gmail.com";
+
+            // Create User For Lecturer
+            String createUserScript = "INSERT INTO employee_user(user_id, full_name, gender, email) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(createUserScript);
+            preparedStatement.setString(1, newUserID);
+            preparedStatement.setString(2, lecturer.getName());
+            preparedStatement.setString(3, "male");
+            preparedStatement.setString(4, email);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            // Insert new lecturer
+            preparedStatement = connection.prepareStatement(saveScript);
+            preparedStatement.setString(1, lecturer.getCode());
+            preparedStatement.setString(2, lecturer.getName());
+            preparedStatement.setString(3, lecturer.getUserID());
+            preparedStatement.executeUpdate();
+
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }
@@ -89,7 +138,7 @@ public class LecturerDAO implements DAO<Lecturer> {
         preparedStatement.setString(3, code);
         preparedStatement.executeUpdate();
 
-        if(connection != null) {
+        if (connection != null) {
             try {
                 connection.close();
             } catch (Exception exception) {
@@ -100,16 +149,37 @@ public class LecturerDAO implements DAO<Lecturer> {
 
     @Override
     public void delete(String code) throws Exception {
-        PreparedStatement preparedStatement = connection.prepareStatement(deleteScript);
-        preparedStatement.setString(1, code);
-        preparedStatement.executeUpdate();
+        String getUserIDQuery = "SELECT user_id FROM lecturer WHERE Lcode = ?";
+        String deleteUserQuery = "DELETE FROM employee_user WHERE user_id = ?";
+        try {
+            //  Get user_id of lecturer will be deleted
+            PreparedStatement preparedStatement = connection.prepareStatement(getUserIDQuery);
+            preparedStatement.setString(1, code);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            String correspondingUserID = resultSet.getString("user_id");
+            preparedStatement.close();
 
-        if(connection != null) {
-            try {
-                connection.close();
-            } catch(Exception exception) {
-                exception.printStackTrace();
+            // Delete a lecturer with given code
+            preparedStatement = connection.prepareStatement(deleteScript);
+            preparedStatement.setString(1, code);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            // Delete a user with given user_id
+            preparedStatement = connection.prepareStatement(deleteUserQuery);
+            preparedStatement.setString(1, correspondingUserID);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }
+
 }
