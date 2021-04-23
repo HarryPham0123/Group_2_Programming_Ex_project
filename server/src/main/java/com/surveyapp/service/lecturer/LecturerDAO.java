@@ -69,7 +69,7 @@ public class LecturerDAO implements DAO<Lecturer> {
     public void save(Lecturer lecturer) throws Exception {
         try {
             // Select last row from table user in database
-            String getLastUserRowQuery = "SELECT * FROM user ORDER BY user_id DESC LIMIT 1";
+            String getLastUserRowQuery = "SELECT * FROM employee_user ORDER BY user_id DESC LIMIT 1";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(getLastUserRowQuery);
 
