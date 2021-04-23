@@ -1,42 +1,42 @@
 DROP PROCEDURE IF EXISTS get_answers;
 DELIMITER //
 CREATE PROCEDURE `get_answers`(
-	input_AYcode VARCHAR(9), 
-	input_Scode VARCHAR(10), 
-	input_Fcode VARCHAR(10), 
-	input_Pcode VARCHAR(10), 
-	input_Mcode VARCHAR(10), 
-	input_Lcode VARCHAR(10), 
-	input_Ccode VARCHAR(10))
+	input_academic_year VARCHAR(9), 
+	input_semester VARCHAR(10), 
+	input_faculty VARCHAR(10), 
+	input_program VARCHAR(10), 
+	input_module VARCHAR(10), 
+	input_lecturer VARCHAR(10), 
+	input_class VARCHAR(10))
 sp: BEGIN
 -- Check invalid parameter (Para NOT null but not in database)
 -- If invalid, stop the procedure and output the error message
 CASE
-	WHEN (input_AYcode not in (Select AYcode from academic_year)) AND (input_AYcode is not NULL) THEN
+	WHEN (input_academic_year not in (Select AYcode from academic_year)) AND (input_academic_year is not NULL) THEN
 		SELECT 'invalid academic year' as 'message';
         LEAVE sp;
         
-	WHEN (input_Scode not in (Select Scode from semester)) AND (input_Scode is not NULL) THEN
+	WHEN (input_semester not in (Select Scode from semester)) AND (input_semester is not NULL) THEN
 		SELECT 'invalid semester' as 'message';
         LEAVE sp;
 
-	WHEN (input_Fcode not in (Select Fcode from faculty)) AND (input_Fcode is not NULL) THEN
+	WHEN (input_faculty not in (Select Fcode from faculty)) AND (input_faculty is not NULL) THEN
 		SELECT 'invalid faculty' as 'message';
         LEAVE sp;
 
-	WHEN (input_Pcode not in (Select Pcode from program)) AND (input_Pcode is not NULL) THEN
+	WHEN (input_program not in (Select Pcode from program)) AND (input_program is not NULL) THEN
 		SELECT 'invalid program' as 'message';
         LEAVE sp;
 
-	WHEN (input_Mcode not in (Select Mcode from module)) AND (input_Mcode is not NULL) THEN
+	WHEN (input_module not in (Select Mcode from module)) AND (input_module is not NULL) THEN
 		SELECT 'invalid module' as 'message';
         LEAVE sp;
 
-	WHEN (input_Lcode not in (Select Lcode from lecturer)) AND (input_Lcode is not NULL) THEN
+	WHEN (input_lecturer not in (Select Lcode from lecturer)) AND (input_lecturer is not NULL) THEN
 		SELECT 'invalid lecturer' as 'message';
         LEAVE sp;
         
-	WHEN (input_Ccode not in (Select Ccode from class)) AND (input_Ccode is not NULL) THEN
+	WHEN (input_class not in (Select Ccode from class)) AND (input_class is not NULL) THEN
 		SELECT 'invalid class' as 'message';
         LEAVE sp;
 	-- In the case of all parameters are valid
@@ -73,32 +73,32 @@ CASE
         NATURAL JOIN ay_fac_pm NATURAL JOIN module m
 	-- Check if parameter NULL or NOT, if yes, query based on the other parameters (filter)
     WHERE
-	( input_AYcode is null
-		or ay.AYcode = input_AYcode
+	( input_academic_year is null
+		or ay.AYcode = input_academic_year
 	)
 	AND
-	( input_Scode is null
-		or s.Scode = input_Scode
+	( input_semester is null
+		or s.Scode = input_semester
 	)
 	AND
-	( input_Fcode is null
-		or f.Fcode = input_Fcode
+	( input_faculty is null
+		or f.Fcode = input_faculty
 	)
 	AND
-	( input_Pcode is null
-		or p.Pcode = input_Pcode
+	( input_program is null
+		or p.Pcode = input_program
 	)
 	AND
-	( input_Mcode is null
-		or m.Mcode = input_Mcode
+	( input_module is null
+		or m.Mcode = input_module
 	)
 	AND
-	( input_Lcode is null
-		or lec.Lcode = input_Lcode
+	( input_lecturer is null
+		or lec.Lcode = input_lecturer
 	)
 	AND
-	( input_Ccode is null
-		or c.Ccode = input_Ccode
+	( input_class is null
+		or c.Ccode = input_class
 	);
 END CASE;
 END
