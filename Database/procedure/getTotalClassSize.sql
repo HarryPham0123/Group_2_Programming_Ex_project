@@ -42,7 +42,7 @@ CASE
         LEAVE sp;
 	ELSE
 -- Query for getting the class's size
-SELECT SUM(c.size)
+SELECT SUM(c.size) as 'sum'
 FROM class c
    NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
    NATURAL JOIN semester s

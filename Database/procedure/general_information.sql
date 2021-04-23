@@ -44,12 +44,16 @@ CASE
 	ELSE
 -- Query to get the general information
 SELECT ay.AYcode as 'Academic_Year_code',
-	s.Scode as 'Semester',
-	f.Fcode as 'Faculty',
-	p.Pcode as 'Program',
+	s.Scode as 'Semester_code',
+	f.Fcode as 'Faculty_code',
+    f.Fname as 'Faculty_name',
+	p.Pcode as 'Program_code',
+    p.Pname as 'Program_name',
 	m.Mcode as 'Module',
+    m.Mname as 'Module_name',
 	c.Ccode as 'Class_code',
     lec.Lcode as 'Lecturer_code',
+    lec.Lname as 'Lecturer_name',
 	c.size as 'Class_size'
 FROM class c
    NATURAL JOIN lecturer_in_class NATURAL JOIN lecturer lec 
