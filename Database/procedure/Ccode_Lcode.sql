@@ -10,11 +10,11 @@ sp: BEGIN
 	CASE 
 	-- Check invalid parameter (Para NOT null but not in database)
 		WHEN (input_Lcode not in (Select Lcode from lecturer)) AND (input_Lcode is not NULL) THEN
-			SELECT 'Invalid lecturer' as 'Error_message';
+			SELECT 'invalid lecturer' as 'message';
 			LEAVE sp;
         
 		WHEN (input_Ccode not in (Select Ccode from class)) AND (input_Ccode is not NULL) THEN
-			SELECT 'Invalid class' as 'Error_message';
+			SELECT 'invalid class' as 'message';
 			LEAVE sp;
 			
 	-- Check relationship exist in database or not
