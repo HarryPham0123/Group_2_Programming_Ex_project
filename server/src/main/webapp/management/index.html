@@ -42,7 +42,7 @@
         </tr>
         <tfoot>
         <tr>
-            <!-- Input academic year code-->
+            <!-- Show Academic year code-->
             <td><input type="text" id="create-AYCode"></td>
             <!-- Button new-->
             <td><button class="create1" type="button" id="button1">New</button></td>
@@ -72,7 +72,7 @@
         </tr>
         <tfoot>
         <tr>
-            <!-- Input semester code and semester academic year code-->
+            <!-- Show semester code and semester academic year code-->
             <td><input type="text" id="create-semCode"></td>
             <td><input type ="text" id="create-semAyCode"></td>
             <!-- Button new-->
@@ -103,7 +103,7 @@
         </tr>
         <tfoot>
         <tr>
-            <!-- Input Faculty code and faculty-->
+            <!-- Show Faculty code and faculty-->
             <td><input type="text" id="create-fcode"></td>
             <td><input type ="text" id="create-faculty"></td>
             <!-- Button new-->
@@ -133,7 +133,7 @@
         </tr>
         <tfoot>
         <tr>
-            <!-- Input Program code and Program name-->
+            <!-- Show Program code and Program name-->
             <td><input type="text" id="create-programCode"></td>
             <td><input type ="text" id="create-programName"></td>
             <!-- Button new-->
@@ -164,7 +164,7 @@
         </tr>
         <tfoot>
         <tr>
-            <!-- Input Module code and Module name-->
+            <!-- Show Module code and Module name-->
             <td><input type="text" id="create-moduleCode"></td>
             <td><input type ="text" id="create-moduleName"></td>
             <!-- Button new-->
@@ -197,7 +197,7 @@
         </tr>
         <tfoot>
         <tr>
-            <!-- Input Class code, Class size, Semester code, Module code-->
+            <!-- Show Class code, Class size, Semester code, Module code-->
             <td><input type="text" id="create-classCode"></td>
             <td><input type ="text" id="create-size"></td>
             <td><input type ="text" id="create-semesterCode"></td>
@@ -230,7 +230,7 @@
         </tr>
         <tfoot>
         <tr>
-            <!-- Input Lecturer code and Lecturer name-->
+            <!-- Show Lecturer code and Lecturer name-->
             <td><input type="text" id="create-lecturerCode"></td>
             <td><input type ="text" id="create-lecturerName"></td>
             <!-- Button new-->
@@ -242,54 +242,78 @@
 </div>
 </div>
 
-
-<h3>Classes and lecturers</h3>
-<button class="update8" type="button">Load data</button>
-<button class="show-btn8" type="button">Show</button>
-<button class="hide-btn8" type="button">Hide</button>
+<!--Classes and Lecturers-->
+<div class="class-lec">
+<h3 id="title1">Classes and Lecturers</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update8" type="button" id="button">Load data</button>
+<button class="show-btn8" type="button" id="button">Show</button>
+<button class="hide-btn8" type="button" id="button">Hide</button>
+</div>
+<div class="container">
 <div class="table-container8">
-    <table style="margin-top:20px; display:none" class="table-list8" id="table-list8">
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list8" id="table-list8">
         <tr>
             <th>Class code</th>
             <th>Lecturer code</th>
         </tr>
         <tfoot>
         <tr>
+            <!-- Show Class code and Lecturer code-->
             <td><input type="text" id="create-relaclassCode"></td>
             <td><input type ="text" id="create-relalecturerCode"></td>
-            <td><button class="create8" type="button">New</button></td>
+            <!-- Button new-->
+            <td><button class="create8" type="button" id="button1">New</button></td>
         </tr>
         </tfoot>
     </table>
 </div>
+</div>
+</div>
 
-<h3>Academic years and faculties</h3>
-<button class="update9" type="button">Load data</button>
-<button class="show-btn9" type="button">Show</button>
-<button class="hide-btn9" type="button">Hide</button>
+<!-- Academic years and Faculties-->
+<div class="aca-fa">
+<h3 id="title1">Academic years and Faculties</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update9" type="button" id="button">Load data</button>
+<button class="show-btn9" type="button" id="button">Show</button>
+<button class="hide-btn9" type="button" id="button">Hide</button>
+</div>
+<div class="container">
 <div class="table-container9">
-    <table style="margin-top:20px; display:none" class="table-list9" id="table-list9">
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list9" id="table-list9">
         <tr>
             <th>Academic Year Code</th>
             <th>Faculty Code</th>
         </tr>
         <tfoot>
         <tr>
+            <!-- Show Academic year code and Faculties code-->
             <td><input type="text" id="create-relaAcaCode1"></td>
             <td><input type ="text" id="create-relaFacultyCode1"></td>
-            <td><button class="create9" type="button">New</button></td>
+            <!-- Button new-->
+            <td><button class="create9" type="button" id="button1">New</button></td>
         </tr>
         </tfoot>
     </table>
 </div>
+</div>
+</div>
 
-
-<h3>Academic years, faculties and programs</h3>
-<button class="update10" type="button">Load data</button>
-<button class="show-btn10" type="button">Show</button>
-<button class="hide-btn10" type="button">Hide</button>
+<!-- Academic years, Faculties and Programs-->
+<div class="aca-fa-pro">
+<h3 id="title1">Academic years, Faculties and Programs</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update10" type="button" id="button">Load data</button>
+<button class="show-btn10" type="button" id="button">Show</button>
+<button class="hide-btn10" type="button" id="button">Hide</button>
+</div>
+<div class="container">
 <div class="table-container10">
-    <table style="margin-top:20px; display:none" class="table-list10" id="table-list10">
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list10" id="table-list10">
         <tr>
             <th>Academic Year Code</th>
             <th>Faculty Code</th>
@@ -297,21 +321,31 @@
         </tr>
         <tfoot>
         <tr>
+            <!-- Show Academic year code, Falcuties code and Program code-->
             <td><input type="text" id="create-relaAcaCode2"></td>
             <td><input type ="text" id="create-relaFacultyCode2"></td>
             <td><input type ="text" id="create-relaProgramCode2"></td>
-            <td><button class="create10" type="button">New</button></td>
+            <!-- Button new-->
+            <td><button class="create10" type="button" id="button1">New</button></td>
         </tr>
         </tfoot>
     </table>
 </div>
+</div>
+</div>
 
-<h3>Modules, Academic years, faculties and programs</h3>
-<button class="update11" type="button">Load data</button>
-<button class="show-btn11" type="button">Show</button>
-<button class="hide-btn11" type="button">Hide</button>
+<!-- Modules, Academic year, Faculties and Programs-->
+<div class="mod-aca-fa-pro">
+<h3 id="title1">Modules, Academic years, Faculties and Programs</h3>
+<div class="container1">
+<!-- Display button-->
+<button class="update11" type="button" id="button">Load data</button>
+<button class="show-btn11" type="button" id="button">Show</button>
+<button class="hide-btn11" type="button" id="button">Hide</button>
+</div>
+<div class="container">
 <div class="table-container11">
-    <table style="margin-top:20px; display:none" class="table-list11" id="table-list11">
+    <table style="display:none; margin:0 auto; text-align: center;" class="table-list11" id="table-list11">
         <tr>
             <th>Module Code</th>
             <th>Academic Year Code</th>
@@ -320,14 +354,18 @@
         </tr>
         <tfoot>
         <tr>
+            <!-- Show Module code, Academic year code, Faculties code and Program code-->
             <td><input type ="text" id="create-relaModuleCode3"></td>
             <td><input type="text" id="create-relaAcaCode3"></td>
             <td><input type ="text" id="create-relaFacultyCode3"></td>
             <td><input type ="text" id="create-relaProgramCode3"></td>
-            <td><button class="create11" type="button">New</button></td>
+            <!-- Button new-->
+            <td><button class="create11" type="button" id="button1">New</button></td>
         </tr>
         </tfoot>
     </table>
+</div>
+</div>
 </div>
 
 </body>
