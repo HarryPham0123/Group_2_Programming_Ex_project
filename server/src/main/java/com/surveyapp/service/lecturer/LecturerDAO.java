@@ -103,7 +103,7 @@ public class LecturerDAO implements DAO<Lecturer> {
             String email = lecturerName + "@gmail.com";
 
             // Create User For Lecturer
-            String createUserScript = "INSERT INTO user(user_id, full_name, gender, email) VALUES (?, ?, ?, ?)";
+            String createUserScript = "INSERT INTO employee_user(user_id, full_name, gender, email) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(createUserScript);
             preparedStatement.setString(1, newUserID);
             preparedStatement.setString(2, lecturer.getName());
@@ -150,7 +150,7 @@ public class LecturerDAO implements DAO<Lecturer> {
     @Override
     public void delete(String code) throws Exception {
         String getUserIDQuery = "SELECT user_id FROM lecturer WHERE Lcode = ?";
-        String deleteUserQuery = "DELETE FROM user WHERE user_id = ?";
+        String deleteUserQuery = "DELETE FROM employee_user WHERE user_id = ?";
         try {
             //  Get user_id of lecturer will be deleted
             PreparedStatement preparedStatement = connection.prepareStatement(getUserIDQuery);
