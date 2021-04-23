@@ -60,14 +60,14 @@ public class ClassRoute {
     @GET
     @Path("/size")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSummaryQuestion(
-            @QueryParam("academic_year") String academic_year,
-            @QueryParam("semester") String semester,
-            @QueryParam("faculty") String faculty,
-            @QueryParam("program") String program,
-            @QueryParam("module") String module,
-            @QueryParam("class") String clazz,
-            @QueryParam("lecturer") String lecturer
+    public Response getClassesSize(
+            @DefaultValue("null") @QueryParam("academic_year") String academic_year,
+            @DefaultValue("null") @QueryParam("semester") String semester,
+            @DefaultValue("null") @QueryParam("faculty") String faculty,
+            @DefaultValue("null") @QueryParam("program") String program,
+            @DefaultValue("null") @QueryParam("module") String module,
+            @DefaultValue("null") @QueryParam("class") String clazz,
+            @DefaultValue("null") @QueryParam("lecturer") String lecturer
     ) {
         try {
             Code code = new Code(academic_year, semester, faculty, program, module, lecturer, clazz);

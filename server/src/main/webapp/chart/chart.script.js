@@ -24,12 +24,12 @@ $(function () {
         var arrayOfValues = [academic_year, semester, faculty, program, module, lecturer, clazz];
 
         //Fetch class's size
-        //fetchClassSize();
+        fetchClassSize();
 
         //Checks if both class and lecturer are selected
         if ((lecturer !== "null") && (clazz !== "null")) {
             $(".comment-table").show();
-            displayComments();
+            displayComments(lecturer, clazz);
 
         }
         console.log(arrayOfValues);
@@ -223,17 +223,18 @@ function displayTitle(forChart) {
         $(`<h1 class="chart-title">${chartTitle}</h1>`).insertBefore($(`#${forChart}`));
     });
 };
-function displayComments() {
+function displayComments(lecturer, clazz) {
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "http://localhost:8080/survey/api/questionnaire/question_18",
+        url: `http://localhost:8080/survey/api/questionnaire/question_18?lecturer=${lecturer}&class=${clazz}`,
         success: function(comments) {
             //Insert comments to table's DOM
+            console.log(comments);
             comments.map((comment, index) => {
                 $(`<tr>
                 <td>${index + 1}</td>
-                <td>${comment}</td>
+                <td>${comment["question_18"]}</td>
                 </tr>`).appendTo(".comment-table");
             })
         }
@@ -439,11 +440,11 @@ function fetchClassSize(
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: `http://localhost:8080/survey/api/classes/size?academic_year=${encodeURI(academic_year)}&semester=${encodeURI(semester)}&faculty=${encodeURI(faculty)}&program=${encodeURI(program)}&module=${encodeURI(module)}&lecturer=${encodeURI(lecturer)}&class=${encodeURI(clazz)}` ``,
+        url: `http://localhost:8080/survey/api/classes/size?academic_year=${encodeURI(academic_year)}&semester=${encodeURI(semester)}&faculty=${encodeURI(faculty)}&program=${encodeURI(program)}&module=${encodeURI(module)}&lecturer=${encodeURI(lecturer)}&class=${encodeURI(clazz)}`,
         success: function(data) {
-            console.log(data);
-            //Update classSize state
-            classSize = data.sum;
+            console.log();
+            classSize = data["SUM(c.size)"];
+            console.log(classSize);
         }
     })
 }

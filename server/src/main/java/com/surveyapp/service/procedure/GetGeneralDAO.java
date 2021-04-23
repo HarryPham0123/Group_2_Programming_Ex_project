@@ -20,6 +20,7 @@ public class GetGeneralDAO {
         connection = new DBUtil().getConnection();
         statement = connection.prepareCall(procedureQuery);
 
+        System.out.println(code.getClazz().equals("null") + "is class");
         //Set parameters
         statement.setString(1, code.getAcademic_year().equals("null") ? null : code.getAcademic_year());
         statement.setString(2, code.getSemester().equals("null") ? null : code.getSemester());

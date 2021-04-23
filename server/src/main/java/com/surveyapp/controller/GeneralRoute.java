@@ -24,8 +24,7 @@ public class GeneralRoute {
             @DefaultValue("null") @QueryParam("lecturer") String lecturer
     ) {
         try {
-            System.out.println("Academic year from route layer is null ? " + (academic_year == null));
-            Code code = new Code(academic_year, semester, faculty, program, module, clazz, lecturer);
+            Code code = new Code(academic_year, semester, faculty, program, module, lecturer, clazz);
             return Response
                     .status(Response.Status.OK)
                     .entity(procedureService.getAll(code))

@@ -150,9 +150,9 @@ const api='http://localhost:8080/survey/api/general';
         })
             $(".acad-year").val(newData[0].AYcode);
             $(".semester").val(newData[0].Scode);
-            $(".faculty").val(newData[0].Fname);
-            $(".module").val(newData[0].Mname);
-            $(".program").val(newData[0].Pname);
+            $(".faculty").val(newData[0].Fcode);
+            $(".module").val(newData[0].Mcode);
+            $(".program").val(newData[0].Pcode);
         //});
 
     });
