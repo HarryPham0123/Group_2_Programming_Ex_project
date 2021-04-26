@@ -20,8 +20,12 @@ $(function () {
         let module = $(".sel-module :selected").val();
         let lecturer = $(".sel-lec :selected").val();
         let clazz = $(".sel-class :selected").val();
+
         //Encapsulates the filter, to send to back-end
         var arrayOfValues = [academic_year, semester, faculty, program, module, lecturer, clazz];
+
+        //Fetch class's size
+        fetchClassSize(...arrayOfValues);
 
         //Checks if both class and lecturer are selected
         if ((lecturer !== "null") && (clazz !== "null")) {
@@ -29,16 +33,13 @@ $(function () {
             displayComments(lecturer, clazz);
 
         }
-        console.log(arrayOfValues);
+        console.log("[DEBUG] Current filter array: " + arrayOfValues);
         //Fetch questionnaires -> update the chart and description
         fetchQuestionnaires("gender_question", ...arrayOfValues)("gender_chart");
         fetchQuestionnaires("attendance_question", ...arrayOfValues)('attendance_chart');
         for (index = 1; index < 18; index++) {
             fetchQuestionnaires(`question_${index}`, ...arrayOfValues)(`question_${index}_chart`);
         }
-
-        //Fetch class's size
-        fetchClassSize(...arrayOfValues);
     });
 
     //Attach listener to the selects
@@ -151,7 +152,7 @@ function updateDescription(forChart) {
 
         //Calculate the mean and standard deviation
         let [mean, standardDeviation] = calculateStats(values);
-        let numberOfResponds = jStat.sum(values);
+        let numberOfResponds = parseFloat(jStat.sum(values));
         let respondRate = ((numberOfResponds/classSize) * 100).toFixed(1) + "%";
 
         //Render the calculation
@@ -360,7 +361,6 @@ function getCodes(
         contentType: "application/json",
         url,
         success: function (data) {
-            console.log(data);
             var codeArray = [];
             //Add to the available array
             for (index = 0; index < data.length; index++) {
@@ -426,7 +426,7 @@ function watchSelect(selectIndex) {
                     })
                 }
             }
-            console.log("Filter state: " + selectedArray);
+            console.log("[DEBUG] Filter storage: " + selectedArray);
         }
     })
 }

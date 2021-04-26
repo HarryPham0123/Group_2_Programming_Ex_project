@@ -1,7 +1,5 @@
 $(function () {
-
-
-	//Hide tables after clicking hide-btns
+  //Hide tables function 
 	$(".hide-btn1").click(function() {
 		$(".table-container1").slideUp()
 	})
@@ -24,8 +22,25 @@ $(function () {
 		$(".table-container7").slideUp()
 	})
 
+  $(".hide-btn8").click(function() {
+		$(".table-container8").slideUp()
+	})
 
-	//Show tables after clicking show-btn
+  $(".hide-btn9").click(function() {
+		$(".table-container9").slideUp()
+	})
+
+  $(".hide-btn10").click(function() {
+		$(".table-container10").slideUp()
+	})
+
+  $(".hide-btn11").click(function() {
+		$(".table-container11").slideUp()
+	})
+
+
+
+	//Show tables functions
 	$(".show-btn1").click(function() {
 		$(".table-container1").slideDown()
 	})
@@ -48,9 +63,22 @@ $(function () {
 		$(".table-container7").slideDown()
 	})
 
+$(".show-btn8").click(function() {
+		$(".table-container8").slideDown()
+	})
+  $(".show-btn9").click(function() {
+		$(".table-container9").slideDown()
+	})
+  $(".show-btn10").click(function() {
+		$(".table-container10").slideDown()
+	})
+  $(".show-btn11").click(function() {
+		$(".table-container11").slideDown()
+	})
 
 
-  //Load data buttons, that calls the getData() functions, display the table forms
+
+  //Load data functions that call getData() and display the form of each selected table
   $(".update1").one("click", function() {
 		getData1();
     var x = document.getElementById("table-list1");
@@ -87,8 +115,29 @@ $(function () {
     x.style.display = "block";
 	})
 
+  $(".update8").one("click", function() {
+		getData8();
+    var x = document.getElementById("table-list8");
+    x.style.display = "block";
+	})
+  $(".update9").one("click", function() {
+		getData9();
+    var x = document.getElementById("table-list9");
+    x.style.display = "block";
+	})
+  $(".update10").one("click", function() {
+		getData10();
+    var x = document.getElementById("table-list10");
+    x.style.display = "block";
+	})
+  $(".update11").one("click", function() {
+		getData11();
+    var x = document.getElementById("table-list11");
+    x.style.display = "block";
+	})
 
-  //Create (New) buttons, that call create() functions to add a new row from user input
+
+  //Create functions when click New buttons
   $(".create1").click(function() {
     createAYear();
 	})
@@ -110,10 +159,23 @@ $(function () {
   $(".create7").click(function() {
     createLecturer();
 	})
+  $(".create8").click(function() {
+    createLecturerClass();
+	})
+  $(".create9").click(function() {
+    createAcaFaculty();
+	})
+  $(".create10").click(function() {
+    createAcaFacuProgram();
+	})
+  $(".create11").click(function() {
+    createAcaFacuProModule();
+	})
 })
 
 
-//Ajax getData() functions to get the data from api, then call dataRender() functions to render the data to display to tables
+
+//Ajax getData() functions to get data from server, also call the dataRender() to render to tables
 function getData1(){
   $.ajax({
   type: 'GET',
@@ -200,8 +262,57 @@ function getData7(){
   })
 }
 
+function getData8(){
+  $.ajax({
+  type: 'GET',
+  url: 'http://localhost:8080/survey/api/lecturer_class',
+  success: function(data) {
+    dataRender8(data);
+  },
+  error:function () {
+    alert("Error loading order");
+    },
+  })
+}
+function getData9(){
+  $.ajax({
+  type: 'GET',
+  url: 'http://localhost:8080/survey/api/academic_year_faculty',
+  success: function(data) {
+    dataRender9(data);
+  },
+  error:function () {
+    alert("Error loading order");
+    },
+  })
+}
+function getData10(){
+  $.ajax({
+  type: 'GET',
+  url: 'http://localhost:8080/survey/api/academic_year_faculty_program',
+  success: function(data) {
+    dataRender10(data);
+  },
+  error:function () {
+    alert("Error loading order");
+    },
+  })
+}
+function getData11(){
+  $.ajax({
+  type: 'GET',
+  url: 'http://localhost:8080/survey/api/academic_year_faculty_program_module',
+  success: function(data) {
+    dataRender11(data);
+  },
+  error:function () {
+    alert("Error loading order");
+    },
+  })
+}
 
-//dataRender() functions to append the data from the api into the tables
+
+//dataRender functions that render the data from server to tables
 function dataRender1(data) {
 data.map(val=>{
   $(`<tr class=${val.code}>
@@ -277,13 +388,50 @@ function dataRender7(data) {
         <tr>`).appendTo(".table-list7");
 })
 }
+function dataRender8(data) {
+  data.map(val=>{
+    $(`<tr class=?class_code=${val.ccode}&lecturer_code=${val.lcode}>
+      <td>${val.ccode}</td>
+      <td>${val.lcode}</td>   
+      <td><button id=?class_code=${val.ccode}&lecturer_code=${val.lcode} type="button" onClick="deleteLecturerClass(this.id)">Delete</button></td>
+        <tr>`).appendTo(".table-list8");
+})
+}
+function dataRender9(data) {
+  data.map(val=>{
+    $(`<tr class=?academic_year=${val.aycode}&faculty_code=${val.fcode}>
+      <td>${val.aycode}</td>
+      <td>${val.fcode}</td>  
+      <td><button id=?academic_year=${val.aycode}&faculty_code=${val.fcode} type="button" onClick="deleteAcaFaculty(this.id)">Delete</button></td>
+        <tr>`).appendTo(".table-list9");
+})
+}
+function dataRender10(data) {
+  data.map(val=>{
+    $(`<tr class=?academic_year=${val.aycode}&faculty_code=${val.fcode}&program_code=${val.pcode}>
+      <td>${val.aycode}</td>
+      <td>${val.fcode}</td>
+      <td>${val.pcode}</td>
+      <td><button id=?academic_year=${val.aycode}&faculty_code=${val.fcode}&program_code=${val.pcode} type="button" onClick="deleteAcaFacuProgram(this.id)">Delete</button></td>
+        <tr>`).appendTo(".table-list10");
+})
+}
+function dataRender11(data) {
+  data.map(val=>{
+    $(`<tr class=?academic_year=${val.aycode}&faculty_code=${val.fcode}&program_code=${val.pcode}&module_code=${val.mcode}>
+      <td>${val.mcode}</td>
+      <td>${val.aycode}</td>
+      <td>${val.fcode}</td>
+      <td>${val.pcode}</td>
+      <td><button id=?academic_year=${val.aycode}&faculty_code=${val.fcode}&program_code=${val.pcode}&module_code=${val.mcode} type="button" onClick="deleteAcaFacuProModule(this.id)">Delete</button></td>
+        <tr>`).appendTo(".table-list11");
+})
+}
 
-
-//create() functions when pressing New buttons, that call POST requests to add new attributes to the database, if the data is valid (after check validation).
+//Create functions that send POST request to server (if the input data is valid), whenever the user click the New buttons
 function createAYear(){
   const code = $('#create-AYCode').val();
-  if(code.length == 6)
-  {
+  if(code.length==9){
   let PostJson = {
     "code" : code,
   }
@@ -294,9 +442,8 @@ function createAYear(){
     data: JSON.stringify(PostJson),
     dataType: "text",
     error: function(e) {
-    alert("Something wrong");
-        console.log(e);
-      },
+      alert("Something wrong");
+        },
     success : function(data, textStatus, jqXHR){
       //Load data dynamically after press New
       $(`<tr  class=${code}>
@@ -307,17 +454,17 @@ function createAYear(){
       }
   })
 }
-  else{
-    alert("Wrong input, please provide the input in correct form");
-  }
-	//Auto erase the New fields after reloading
+else{
+  alert("Wrong input, please provide the correct input");
+}
+  //Auto erase the New fields
   $("#create-AYCode").val('');
 }
 
 function createSemester(){
     const code = $('#create-semCode').val();
     const aycode = $('#create-semAyCode').val();
-    if(code.length == 5 & aycode.length == 6){
+    if(code.length == 5 & aycode.length == 9){
     let PostJson = {
       "code" : code,
       "aycode" : aycode,
@@ -346,7 +493,6 @@ function createSemester(){
     else{
       alert("Wrong input, please provide the input in correct form");
     }
-	//Auto erase the New fields after reloading
     $('#create-semCode').val('');
     $('#create-semAyCode').val('');
   }
@@ -371,6 +517,7 @@ function createFaculty(){
             console.log(e);
           },
         success : function(data, textStatus, jqXHR){
+          
         //Load data dynamically right after click New button
       $(`<tr class=${fcode}>
       <td>${fcode}</td>
@@ -379,14 +526,14 @@ function createFaculty(){
       <td><input type="text" id=${fcode}-modfname placeholder="Faculty name"></td>
       <td><button id=${fcode} type="button" onClick="modifyFaculty(this.id)">Modify</button></td>
         <tr>`).appendTo(".table-list3");
-          alert("Create new faculty successfully");
+        alert("Create new faculty successfully");
           }
       })
     }
     else{
       alert("Wrong input, please provide the input in correct form");
     }
-		//Auto erase the New fields after reloading
+    //Auto erase the New input fields
     $("#create-fcode").val('');
     $("#create-faculty").val('');
   }
@@ -426,7 +573,7 @@ function createFaculty(){
      else{
        alert("Wrong input, please provide the input in correct form");
      }
-	    //Auto erase the New fields after reloading
+     //Auto erase the New input fields
      $("#create-programCode").val('');
      $("#create-programName").val('');
   }
@@ -466,7 +613,7 @@ function createFaculty(){
      else{
        alert("Wrong input, please provide the input in correct form");
      }
-	  	  //Auto erase the New fields after reloading
+     //Auto erase the New input fields
      $("#create-moduleCode").val('');
      $("#create-moduleName").val('');
   }
@@ -512,7 +659,7 @@ function createFaculty(){
      else{
        alert("Wrong input, please provide input in the correct form");
      }
-	  	  //Auto erase the New fields after reloading
+     //Auto erase the New input fields
      $("#create-classCode").val('');
      $("#create-size").val('');
      $("#create-semesterCode").val('');
@@ -542,7 +689,7 @@ function createFaculty(){
         //Load data dynamically 
         $(`<tr class=${code}>
         <td>${code}</td>
-        <td>${name}</td>
+        <td>${name}</td> 
         <td><button id=${code} type="button" onClick="deleteLecturer(this.id)">Delete</button></td>
         <td><input type="text" id=${code}-modlecname placeholder="Lecturer name"></td>
         <td><button id=${code} type="button" onClick="modifyLecturer(this.id)">Modify</button></td>
@@ -554,13 +701,153 @@ function createFaculty(){
      else{
        alert("Wrong input, please provide input in the correct form");
      }
-	  	  //Auto erase the New fields after reloading
+     //Auto erase the New input fields
      $("#create-lecturerCode").val('');
      $("#create-lecturerName").val('');
   }
 
+  function createLecturerClass(){
+    const ccode = $('#create-relaclassCode').val();
+    const lcode = $('#create-relalecturerCode').val();
+    if(ccode.length == 5 && lcode.length ==5){
+    let PostJson = {
+      "ccode" : ccode,
+      "lcode" : lcode,
+    }
+    $.ajax({
+      type: 'POST',
+      contentType: "application/json",
+      url: "http://localhost:8080/survey/api/lecturer_class",
+      data: JSON.stringify(PostJson),
+      dataType: "text",
+      error: function(e) {
+      alert("Something wrong");
+          console.log(e);
+        },
+      success : function(data, textStatus, jqXHR){
+        //Load data dynamically 
+        $(`<tr class=?class_code=${ccode}&lecturer_code=${lcode}>
+        <td>${ccode}</td>
+        <td>${lcode}</td>
+        <td><button id=?class_code=${ccode}&lecturer_code=${lcode} type="button" onClick="deleteLecturerClass(this.id)">Delete</button></td>
+          <tr>`).appendTo(".table-list8");
+        alert("Create new class and lecturer successfully");
+        }
+    })
+  } 
+     else{
+       alert("Wrong input, please provide input in the correct form");
+     }
+     //Auto erase the New input fields
+     $("#create-relaclassCode").val('');
+     $("#create-relalecturerCode").val('');
+  }
 
-  //Delete functions when clicking the Delete buttons, only delete if the delete data is valid, otherwise, return an Error alert
+  function createAcaFaculty(){
+    const aycode = $('#create-relaAcaCode1').val();
+    const fcode = $('#create-relaFacultyCode1').val();
+    let PostJson = {
+      "aycode" : aycode,
+      "fcode" : fcode,
+    }
+    $.ajax({
+      type: 'POST',
+      contentType: "application/json",
+      url: "http://localhost:8080/survey/api/academic_year_faculty",
+      data: JSON.stringify(PostJson),
+      dataType: "text",
+      error: function(xhr, status, error) {
+      alert(xhr.responseText);
+        },
+      success : function(data, textStatus, jqXHR){
+        //Load data dynamically 
+        $(`<tr class=?academic_year=${aycode}&faculty_code=${fcode}>
+        <td>${aycode}</td>
+        <td>${fcode}</td>
+        <td><button id=?academic_year=${aycode}&faculty_code=${fcode} type="button" onClick="deleteAcaFaculty(this.id)">Delete</button></td>
+          <tr>`).appendTo(".table-list9");
+        alert("Create new academic year and faculty successfully");
+        }
+    })
+     //Auto erase the New input fields
+     $("#create-relaAcaCode1").val('');
+     $("#create-relaFacultyCode1").val('');
+  }
+
+  function createAcaFacuProgram(){
+    const aycode = $('#create-relaAcaCode2').val();
+    const fcode = $('#create-relaFacultyCode2').val();
+    const pcode = $('#create-relaProgramCode2').val();
+    let PostJson = {
+      "aycode" : aycode,
+      "fcode" : fcode,
+      "pcode" : pcode,
+    }
+    $.ajax({
+      type: 'POST',
+      contentType: "application/json",
+      url: "http://localhost:8080/survey/api/academic_year_faculty_program",
+      data: JSON.stringify(PostJson),
+      dataType: "text",
+      error: function(xhr, status, error) {
+      alert(xhr.responseText);
+        },
+      success : function(data, textStatus, jqXHR){
+        //Load data dynamically 
+        $(`<tr class=?academic_year=${aycode}&faculty_code=${fcode}&program_code=${pcode}>
+        <td>${aycode}</td>
+        <td>${fcode}</td>
+        <td>${pcode}</td>
+        <td><button id=?academic_year=${aycode}&faculty_code=${fcode}&program_code=${pcode} type="button" onClick="deleteAcaFacuProgram(this.id)">Delete</button></td>
+          <tr>`).appendTo(".table-list10");
+        alert("Create new academic year, faculty and program successfully");
+        }
+    })
+     //Auto erase the New input fields
+     $("#create-relaAcaCode2").val('');
+     $("#create-relaFacultyCode2").val('');
+     $("#create-relaProgramCode2").val('');
+  }
+
+  function createAcaFacuProModule(){
+    const mcode = $('#create-relaModuleCode3').val();
+    const aycode = $('#create-relaAcaCode3').val();
+    const fcode = $('#create-relaFacultyCode3').val();
+    const pcode = $('#create-relaProgramCode3').val();
+    let PostJson = {
+      "mcode"  : mcode,
+      "aycode" : aycode,
+      "fcode" : fcode,
+      "pcode" : pcode,
+    }
+    $.ajax({
+      type: 'POST',
+      contentType: "application/json",
+      url: "http://localhost:8080/survey/api/academic_year_faculty_program_module",
+      data: JSON.stringify(PostJson),
+      dataType: "text",
+      error: function(xhr, status, error) {
+        alert(xhr.responseText);
+       },
+      success : function(data, textStatus, jqXHR){
+        //Load data dynamically 
+        $(`<tr class=?academic_year=${aycode}&faculty_code=${fcode}&program_code=${pcode}&module_code=${mcode}>
+        <td>${mcode}</td>
+        <td>${aycode}</td>
+        <td>${fcode}</td>
+        <td>${pcode}</td>
+        <td><button id=?academic_year=${aycode}&faculty_code=${fcode}&program_code=${pcode}&module_code=${mcode} type="button" onClick="deleteAcaFacuProModule(this.id)">Delete</button></td>
+          <tr>`).appendTo(".table-list11");
+        alert("Create new academic year, faculty, program and module successfully");
+        }
+    })
+     //Auto erase the New input fields
+     $("#create-relaModuleCode3").val('');
+     $("#create-relaAcaCode3").val('');
+     $("#create-relaFacultyCode3").val('');
+     $("#create-relaProgramCode3").val('');
+  }
+  //Delete functions that send Delete request of selected row to server 
   function deleteAcademicYear(clicked_id)
   {
     var ID=clicked_id;
@@ -568,7 +855,7 @@ function createFaculty(){
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/academic_year/'+`${ID}`,
       success: function() {
-	       //Delete the append row automatically
+         //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
@@ -584,7 +871,7 @@ function createFaculty(){
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/semesters/'+`${ID}`,
       success: function() {
-	       //Delete the append row automatically
+        	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
@@ -600,7 +887,7 @@ function createFaculty(){
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/faculties/'+`${ID}`,
       success: function() {
-	      	  //Delete the append row automatically
+        	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
@@ -616,7 +903,7 @@ function createFaculty(){
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/programs/'+`${ID}`,
       success: function() {
-	      	  //Delete the append row automatically
+        	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
@@ -632,7 +919,7 @@ function createFaculty(){
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/module/'+`${ID}`,
       success: function() {
-	      	  //Delete the append row automatically
+        	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
@@ -648,7 +935,7 @@ function createFaculty(){
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/classes/'+`${ID}`,
       success: function() {
-	      	  //Delete the append row automatically
+        	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
@@ -664,7 +951,71 @@ function createFaculty(){
       type: 'DELETE',
       url: 'http://localhost:8080/survey/api/lecturers/'+`${ID}`,
       success: function() {
-	      	  //Delete the append row automatically
+        	  //Delete the append row automatically
+        $('tr[class*="' + clicked_id + '"]').remove();
+        alert("Delete successful");
+      },
+      error:function () {
+        alert("Error");
+        },
+      })
+  }
+  function deleteLecturerClass(clicked_id)
+  {
+    var ID=clicked_id;
+    $.ajax({
+      type: 'DELETE',
+      url: 'http://localhost:8080/survey/api/lecturer_class/'+`${ID}`,
+      success: function() {
+        	  //Delete the append row automatically
+        $('tr[class*="' + clicked_id + '"]').remove();
+        alert("Delete successful");
+      },
+      error:function () {
+        alert("Error");
+        },
+      })
+  }
+  function deleteAcaFaculty(clicked_id)
+  {
+    var ID=clicked_id;
+    $.ajax({
+      type: 'DELETE',
+      url: 'http://localhost:8080/survey/api/academic_year_faculty/'+`${ID}`,
+      success: function() {
+        	  //Delete the append row automatically
+        $('tr[class*="' + clicked_id + '"]').remove();
+        alert("Delete successful");
+      },
+      error:function () {
+        alert("Error");
+        },
+      })
+  }
+  function deleteAcaFacuProgram(clicked_id)
+  {
+    var ID=clicked_id;
+    $.ajax({
+      type: 'DELETE',
+      url: 'http://localhost:8080/survey/api/academic_year_faculty_program/'+`${ID}`,
+      success: function() {
+        	  //Delete the append row automatically
+        $('tr[class*="' + clicked_id + '"]').remove();
+        alert("Delete successful");
+      },
+      error:function () {
+        alert("Error");
+        },
+      })
+  }
+  function deleteAcaFacuProModule(clicked_id)
+  {
+    var ID=clicked_id;
+    $.ajax({
+      type: 'DELETE',
+      url: 'http://localhost:8080/survey/api/academic_year_faculty_program_module/'+`${ID}`,
+      success: function() {
+        	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
         alert("Delete successful");
       },
@@ -674,12 +1025,10 @@ function createFaculty(){
       })
   }
 
-
- // Modify buttons onclick function, send PUT request to update the input values from the users
-
-
+//Modify functions when click Modify, send PUT request (if data is valid) to server to modify the data
   function modifyFaculty(clicked_id){
     var ID=clicked_id;
+    var alo="fuck";
     const name=document.getElementById(clicked_id +'-modfname').value;
     if(name.length >0){
     let PostJson = {
@@ -697,13 +1046,15 @@ function createFaculty(){
             console.log(e);
           },
         success : function(data, textStatus, jqXHR){
-          alert("Update new faculty successful");
+          alert("Update new faculty name successful");
           }
       })
     }
     else{
       alert("Wrong input, please provide the correct input");
     }
+    //Erase the modify input field
+    document.getElementById(clicked_id +'-modfname').value="";
   }
 
   function modifyProgram(clicked_id){
@@ -725,13 +1076,15 @@ function createFaculty(){
             console.log(e);
           },
         success : function(data, textStatus, jqXHR){
-          alert("Update new program successful");
+          alert("Update new program name successful");
           }
       })
     }
     else{
       alert("Wrong input, please provide the correct input");
     }
+    //Erase the modify input field
+    document.getElementById(clicked_id +'-modproname').value="";
   }
 
   function modifyModule(clicked_id){
@@ -753,13 +1106,15 @@ function createFaculty(){
             console.log(e);
           },
         success : function(data, textStatus, jqXHR){
-          alert("Update new module successful");
+          alert("Update new module name successful");
           }
       })
     }
     else{
       alert("Wrong input, please provide the correct input");
     }
+        //Erase the modify input field
+        document.getElementById(clicked_id +'-modmodulename').value="";
   }
 
   function modifyClass(clicked_id){
@@ -785,13 +1140,15 @@ function createFaculty(){
             console.log(e);
           },
         success : function(data, textStatus, jqXHR){
-          alert("Update new class successful");
+          alert("Update new class size successful");
           }
       })
     }
     else{
       alert("Wrong input, please provide the correct input");
     }
+       //Erase the modify input field
+       document.getElementById(clicked_id +'-modclasssize').value="";
   }
 
   function modifyLecturer(clicked_id){
@@ -813,11 +1170,13 @@ function createFaculty(){
             console.log(e);
           },
         success : function(data, textStatus, jqXHR){
-          alert("Update new Lecturer successful");
+          alert("Update new Lecturer name successful");
           }
       })
     }
     else{
       alert("Wrong input, please provide the correct input");
     }
+      //Erase the modify input field
+      document.getElementById(clicked_id +'-modlecname').value="";
   }
