@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS class (
   Ccode VARCHAR(10),
-  size INT,
+  size INT DEFAULT (0),
   Scode VARCHAR(10) NOT NULL,
   Mcode VARCHAR(10) NOT NULL,
   Check (Ccode REGEXP 'C[0-9]{3}[a-z]'),
