@@ -12,14 +12,14 @@ This project is made to accomplish the module "Programming Exercise" in Vietname
 
 ## Dependencies
 
-### Front-end
+### 1. Front-end
  + HTML, CSS and Javascript
  + Jstat [link](https://github.com/jstat/jstat)
  + ChartJS [link](https://github.com/chartjs/Chart.js)
  + ChartJS-chart-error-bar [link](https://github.com/sgratzl/chartjs-chart-error-bars)
  + Bootstrap 5 [link](https://github.com/twbs/bootstrap)
  + 
-### Back-end
+### 2. Back-end
  + Apache Maven 3.8.1 [link](https://maven.apache.org/)
  + Maven Cargo Deploy [link](https://github.com/codehaus-cargo/cargo)
  + Maven Compiler plugin [link](https://github.com/apache/maven-compiler-plugin)
@@ -27,7 +27,7 @@ This project is made to accomplish the module "Programming Exercise" in Vietname
  + Java JWT 0.11.2 [link](https://github.com/jwtk/jjwt)
  + Java MySQL connector 8.0.22 [link](https://dev.mysql.com/downloads/connector/j/)
 
-### Database
+### 3. Database
  + MySQL Server 8.0.23
 ## 3. Maven Tomcat deploy
 1. Go to server's folder: `cd server`.
