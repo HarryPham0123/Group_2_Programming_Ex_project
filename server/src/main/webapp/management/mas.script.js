@@ -1,4 +1,6 @@
 $(function () {
+  //Calling dropDown function for selection lists: 
+  dropDown();
   //Hide tables function 
 	$(".hide-btn1").click(function() {
 		$(".table-container1").slideUp()
@@ -67,7 +69,7 @@ $(".show-btn8").click(function() {
 		$(".table-container8").slideDown()
 	})
   $(".show-btn9").click(function() {
-		$(".table-container9").slideDown()
+    $(".table-container9").slideDown()
 	})
   $(".show-btn10").click(function() {
 		$(".table-container10").slideDown()
@@ -450,6 +452,7 @@ function createAYear(){
   <td>${code}</td>
   <td><button id=${code} type="button" onClick="deleteAcademicYear(this.id)">Delete</button></td>
     <tr>`).appendTo(".table-list1");
+    $(".create-relaAcaCode").append(`<option value=${code}>${code}</option>`);
     alert("Create new academic year successfully");
       }
   })
@@ -486,6 +489,7 @@ function createSemester(){
     <td>${aycode}</td>
     <td><button id=${code} type="button" onClick="deleteSemester(this.id)">Delete</button></td>
       <tr>`).appendTo(".table-list2");
+      $(".create-relaSemesterCode").append(`<option value=${code}>${code}</option>`);
       alert("Create new semester successfully");
         }
     })
@@ -526,6 +530,7 @@ function createFaculty(){
       <td><input type="text" id=${fcode}-modfname placeholder="Faculty name"></td>
       <td><button id=${fcode} type="button" onClick="modifyFaculty(this.id)">Modify</button></td>
         <tr>`).appendTo(".table-list3");
+        $(".create-relaFacultyCode").append(`<option value=${fcode}>${fcode}</option>`);
         alert("Create new faculty successfully");
           }
       })
@@ -566,6 +571,7 @@ function createFaculty(){
     <td><input type="text" id=${programcode}-modproname placeholder="Program name"></td>
     <td><button id=${programcode} type="button" onClick="modifyProgram(this.id)">Modify</button></td>  
       <tr>`).appendTo(".table-list4");
+      $(".create-relaProgramCode").append(`<option value=${programcode}>${programcode}</option>`);
         alert("Create new program successfully");
         }
     })
@@ -606,6 +612,7 @@ function createFaculty(){
         <td><input type="text" id=${code}-modmodulename placeholder="Module name"></td>
         <td><button id=${code} type="button" onClick="modifyModule(this.id)">Modify</button></td>
           <tr>`).appendTo(".table-list5");
+          $(".create-relaModuleCode").append(`<option value=${code}>${code}</option>`);
         alert("Create new module successfully");
         }
     })
@@ -622,9 +629,8 @@ function createFaculty(){
   function createClass(){
     const code = $('#create-classCode').val();
     const size = $('#create-size').val();
-    const scode = $('#create-semesterCode').val();
-    const mcode = $('#create-modCode').val();
-    if(code.length == 5 && size.length > 0 && size > 0 && scode.length == 5 && mcode.length == 5){
+    const scode =$('#create-relaSemesterCode').val();
+    const mcode = $('#create-relaModuleCode1').val();
     let PostJson = {
       "code" : code,
       "size" : size,
@@ -652,18 +658,15 @@ function createFaculty(){
         <td><input type="text" id=${code}-modclasssize placeholder="Class size"></td>
         <td><button id=${code} type="button" onClick="modifyClass(this.id)">Modify</button></td>  
       <tr>`).appendTo(".table-list6");
+      $(".create-relaclassCode").append(`<option value=${code}>${code}</option>`);
         alert("Create new class successfully");
         }
     })
-  } 
-     else{
-       alert("Wrong input, please provide input in the correct form");
-     }
      //Auto erase the New input fields
      $("#create-classCode").val('');
      $("#create-size").val('');
-     $("#create-semesterCode").val('');
-     $("#create-modCode").val('');
+     $("#create-relaSemesterCode").val('');
+     $("#create-relaModuleCode1").val('');
   }
 
 
@@ -694,6 +697,7 @@ function createFaculty(){
         <td><input type="text" id=${code}-modlecname placeholder="Lecturer name"></td>
         <td><button id=${code} type="button" onClick="modifyLecturer(this.id)">Modify</button></td>
           <tr>`).appendTo(".table-list7");
+          $(".create-relalecturerCode").append(`<option value=${code}>${code}</option>`);
         alert("Create new lecturer successfully");
         }
     })
@@ -709,7 +713,6 @@ function createFaculty(){
   function createLecturerClass(){
     const ccode = $('#create-relaclassCode').val();
     const lcode = $('#create-relalecturerCode').val();
-    if(ccode.length == 5 && lcode.length ==5){
     let PostJson = {
       "ccode" : ccode,
       "lcode" : lcode,
@@ -734,10 +737,6 @@ function createFaculty(){
         alert("Create new class and lecturer successfully");
         }
     })
-  } 
-     else{
-       alert("Wrong input, please provide input in the correct form");
-     }
      //Auto erase the New input fields
      $("#create-relaclassCode").val('');
      $("#create-relalecturerCode").val('');
@@ -746,6 +745,7 @@ function createFaculty(){
   function createAcaFaculty(){
     const aycode = $('#create-relaAcaCode1').val();
     const fcode = $('#create-relaFacultyCode1').val();
+  
     let PostJson = {
       "aycode" : aycode,
       "fcode" : fcode,
@@ -813,7 +813,7 @@ function createFaculty(){
     const mcode = $('#create-relaModuleCode3').val();
     const aycode = $('#create-relaAcaCode3').val();
     const fcode = $('#create-relaFacultyCode3').val();
-    const pcode = $('#create-relaProgramCode3').val();
+    const pcode=$('#create-relaProgramCode3').val();
     let PostJson = {
       "mcode"  : mcode,
       "aycode" : aycode,
@@ -857,6 +857,7 @@ function createFaculty(){
       success: function() {
          //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
+        $('.create-relaAcaCode option[value=' + ID + ']').remove();
         alert("Delete successful");
       },
       error:function () {
@@ -873,6 +874,7 @@ function createFaculty(){
       success: function() {
         	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
+        $('.create-relaSemesterCode option[value=' + ID + ']').remove();
         alert("Delete successful");
       },
       error:function () {
@@ -889,6 +891,7 @@ function createFaculty(){
       success: function() {
         	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
+        $('.create-relaFacultyCode option[value=' + ID + ']').remove();
         alert("Delete successful");
       },
       error:function () {
@@ -905,6 +908,7 @@ function createFaculty(){
       success: function() {
         	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
+        $('.create-relaProgramCode option[value=' + ID + ']').remove();
         alert("Delete successful");
       },
       error:function () {
@@ -921,6 +925,7 @@ function createFaculty(){
       success: function() {
         	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
+        $('.create-relaModuleCode option[value=' + ID + ']').remove();
         alert("Delete successful");
       },
       error:function () {
@@ -937,6 +942,7 @@ function createFaculty(){
       success: function() {
         	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
+        $('.create-relaclassCode option[value=' + ID + ']').remove(); 
         alert("Delete successful");
       },
       error:function () {
@@ -953,6 +959,7 @@ function createFaculty(){
       success: function() {
         	  //Delete the append row automatically
         $('tr[class*="' + clicked_id + '"]').remove();
+        $('.create-relalecturerCode option[value=' + ID + ']').remove();
         alert("Delete successful");
       },
       error:function () {
@@ -1179,4 +1186,65 @@ function createFaculty(){
     }
       //Erase the modify input field
       document.getElementById(clicked_id +'-modlecname').value="";
+  }
+
+  //Dropdown list function for relational tables
+  function dropDown(){
+    const api1='http://localhost:8080/survey/api/academic_year'
+    $.get(api1,function(data){
+      data.map(value=>{
+         $(`
+           <option value=${value.code}>${value.code}</option>
+         `).appendTo(".create-relaAcaCode");
+      })
+    })
+    const api2='http://localhost:8080/survey/api/faculties'
+    $.get(api2,function(data){
+      data.map(value=>{
+         $(`
+           <option value=${value.code}>${value.code}</option>
+         `).appendTo(".create-relaFacultyCode");
+      })
+    })
+
+    const api3='http://localhost:8080/survey/api/programs'
+    $.get(api3,function(data){
+      data.map(value=>{
+         $(`
+           <option value=${value.code}>${value.code}</option>
+         `).appendTo(".create-relaProgramCode");
+      })
+    })
+    const api4='http://localhost:8080/survey/api/module'
+    $.get(api4,function(data){
+      data.map(value=>{
+         $(`
+           <option value=${value.code}>${value.code}</option>
+         `).appendTo(".create-relaModuleCode");
+      })
+    })
+    const api5='http://localhost:8080/survey/api/classes'
+    $.get(api5,function(data){
+      data.map(value=>{
+         $(`
+           <option value=${value.code}>${value.code}</option>
+         `).appendTo(".create-relaclassCode");
+      })
+    })
+    const api6='http://localhost:8080/survey/api/lecturers'
+    $.get(api6,function(data){
+      data.map(value=>{
+         $(`
+           <option value=${value.code}>${value.code}</option>
+         `).appendTo(".create-relalecturerCode");
+      })
+    })
+    const api7='http://localhost:8080/survey/api/semesters'
+    $.get(api7,function(data){
+      data.map(value=>{
+         $(`
+           <option value=${value.code}>${value.code}</option>
+         `).appendTo(".create-relaSemesterCode");
+      })
+    })
   }
