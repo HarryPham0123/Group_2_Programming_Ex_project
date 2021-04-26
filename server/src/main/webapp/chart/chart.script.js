@@ -235,10 +235,13 @@ function displayComments(lecturer, clazz) {
 
             //Insert comments to table's DOM
             comments.map((comment, index) => {
-                $(`<tr>
-                <td>${index + 1}</td>
-                <td>${comment["question_18"]}</td>
-                </tr>`).appendTo(".comment-table");
+                //Filter out the non-variable comment
+                if (comment["question_18"] !== "") {
+                    $(`<tr>
+                    <td>${index + 1}</td>
+                    <td>${comment["question_18"]}</td>
+                    </tr>`).appendTo(".comment-table");
+                }
             })
         }
     })
