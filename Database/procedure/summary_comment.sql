@@ -15,7 +15,8 @@ IF EXISTs (SELECT lc.Ccode, lc.Lcode
 		SELECT question_18 as 'comment'
         FROM questionnaire q
         WHERE q.Ccode = input_Ccode
-            AND q.Lcode = input_Lcode;
+        AND q.Lcode = input_Lcode
+	AND question_18 <> '';
             
 -- Else, return error message
 ELSE SELECT 'no' as 'message';
