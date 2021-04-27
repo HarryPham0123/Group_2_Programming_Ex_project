@@ -384,9 +384,11 @@ function watchSelect(selectIndex) {
     //Check the changed index
     if (selectedArray.includes(selectIndex)) {
         //Check lower-bound index
-        let startIndex = (selectedArray.length - selectIndex) < 2 ? 1 : (selectedArray.length - selectIndex);
+        let startIndex = selectedArray.indexOf(selectIndex) < 1 ? 1 : selectedArray.indexOf(selectIndex);
+        console.log("[DEBUG] " + "Start index: " + startIndex);
         //Identify which ones to delete
-        var toDeleteSelects = selectedArray.splice(startIndex, selectIndex);
+        var toDeleteSelects = selectedArray.splice(startIndex, selectedArray.length);
+        console.log("[DEBUG] " + "To be deleted selects: " + toDeleteSelects);
         //Deletes the selects base on indexes
         toDeleteSelects.forEach(deleteIndex => {
             $(selects.get(deleteIndex)).empty().append("<option value=null>--any--<option/>");
