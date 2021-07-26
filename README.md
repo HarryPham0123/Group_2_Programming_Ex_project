@@ -1,4 +1,4 @@
-# Programming Exercise - Group 2
+# Student Management System
 This project is made to accomplish the module "Programming Exercise" in Vietnamese-German University lecturing by Professor Manuel Cravel. All of the information reserve to the members of the group 2 including
  + Nguyen Dang Khoa, 14322 - Project Manager 
  + Vu Viet Hoang, 15041 - Front-end Lead
